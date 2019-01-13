@@ -1,0 +1,4 @@
+Pour intsaller numpy sur ce workspace (fait le 5 janvier 2019) :
+sudo apt-get update 
+sudo apt-get install python-dev
+sudo pip install numpy scipy
