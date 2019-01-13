@@ -10,28 +10,38 @@ class CoverageId :
     def __init__(self, coverageId,resol):
         self.coverageId = coverageId  # le label renvoyé par la requête getCapabilities du WCS
         self.resol=resol  # la résolution ("001" ou "0025"), la même que celle fournie à la requête getCapabilities du WCS
-        self.description=""  # description renvoyée par la requette getCapabilities du WCS
+        self.descr=""  # description renvoyée par la requette getCapabilities du WCS
+        self.code=""
         for k,v in catalogueWCS.items():
             (nom,desc)=v
             if nom==self.chaineNom():
                 self.code=k
                 break
+        if self.code=="":
+            raise Exception (self.chaineNom() + " non trouvee dans le dictionnaire"  +self.descr)
+        self.timeUTCRunTs=self.tsUTCRun()
+        self.timeDeb=""
+        self.timeFin=""
     def chaineNom (self):
         index=string.find(self.coverageId,"___");
         rep=self.coverageId[0:index];
         return rep
-    def chaineDate(self):  # retourne la partie de l'Id indiquant la date du run
+    def chaineDate(self):  # retourne la partie de l'Id indiquant la date du run sous un format du type : "2019-01-13T13:00:00Z"
         index=string.find(self.coverageId,"___");
         rep=self.coverageId[index+3:index+23];
         rep=rep.replace(".",":")
         return rep
     def dateUTCRun(self):   # date UTC du RUN par decodage de chaineDate()
         chaine=self.chaineDate()
+        return self.dateFromChaine(chaine)
+    def dateFromChaine(self,chaine):  #  objet date à partir d'une chaine du type : "2019-01-13T13:00:00Z"
         rep=datetime.datetime.strptime(chaine,'%Y-%m-%dT%H:%M:%SZ')
         return rep
     def tsUTCRun(self):    # timestamp UTC du RUN
-        date=self.dateUTCRun()
-        return int(date.strftime('%s'))
+        dateUTC=self.dateUTCRun()
+        return self.ts(dateUTC)
+    def ts(self,dateUTC):  #  timestamp d'une date UTC
+        return int(dateUTC.strftime('%s'))
     def ageRun(self):      # age du RUN en heures par différence à l'heure actuelle
         #ts = time.time()   
         ts= calendar.timegm(time.gmtime())
@@ -94,10 +104,13 @@ class CoverageId :
                     complem=str(i)
                 else:
                     complem=""
-                if (val): res[code+complem]=val  # écriture de la valeur associée au tagName dans le dictionnire des résultats
+                if (val):
+                    self.__dict__[code+complem]=val
+                    res[code+complem]=val  # écriture de la valeur associée au tagName dans le dictionnire des résultats
         getItems ('swe:description',"descr")
         unit=mydoc.getElementsByTagName("swe:uom")[0].attributes.getNamedItem("code").nodeValue;
         res["descrUnite"]=unit
+        self.unite=unit
         getItems ('gmlrgrid:gridAxesSpanned',"axe")
         getItems ('gmlrgrid:coefficients',"axeCoeff")
         getItems ('gml:pos',"pos")
@@ -106,10 +119,20 @@ class CoverageId :
         getItems ('gml:lowerCorner',"cornerLow")
         getItems ('gml:upperCorner',"cornerUpper")
         getItems ('gml:beginPosition',"timeDeb")
+        self.timeDebTs=self.ts(self.dateFromChaine(self.timeDeb))
         getItems ('gml:endPosition',"timeFin")
+        self.timeFinTs=self.ts(self.dateFromChaine(self.timeFin))
         res["timeCumul"]=self.dureeCumul()
-        res["timeTsDeb"]=self.tsUTCRun()
+        self.timeCumul=self.dureeCumul()
+        res["timeTsUTCRun"]=self.tsUTCRun()
         res["Id"]=self.coverageId
+        self.Id=self.coverageId
         res["code"]=self.code
+        self.code=self.code
+        for cle in self.__dict__:
+            if "Coeff" in cle:
+                val=self.__dict__[cle]
+                val=list(map(lambda x: int(x), val.split()))
+                self.__dict__[cle]=val
         return res    # renvoi le dictionnaire des résultats
         

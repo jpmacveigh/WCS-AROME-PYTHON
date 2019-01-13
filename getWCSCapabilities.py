@@ -1,6 +1,7 @@
 # coding: utf8
 from __future__ import unicode_literals
-import requests 
+import requests
+import sys
 from CoverageId import CoverageId
 #import xml.etree.ElementTree as ET
 from xml.dom import minidom
@@ -28,15 +29,25 @@ def getWCSCapabilities(resol):  # Lance une requête "getCapabilities" du WCS po
         cle='"",("'+CoverageId(coverageId,resol).chaineNom()+'","'+description+'"),'
         lesTitres.add(cle)
         cov=CoverageId(coverageId,resol)  # création dun objet CoverageId
-        cov.description=description  # renseignement de sa descritpion
+        cov.descr=description  # renseignement de sa descritpion
         res.append(cov)  # écriture des objets CoverageId dans la liste des résultats
-    """
     titres=sorted(lesTitres)
-    for titre in titres:
+    """for titre in titres:
         print titre
-    print len(titres)
-    """
+    print len(titres)"""
+    
     return res    # renvoi la liste des objets CoverageId exposés par le WCS de MF
+def mostRecentId(resol,code):
+    tab=getWCSCapabilities(resol)
+    ts=-sys.maxint-1
+    res=None
+    for Id in tab:
+        if Id.code==code and Id.timeUTCRunTs>=ts :
+            res=Id
+            ts=Id.timeUTCRunTs
+    return res
+
+    
 
 
 

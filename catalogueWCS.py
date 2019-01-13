@@ -36,6 +36,7 @@ catalogueWCS={
 "RR(p)":("TOTAL_PRECIPITATION_RATE__ISOBARIC_SURFACE","Intensité des précipitations sur des surfaces isobares."),
 "RR(h)":("TOTAL_PRECIPITATION_RATE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND","Intensité des précipitations en niveaux hauteur."),
 "Precip (cumul)":("TOTAL_PRECIPITATION__GROUND_OR_WATER_SURFACE","Quantité totale de précipitations."),
+"Precip? (cumul)":("TOTAL_PRECIPITATION_RATE__GROUND_OR_WATER_SURFACE","Quantité totale de précipitations ?."),
 "Snow (cumul)":("TOTAL_SNOW_PRECIPITATION__GROUND_OR_WATER_SURFACE","Quantité de précipitations sous forme de neige."),
 "RR(cumul)":("TOTAL_WATER_PRECIPITATION__GROUND_OR_WATER_SURFACE","Quantité de précipitations sous forme liquide."),
 "Kte(p)":("TURBULENT_KINETIC_ENERGY__ISOBARIC_SURFACE","Energie cinétique turbulente sur des surfaces isobares."),
