@@ -6,6 +6,7 @@ from CoverageId import CoverageId
 reso="0025"
 code="Kte(h)"
 code="Topo"
+code="Geop(p)"
 Id=mostRecentId(reso,code)
 if Id:
     Id.describeCoverage()

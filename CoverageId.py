@@ -108,9 +108,12 @@ class CoverageId :
                     self.__dict__[code+complem]=val
                     res[code+complem]=val  # écriture de la valeur associée au tagName dans le dictionnire des résultats
         getItems ('swe:description',"descr")
-        unit=mydoc.getElementsByTagName("swe:uom")[0].attributes.getNamedItem("code").nodeValue;
+        unit=mydoc.getElementsByTagName("swe:uom")[0].attributes.getNamedItem("code").nodeValue
         res["descrUnite"]=unit
         self.unite=unit
+        #gmlrgrid:offsetVector srsDimension="4"
+        dim=mydoc.getElementsByTagName("gmlrgrid:offsetVector")[0].attributes.getNamedItem("srsDimension").nodeValue
+        self.dim=int(dim)
         getItems ('gmlrgrid:gridAxesSpanned',"axe")
         getItems ('gmlrgrid:coefficients',"axeCoeff")
         getItems ('gml:pos',"pos")
