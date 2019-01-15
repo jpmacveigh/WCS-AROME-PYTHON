@@ -19,6 +19,7 @@ class CoverageId :
                 break
         if self.code=="":
             raise Exception (self.chaineNom() + " non trouvee dans le dictionnaire"  +self.descr)
+        self.timeUTCRun=self.chaineDate()
         self.timeUTCRunTs=self.tsUTCRun()
         self.timeDeb=""
         self.timeFin=""
@@ -77,7 +78,7 @@ class CoverageId :
         path="https://geoservices.meteofrance.fr/services/"+model+"?SERVICE=WCS&version=2.0.1&REQUEST=DescribeCoverage&coverageID=";
         path=path+self.coverageId+"&token=__BvvAzSbJXLEdUJ--rRU0E1F8qi6cSxDp5x5AtPfCcuU__"; 
         return path
-    def describeCoverage(self):  # envoi d'une requette describeCoverage pour ce CoverageId
+    def describeCoverage(self):  # Envoi et traitement d'une requette describeCoverage pour ce CoverageId
         path = self.describeCoveragePath()
         status=-1
         while status != 200:
@@ -113,7 +114,7 @@ class CoverageId :
         self.unite=unit
         #gmlrgrid:offsetVector srsDimension="4"
         dim=mydoc.getElementsByTagName("gmlrgrid:offsetVector")[0].attributes.getNamedItem("srsDimension").nodeValue
-        self.dim=int(dim)
+        self.dim=int(dim)   # nombre d'axes (dimensions) du coverageId
         getItems ('gmlrgrid:gridAxesSpanned',"axe")
         getItems ('gmlrgrid:coefficients',"axeCoeff")
         getItems ('gml:pos',"pos")
@@ -132,10 +133,21 @@ class CoverageId :
         self.Id=self.coverageId
         res["code"]=self.code
         self.code=self.code
-        for cle in self.__dict__:
+        for cle in self.__dict__:  # découpage des coefficients des axes et mise dans un tableau
             if "Coeff" in cle:
                 val=self.__dict__[cle]
                 val=list(map(lambda x: int(x), val.split()))
                 self.__dict__[cle]=val
+        if self.dim==3 :    # contôle cohérence timeDeb, timeFin et axe des temps
+            axeTime="axeCoeff2"
+        else:  #  cas où dim= 4 et où il y a un niveau vertical
+            axeTime="axeCoeff3"
+        self.time=self.__dict__[axeTime]  #  renommage de l'axe des temps
+        del self.__dict__[axeTime]
+        self.timeNbEch=len(self.time)  # nombre d'échéance temporelles dasn le CoverageId
+        tsFin=self.timeDebTs+self.time[-1]
+        if tsFin != self.timeFinTs : raise Exception ("Erreur timeFinTs")
+        tsDeb=self.timeUTCRunTs+self.time[0]
+        if tsDeb != self.timeDebTs : raise Exception ("Erreur timeDebTs")
         return res    # renvoi le dictionnaire des résultats
         
