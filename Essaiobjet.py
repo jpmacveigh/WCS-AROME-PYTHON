@@ -1,10 +1,12 @@
 # coding: utf8
 import json
+import time
 class toto:
     def __init__(self,x):
         self.longueur=x
 
-    
+print time.time()   
+print time.gmtime()
 toto=toto(10)
 print (json.dumps(toto.__dict__,indent=4))
 toto.largeur=23

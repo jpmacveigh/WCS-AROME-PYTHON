@@ -140,13 +140,25 @@ class CoverageId :
                 self.__dict__[cle]=val
         if self.dim==3 :    # contôle cohérence timeDeb, timeFin et axe des temps
             axeTime="axeCoeff2"
+            self.niv=None
         else:  #  cas où dim= 4 et où il y a un niveau vertical
             axeTime="axeCoeff3"
+            axeNiv="axeCoeff2"
+            self.niv=self.__dict__["axe2"]
+            self.__dict__[self.niv]=self.__dict__[axeNiv]
+            del self.__dict__[axeNiv]
         self.time=self.__dict__[axeTime]  #  renommage de l'axe des temps
         del self.__dict__[axeTime]
         self.timeNbEch=len(self.time)  # nombre d'échéance temporelles dasn le CoverageId
-        tsFin=self.timeDebTs+self.time[-1]
-        if tsFin != self.timeFinTs : raise Exception ("Erreur timeFinTs")
+        tsFin=self.timeUTCRunTs+self.time[-1]
+        if tsFin != self.timeFinTs :
+            print self.timeDeb
+            print self.timeDebTs
+            print self.time[-1]
+            print tsFin
+            print self.timeFin
+            print self.timeFinTs
+            raise Exception ("Erreur timeFinTs")
         tsDeb=self.timeUTCRunTs+self.time[0]
         if tsDeb != self.timeDebTs : raise Exception ("Erreur timeDebTs")
         return res    # renvoi le dictionnaire des résultats
