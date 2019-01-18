@@ -44,8 +44,6 @@ class CoverageId :
     def ts(self,dateUTC):  #  timestamp d'une date UTC
         return int(dateUTC.strftime('%s'))
     def chaineUTCFromTs(self,tsUTC):  # chaine de date au format '%Y-%m-%dT%H:%M:%SZ' à partir d'un timestamp
-        #d=time.time(tsUTC)
-        #rep=datetime.datetime.strftime(d,'%Y-%m-%dT%H:%M:%SZ')
         rep=datetime.datetime.utcfromtimestamp(tsUTC).strftime('%Y-%m-%dT%H:%M:%SZ')
         return rep
     def ageRun(self):      # age du RUN en heures par différence à l'heure actuelle
@@ -155,11 +153,11 @@ class CoverageId :
         self.time=self.__dict__[axeTime]  #  renommage de l'axe des temps
         del self.__dict__[axeTime]
         tab=[]
-        for ts in self.time:
+        for ts in self.time:  # Ajout des dates des prévisions
             tsPrevi=self.timeUTCRunTs+ts
             chainePrevi=self.chaineUTCFromTs(tsPrevi)
             tab.append(chainePrevi)
-        self.datePrevi=tab
+        self.timeDatePrevi=tab
         self.timeNbEch=len(self.time)  # nombre d'échéance temporelles dasn le CoverageId
         tsFin=self.timeUTCRunTs+self.time[-1]
         if tsFin != self.timeFinTs :
@@ -173,7 +171,11 @@ class CoverageId :
         tsDeb=self.timeUTCRunTs+self.time[0]
         if tsDeb != self.timeDebTs : raise Exception ("Erreur timeDebTs")
         return res    # renvoi le dictionnaire des résultats
-    def getCoverage(self,latiSud,latiNord,longiOuest,longiEst,niv,ts):
+    def niveau(self,numNiv):  #  renvoi la valeur du "numNiv" -ième niveau 
+        if numNiv<0 or numNiv> len(self.__dict__[self.niv]):
+            raise Exception ("Numéro de niveau non valide: %s" % numNiv)
+        return self.__dict__[self.niv][numNiv]
+    def getCoverage(self,latiSud,latiNord,longiOuest,longiEst,chaineDatePrevi,niv=None):
         """ https://geoservices.meteofrance.fr/api/__BvvAzSbJXLEdUJ--rRU0E1F8qi6cSxDp5x5AtPfCcuU__
          /MF-NWP-HIGHRES-AROME-0025-FRANCE-WCS?SERVICE=WCS&VERSION=2.0.1&REQUEST=GetCoverage
          &format=image/tiff&coverageId=GEOPOTENTIAL__ISOBARIC_SURFACE___2017-08-29T06.00.00Z
@@ -185,7 +187,13 @@ class CoverageId :
         latitude  = "&subset=lat("+str(latiSud)+","+str(latiNord)+")"
         longitude = "&subset=long("+str(longiOuest)+","+str(longiEst)+")";
         path=path+latitude+longitude
-        path=path+"&subset=xxxx("+str(niv)+")"
-        path=path+"&subset=time("+str(ts)+")"
-        """ A finir  """
-        return None
+        if niv: path=path+"&subset="+self.niv+"("+str(niv)+")"  # ajout du niveau, if any
+        path=path+"&subset=time("+chaineDatePrevi+")"
+        print path
+        status=-1
+        while status != 200:
+            r=requests.get(path)  # envoi d'une requête "getCoverage" du WCS
+            status=r.status_code
+        fichier = open("WCSgetCoverage.tif","w")
+        print >> fichier,r.content  # le résultat de la requête est un geotiff que l'on écrit dans un ficheir
+        fichier.close()
