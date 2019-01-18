@@ -12,7 +12,7 @@ cles=[]
 for k,v in catalogueWCS.items():
     cles.append(k)
 
-for i in range(200):
+for i in range(2):
     code=cles[random.randint(0,len(cles)-1)]
     Id=mostRecentId(reso,code)
     if Id:

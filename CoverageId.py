@@ -43,6 +43,11 @@ class CoverageId :
         return self.ts(dateUTC)
     def ts(self,dateUTC):  #  timestamp d'une date UTC
         return int(dateUTC.strftime('%s'))
+    def chaineUTCFromTs(self,tsUTC):  # chaine de date au format '%Y-%m-%dT%H:%M:%SZ' à partir d'un timestamp
+        #d=time.time(tsUTC)
+        #rep=datetime.datetime.strftime(d,'%Y-%m-%dT%H:%M:%SZ')
+        rep=datetime.datetime.utcfromtimestamp(tsUTC).strftime('%Y-%m-%dT%H:%M:%SZ')
+        return rep
     def ageRun(self):      # age du RUN en heures par différence à l'heure actuelle
         #ts = time.time()   
         ts= calendar.timegm(time.gmtime())
@@ -149,6 +154,12 @@ class CoverageId :
             del self.__dict__[axeNiv]
         self.time=self.__dict__[axeTime]  #  renommage de l'axe des temps
         del self.__dict__[axeTime]
+        tab=[]
+        for ts in self.time:
+            tsPrevi=self.timeUTCRunTs+ts
+            chainePrevi=self.chaineUTCFromTs(tsPrevi)
+            tab.append(chainePrevi)
+        self.datePrevi=tab
         self.timeNbEch=len(self.time)  # nombre d'échéance temporelles dasn le CoverageId
         tsFin=self.timeUTCRunTs+self.time[-1]
         if tsFin != self.timeFinTs :
@@ -162,4 +173,19 @@ class CoverageId :
         tsDeb=self.timeUTCRunTs+self.time[0]
         if tsDeb != self.timeDebTs : raise Exception ("Erreur timeDebTs")
         return res    # renvoi le dictionnaire des résultats
+    def getCoverage(self,latiSud,latiNord,longiOuest,longiEst,niv,ts):
+        """ https://geoservices.meteofrance.fr/api/__BvvAzSbJXLEdUJ--rRU0E1F8qi6cSxDp5x5AtPfCcuU__
+         /MF-NWP-HIGHRES-AROME-0025-FRANCE-WCS?SERVICE=WCS&VERSION=2.0.1&REQUEST=GetCoverage
+         &format=image/tiff&coverageId=GEOPOTENTIAL__ISOBARIC_SURFACE___2017-08-29T06.00.00Z
+         &subset=lat(50.0,51.0)&subset=long(3.0,4.0)&subset=pressure(100)&subset=time(2017-08-29T15:00:00Z)"""
         
+        path="https://geoservices.meteofrance.fr/api/__BvvAzSbJXLEdUJ--rRU0E1F8qi6cSxDp5x5AtPfCcuU__/MF-NWP-HIGHRES-AROME-";
+        path=path+self.resol+"-FRANCE-WCS?SERVICE=WCS&VERSION=2.0.1&REQUEST=GetCoverage&format=image/tiff&coverageId=";
+        path=path+self.coverageId
+        latitude  = "&subset=lat("+str(latiSud)+","+str(latiNord)+")"
+        longitude = "&subset=long("+str(longiOuest)+","+str(longiEst)+")";
+        path=path+latitude+longitude
+        path=path+"&subset=xxxx("+str(niv)+")"
+        path=path+"&subset=time("+str(ts)+")"
+        """ A finir  """
+        return None
