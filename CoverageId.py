@@ -4,6 +4,10 @@ import string
 import datetime
 import time
 import calendar
+import gdal
+from Axe import Axe
+from Espace2D import Espace2D
+import numpy as np
 from xml.dom import minidom
 from catalogueWCS import catalogueWCS
 class CoverageId :
@@ -175,7 +179,7 @@ class CoverageId :
         if numNiv<0 or numNiv> len(self.__dict__[self.niv]):
             raise Exception ("Numéro de niveau non valide: %s" % numNiv)
         return self.__dict__[self.niv][numNiv]
-    def getCoverage(self,latiSud,latiNord,longiOuest,longiEst,chaineDatePrevi,niv=None):
+    def getCoverage(self,latiSud,latiNord,longiOuest,longiEst,chaineDatePrevi,niv=None): # Envoi d'une requête "getCoverage" du service WCS
         """ https://geoservices.meteofrance.fr/api/__BvvAzSbJXLEdUJ--rRU0E1F8qi6cSxDp5x5AtPfCcuU__
          /MF-NWP-HIGHRES-AROME-0025-FRANCE-WCS?SERVICE=WCS&VERSION=2.0.1&REQUEST=GetCoverage
          &format=image/tiff&coverageId=GEOPOTENTIAL__ISOBARIC_SURFACE___2017-08-29T06.00.00Z
@@ -189,11 +193,28 @@ class CoverageId :
         path=path+latitude+longitude
         if niv: path=path+"&subset="+self.niv+"("+str(niv)+")"  # ajout du niveau, if any
         path=path+"&subset=time("+chaineDatePrevi+")"
-        print path
+        #print path
         status=-1
         while status != 200:
             r=requests.get(path)  # envoi d'une requête "getCoverage" du WCS
             status=r.status_code
-        fichier = open("WCSgetCoverage.tif","w")
+        filename="WCSgetCoverage.tiff"
+        fichier = open(filename,"w")
         print >> fichier,r.content  # le résultat de la requête est un geotiff que l'on écrit dans un ficheir
         fichier.close()
+        self.dataset=gdal.Open(filename, gdal.GA_ReadOnly)  # ouverture du fichier geotiff en écriture seule
+        self.RasterXSize=self.dataset.RasterXSize
+        self.RasterYSize=self.dataset.RasterYSize
+        self.GT=self.dataset.GetGeoTransform()
+        self.npArray=self.dataset.GetRasterBand(1).ReadAsArray()
+        self.axeLongi=Axe("longi","deg",self.GT[0],self.GT[0]+(self.RasterXSize-1)*self.GT[1],self.RasterXSize,np.arange(self.RasterXSize))
+        self.axeLati =Axe("lati", "deg",self.GT[3],self.GT[3]+(self.RasterYSize-1)*self.GT[5],self.RasterYSize,np.arange(self.RasterYSize))
+        self.espace2D=Espace2D(self.axeLongi,self.axeLati,self.npArray)
+    def valeur(self,rangLongi,rangLati):
+        if not (0<= rangLongi <= self.RasterXSize-1): raise Exception ("erreur rangLongi")
+        if not (0<= rangLati <= self.RasterYSize-1): raise Exception ("erreur rangLati")
+        longi = self.GT[0] + rangLongi*self.GT[1] + rangLati*self.GT[2]
+        lati = self.GT[3] + rangLongi*self.GT[4] + rangLati*self.GT[5]
+        val=self.npArray[rangLati,rangLongi]
+        return longi,lati,val
+        

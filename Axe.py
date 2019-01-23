@@ -15,7 +15,7 @@ class Axe:   # un axe avec des ticks et des valeurs définies en ces ticks
         if (len(self.valeurs)!=nb):
             raise Exception ("Axe: le nombre de valeurs attachées à l'axe : %s est déférent du nombre de ticks de l' axe : %s" %(len(self.valeurs),self.nb))
     def isInside (self,x):   # test si "x" est dans les limites de l'axe
-        return (self.mini<=x) and (x<=self.maxi)
+        return ((self.mini<=x<=self.maxi) or (-self.mini<=-x<=-self.maxi))
     def interval(self,x):  # retourne le premier ticks de l'axes inférieur à la valeur "x"
         if self.isInside(x):
             if x==self.maxi:
@@ -29,7 +29,7 @@ class Axe:   # un axe avec des ticks et des valeurs définies en ces ticks
         (ninf,prop)=self.interval(x)
         return (self.valeurs[ninf]+(prop*(self.valeurs[ninf+1]-self.valeurs[ninf])))
             
-            
+"""            
 nb=2801
 #valeurs=np.arange(nb)
 valeurs=np.sin(np.arange(nb)/float(nb-1)*math.pi/2.)
@@ -48,3 +48,5 @@ print axe.val(9.999999999999999)
 print axe.val(-12)
 print axe.val(2)
 print axe.val(16)
+
+"""

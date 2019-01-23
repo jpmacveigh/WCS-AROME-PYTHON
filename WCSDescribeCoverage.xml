@@ -1,26 +1,26 @@
 <wcs:CoverageDescriptions xmlns:wcs="http://www.opengis.net/wcs/2.0" xmlns:swe="http://www.opengis.net/swe/2.0" xmlns:gmlrgrid="http://www.opengis.net/gml/3.3/rgrid" xmlns:gmlcov="http://www.opengis.net/gmlcov/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gml="http://www.opengis.net/gml/3.2" xsi:schemaLocation="     http://www.opengis.net/wcs/2.0 http://schemas.opengis.net/wcs/2.0/wcsAll.xsd     http://www.opengis.net/gml/3.2 http://schemas.opengis.net/gml/3.2.1/gml.xsd     http://www.opengis.net/gmlcov/1.0 http://schemas.opengis.net/gmlcov/1.0/gmlcovAll.xsd     http://www.opengis.net/swe/2.0 http://schemas.opengis.net/sweCommon/2.0/swe.xsd     http://www.opengis.net/gml/3.3/rgrid http://schemas.opengis.net/gml/3.3/referenceableGrid.xsd">
-   <wcs:CoverageDescription gml:id="TOTAL_PRECIPITATION__GROUND_OR_WATER_SURFACE___2019-01-18T03.00.00Z_PT9H">
+   <wcs:CoverageDescription gml:id="TOTAL_WATER_PRECIPITATION__GROUND_OR_WATER_SURFACE___2019-01-23T15.00.00Z_PT6H">
       <gml:boundedBy>
          <gml:EnvelopeWithTimePeriod srsName="http://meteofrance.fr/def/crs/2DLongLat" axisLabels="long lat  time" uomLabels="deg deg  ISO8601" srsDimension="2">
             <gml:lowerCorner>-8 38</gml:lowerCorner>
             <gml:upperCorner>12 53</gml:upperCorner>
-            <gml:beginPosition frame="#ISO-8601">2019-01-18T12:00:00Z</gml:beginPosition>
-            <gml:endPosition frame="#ISO-8601">2019-01-20T00:00:00Z</gml:endPosition>
+            <gml:beginPosition frame="#ISO-8601">2019-01-23T21:00:00Z</gml:beginPosition>
+            <gml:endPosition frame="#ISO-8601">2019-01-23T22:00:00Z</gml:endPosition>
          </gml:EnvelopeWithTimePeriod>
       </gml:boundedBy>
-      <wcs:CoverageId>TOTAL_PRECIPITATION__GROUND_OR_WATER_SURFACE___2019-01-18T03.00.00Z_PT9H</wcs:CoverageId>
+      <wcs:CoverageId>TOTAL_WATER_PRECIPITATION__GROUND_OR_WATER_SURFACE___2019-01-23T15.00.00Z_PT6H</wcs:CoverageId>
       <gml:domainSet>
-         <gmlrgrid:ReferenceableGridByVectors gml:id="grid_TOTAL_PRECIPITATION__GROUND_OR_WATER_SURFACE" dimension="3">
+         <gmlrgrid:ReferenceableGridByVectors gml:id="grid_TOTAL_WATER_PRECIPITATION__GROUND_OR_WATER_SURFACE" dimension="3">
             <gml:limits>
                <gml:GridEnvelope>
                   <gml:low>1 1 1</gml:low>
-                  <gml:high>1121 717  37</gml:high>
+                  <gml:high>1121 717  2</gml:high>
                </gml:GridEnvelope>
             </gml:limits>
             <gml:axisLabels>long lat  time</gml:axisLabels>
             <gmlrgrid:origin>
-               <gml:Point gml:id="grid_TOTAL_PRECIPITATION__GROUND_OR_WATER_SURFACE_origin" srsDimension="3" srsName="http://meteofrance.fr/def/crs/3DLongLatTime">
-                  <gml:pos>-12.0 55.4  32400</gml:pos>
+               <gml:Point gml:id="grid_TOTAL_WATER_PRECIPITATION__GROUND_OR_WATER_SURFACE_origin" srsDimension="3" srsName="http://meteofrance.fr/def/crs/3DLongLatTime">
+                  <gml:pos>-12.0 55.4  21600</gml:pos>
                </gml:Point>
             </gmlrgrid:origin>
             <gmlrgrid:generalGridAxis>
@@ -42,7 +42,7 @@
             <gmlrgrid:generalGridAxis>
                <gmlrgrid:GeneralGridAxis>
                   <gmlrgrid:offsetVector srsDimension="3" axisLabels="long lat  time" uomLabels="deg deg  s" srsName="http://meteofrance.fr/def/crs/3DLongLatTime">0.0 0.0 0.0 1.0</gmlrgrid:offsetVector>
-                  <gmlrgrid:coefficients>32400 36000 39600 43200 46800 50400 54000 57600 61200 64800 68400 72000 75600 79200 82800 86400 90000 93600 97200 100800 104400 108000 111600 115200 118800 122400 126000 129600 133200 136800 140400 144000 147600 151200 154800 158400 162000</gmlrgrid:coefficients>
+                  <gmlrgrid:coefficients>21600 25200</gmlrgrid:coefficients>
                   <gmlrgrid:gridAxesSpanned>time</gmlrgrid:gridAxesSpanned>
                   <gmlrgrid:sequenceRule axisOrder="+1">Linear</gmlrgrid:sequenceRule>
                </gmlrgrid:GeneralGridAxis>
@@ -51,9 +51,9 @@
       </gml:domainSet>
       <gmlcov:rangeType>
          <swe:DataRecord>
-            <swe:field name="TOTAL_PRECIPITATION__GROUND_OR_WATER_SURFACE">
-               <swe:Quantity definition="http://codes.wmo.int/grib2/codeflag/4.2/_0-1-84">
-                  <swe:description>Quantité totale de précipitations.</swe:description>
+            <swe:field name="TOTAL_WATER_PRECIPITATION__GROUND_OR_WATER_SURFACE">
+               <swe:Quantity definition="http://codes.wmo.int/grib2/codeflag/4.2/_0-1-49">
+                  <swe:description>Quantité de précipitations sous forme liquide.</swe:description>
                   <swe:uom code="kg m-2"/>
                </swe:Quantity>
             </swe:field>
