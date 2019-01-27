@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 import requests
 import sys
 import time
+import calendar
 import os
 from CoverageId import CoverageId
 #import xml.etree.ElementTree as ET
@@ -11,7 +12,7 @@ def getWCSCapabilities(resol):  # Lance une requête "getCapabilities" du WCS po
     XMLFileName="WCSCapabilities.xml"
     #  on regarde si la dernière requête "getCapabilities" n'est trop récente
     now=time.time()
-    if (not ((os.path.exists(XMLFileName) and (now-os.path.getctime(XMLFileName)<=10*60)))): 
+    if (not ((os.path.exists(XMLFileName) and (now-os.path.getctime(XMLFileName)<=10*60)))): #  plus de 10 minutes ?
         path="https://geoservices.meteofrance.fr/services/MF-NWP-HIGHRES-AROME-"
         path=path+resol+"-FRANCE-WCS?request=GetCapabilities&version=1.3.0&service=WCS&token=__BvvAzSbJXLEdUJ--rRU0E1F8qi6cSxDp5x5AtPfCcuU__"
         #curl "https://geoservices.meteofrance.fr/services/MF-NWP-HIGHRES-AROME-001-FRANCE-WCS?request=GetCapabilities&version=1.3.0&service=WCS&token=__BvvAzSbJXLEdUJ--rRU0E1F8qi6cSxDp5x5AtPfCcuU__" > resultGetCapabilities
@@ -41,17 +42,44 @@ def getWCSCapabilities(resol):  # Lance une requête "getCapabilities" du WCS po
     """for titre in titres:
         print titre
     print len(titres)"""
-    
     return res    # renvoi la liste des objets CoverageId exposés par le WCS de MF
-def mostRecentId(resol,code):
-    tab=getWCSCapabilities(resol)
-    ts=-sys.maxint-1
+
+def mostRecentId(resol,code):   # renvoi le plus récent des CoverageId de resolution "resol" et dont le code du la variable est "code"
+    tab=getWCSCapabilities(resol)   #  envoi d'ue requête getCapabilities au WCS pour la résolution "resol"
+    ts=-sys.maxint-1    #  le plus grand des entiers
     res=None
-    for Id in tab:
-        if Id.code==code and Id.timeUTCRunTs>=ts :
+    for Id in tab:    #  recherche du plus récent run pour le paramètre de code "code"
+        if Id.code==code and Id.timeUTCRunTs>=ts :  #  on lit le timestamp du run
             res=Id
             ts=Id.timeUTCRunTs
     return res
+    
+def profilVertical(resol,code,longi,lati):
+    Id=mostRecentId(resol,code)
+    if Id:
+        res={}
+        Id.describeCoverage()
+        if (Id.dim!=4): return None #raise Exception ("profilVertical : %s n'est pas de dimension 4" %(code))
+        #print (Id.code,Id.descr,Id.niv)
+        res["titre"]="Profil vertical"
+        res["code"]=Id.code
+        res["descr"]=Id.descr
+        res["vertical"]=Id.niv
+        res["Run"]=Id.chaineDate()
+        res["previ"]=Id.timeDatePrevi[0]
+        res["unit"]=Id.unite
+        res["niveaux"]=[]
+        res["position"]={"longitude":longi,"latitude":lati}
+        niveaux=Id.__dict__[Id.niv]
+        #print niveaux
+        for niv in niveaux:
+            Id.getCoverage(lati-1,lati+1,longi-1,longi+1,Id.timeDatePrevi[0],niv)
+            #print niv,Id.valeur(longi,lati)
+            res["niveaux"].append({"niveau":niv,"valeur":Id.valeur(longi,lati)})
+        ts= calendar.timegm(time.gmtime())
+        res["now"]=Id.chaineUTCFromTs(ts)
+        return res
+    else : return None
 
     
 

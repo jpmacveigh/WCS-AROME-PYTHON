@@ -5,6 +5,7 @@ import datetime
 import time
 import calendar
 import gdal
+import json
 from Axe import Axe
 from Espace2D import Espace2D
 import numpy as np
@@ -36,7 +37,7 @@ class CoverageId :
         rep=self.coverageId[index+3:index+23];
         rep=rep.replace(".",":")
         return rep
-    def dateUTCRun(self):   # date UTC du RUN par decodage de chaineDate()
+    def dateUTCRun(self):   # objet date UTC du RUN par decodage de chaineDate()
         chaine=self.chaineDate()
         return self.dateFromChaine(chaine)
     def dateFromChaine(self,chaine):  #  objet date à partir d'une chaine du type : "2019-01-13T13:00:00Z"
@@ -98,7 +99,7 @@ class CoverageId :
         return res    # renvoi la liste des résultats
     def analyseXML(self,XMLFileName):
         mydoc = minidom.parse(XMLFileName)  # parse an XML file given by his name
-        res={};  # le résultat de la requête sera mis dans un dictionnaire
+        res={}  # le résultat de la requête sera mis dans un dictionnaire
         def getItems (tagName,code):
             #print (tagName)
             items = mydoc.getElementsByTagName(tagName) # recherches du tagName dans le ficheir XML parsé
@@ -133,12 +134,8 @@ class CoverageId :
         self.timeDebTs=self.ts(self.dateFromChaine(self.timeDeb))
         getItems ('gml:endPosition',"timeFin")
         self.timeFinTs=self.ts(self.dateFromChaine(self.timeFin))
-        res["timeCumul"]=self.dureeCumul()
         self.timeCumul=self.dureeCumul()
-        res["timeTsUTCRun"]=self.tsUTCRun()
-        res["Id"]=self.coverageId
         self.Id=self.coverageId
-        res["code"]=self.code
         self.code=self.code
         for cle in self.__dict__:  # découpage des coefficients des axes et mise dans un tableau
             if "Coeff" in cle:
@@ -174,7 +171,6 @@ class CoverageId :
             raise Exception ("Erreur timeFinTs")
         tsDeb=self.timeUTCRunTs+self.time[0]
         if tsDeb != self.timeDebTs : raise Exception ("Erreur timeDebTs")
-        return res    # renvoi le dictionnaire des résultats
     def niveau(self,numNiv):  #  renvoi la valeur du "numNiv" -ième niveau 
         if numNiv<0 or numNiv> len(self.__dict__[self.niv]):
             raise Exception ("Numéro de niveau non valide: %s" % numNiv)
@@ -193,11 +189,14 @@ class CoverageId :
         path=path+latitude+longitude
         if niv: path=path+"&subset="+self.niv+"("+str(niv)+")"  # ajout du niveau, if any
         path=path+"&subset=time("+chaineDatePrevi+")"
+        self.chaineDatePreviGot=chaineDatePrevi
+        self.nivGot=niv
         #print path
         status=-1
         while status != 200:
             r=requests.get(path)  # envoi d'une requête "getCoverage" du WCS
             status=r.status_code
+            #print r.status_code
         filename="WCSgetCoverage.tiff"
         fichier = open(filename,"w")
         print >> fichier,r.content  # le résultat de la requête est un geotiff que l'on écrit dans un ficheir
@@ -210,11 +209,15 @@ class CoverageId :
         self.axeLongi=Axe("longi","deg",self.GT[0],self.GT[0]+(self.RasterXSize-1)*self.GT[1],self.RasterXSize,np.arange(self.RasterXSize))
         self.axeLati =Axe("lati", "deg",self.GT[3],self.GT[3]+(self.RasterYSize-1)*self.GT[5],self.RasterYSize,np.arange(self.RasterYSize))
         self.espace2D=Espace2D(self.axeLongi,self.axeLati,self.npArray)
-    def valeur(self,rangLongi,rangLati):
+    def valeurSurGrille(self,rangLongi,rangLati):  # renvoi la valeur du champs en un point de la grille 
         if not (0<= rangLongi <= self.RasterXSize-1): raise Exception ("erreur rangLongi")
         if not (0<= rangLati <= self.RasterYSize-1): raise Exception ("erreur rangLati")
         longi = self.GT[0] + rangLongi*self.GT[1] + rangLati*self.GT[2]
         lati = self.GT[3] + rangLongi*self.GT[4] + rangLati*self.GT[5]
         val=self.npArray[rangLati,rangLongi]
         return longi,lati,val
+    def valeur(self,longi,lati):
+        return self.espace2D.valeur(longi,lati)
+    def affiche (self):
+        print (json.dumps(self.__dict__,indent=4,sort_keys=True))
         
