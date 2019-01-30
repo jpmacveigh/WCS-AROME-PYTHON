@@ -6,13 +6,12 @@ from getWCSCapabilities import profilVertical
 from flask import jsonify
 from flask import Flask
 app = Flask(__name__)
-
-@app.route('/')
-def index():
+@app.route('/profil_vertical/long=<float:longi>,lat=<float:lati>,param=<code>')
+def profif(longi,lati,code="T(h)"):
     #return "Hello les mecs il est : "+ str(datetime.datetime.utcnow())
     #code="T(h)"
     #print code
-    tab= profilVertical ("0025","T(h)",3.06,50.6)
+    tab= profilVertical ("0025",code,longi,lati)
     return jsonify(tab)
 
 if __name__ == '__main__':
