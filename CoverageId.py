@@ -11,6 +11,7 @@ from Espace2D import Espace2D
 import numpy as np
 from xml.dom import minidom
 from catalogueWCS import catalogueWCS
+from WCSGeotiff import WCSGeotiff
 class CoverageId :
     def __init__(self, coverageId,resol):
         self.coverageId = coverageId  # le label renvoyé par la requête getCapabilities du WCS
@@ -201,13 +202,27 @@ class CoverageId :
         fichier = open(filename,"w")
         print >> fichier,r.content  # le résultat de la requête est un geotiff que l'on écrit dans un ficheir
         fichier.close()
+        self.geotiff=WCSGeotiff(filename)
+    def valeur(self,longi,lati):
+        return self.geotiff.valeur(longi,lati) 
+        
+        """
         self.dataset=gdal.Open(filename, gdal.GA_ReadOnly)  # ouverture du fichier geotiff en écriture seule
         self.RasterXSize=self.dataset.RasterXSize
         self.RasterYSize=self.dataset.RasterYSize
+        print self.RasterXSize,self.RasterYSize
         self.GT=self.dataset.GetGeoTransform()
+        print self.GT
         self.npArray=self.dataset.GetRasterBand(1).ReadAsArray()
-        self.axeLongi=Axe("longi","deg",self.GT[0],self.GT[0]+(self.RasterXSize-1)*self.GT[1],self.RasterXSize,np.arange(self.RasterXSize))
-        self.axeLati =Axe("lati", "deg",self.GT[3],self.GT[3]+(self.RasterYSize-1)*self.GT[5],self.RasterYSize,np.arange(self.RasterYSize))
+        print self.npArray
+        self.argMin=self.npArray.argmin()
+        self.argMax=self.npArray.argmax()
+        self.valMoy=self.npArray.mean()
+        print self.argMin,self.argMax,self.valMoy
+        self.axeLongi=Axe("longi","deg",self.GT[0],self.GT[0]+(self.RasterXSize)*self.GT[1],self.RasterXSize,np.arange(self.RasterXSize))
+        print self.axeLongi.valtick
+        self.axeLati =Axe("lati", "deg",self.GT[3],self.GT[3]+(self.RasterYSize)*self.GT[5],self.RasterYSize,np.arange(self.RasterYSize))
+        print self.axeLati.valtick
         self.espace2D=Espace2D(self.axeLongi,self.axeLati,self.npArray)
     def valeurSurGrille(self,rangLongi,rangLati):  # renvoi la valeur du champs en un point de la grille 
         if not (0<= rangLongi <= self.RasterXSize-1): raise Exception ("erreur rangLongi")
@@ -218,6 +233,7 @@ class CoverageId :
         return longi,lati,val
     def valeur(self,longi,lati):
         return self.espace2D.valeur(longi,lati)
+        """
     def affiche (self):
         print (json.dumps(self.__dict__,indent=4,sort_keys=True))
         

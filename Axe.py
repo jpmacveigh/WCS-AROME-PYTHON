@@ -28,13 +28,13 @@ class Axe:   # un axe avec des ticks et des valeurs définies en ces ticks
     def val (self,x):  # renvoie la valeur attachée à la position "x" sur l'axe, par interpollation linéaire des valeurs des deux ticks encadrant x
         (ninf,prop)=self.interval(x)
         return (self.valeurs[ninf]+(prop*(self.valeurs[ninf+1]-self.valeurs[ninf])))
-            
-"""            
+"""     
 nb=2801
-#valeurs=np.arange(nb)
-valeurs=np.sin(np.arange(nb)/float(nb-1)*math.pi/2.)
+valeurs=np.arange(nb)
+#valeurs=np.sin(np.arange(nb)/float(nb-1)*math.pi/2.)
 axe=Axe("longi","degrés",-12,16.,nb,valeurs)
 print axe.valtick
+print axe.valeurs
 print axe.isInside(5.)
 print axe.interval(5.1)
 print axe.interval(4.59)

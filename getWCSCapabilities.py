@@ -73,7 +73,7 @@ def profilVertical(resol,code,longi,lati):
         niveaux=Id.__dict__[Id.niv]
         #print niveaux
         for niv in niveaux:
-            Id.getCoverage(lati-1,lati+1,longi-1,longi+1,Id.timeDatePrevi[0],niv)
+            Id.getCoverage(lati-.1,lati+.1,longi-.1,longi+.1,Id.timeDatePrevi[0],niv)
             #print niv,Id.valeur(longi,lati)
             res["niveaux"].append({"niveau":niv,"valeur":Id.valeur(longi,lati)})
         ts= calendar.timegm(time.gmtime())

@@ -1,25 +1,25 @@
 <wcs:CoverageDescriptions xmlns:wcs="http://www.opengis.net/wcs/2.0" xmlns:swe="http://www.opengis.net/swe/2.0" xmlns:gmlrgrid="http://www.opengis.net/gml/3.3/rgrid" xmlns:gmlcov="http://www.opengis.net/gmlcov/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gml="http://www.opengis.net/gml/3.2" xsi:schemaLocation="     http://www.opengis.net/wcs/2.0 http://schemas.opengis.net/wcs/2.0/wcsAll.xsd     http://www.opengis.net/gml/3.2 http://schemas.opengis.net/gml/3.2.1/gml.xsd     http://www.opengis.net/gmlcov/1.0 http://schemas.opengis.net/gmlcov/1.0/gmlcovAll.xsd     http://www.opengis.net/swe/2.0 http://schemas.opengis.net/sweCommon/2.0/swe.xsd     http://www.opengis.net/gml/3.3/rgrid http://schemas.opengis.net/gml/3.3/referenceableGrid.xsd">
-   <wcs:CoverageDescription gml:id="TEMPERATURE__ISOBARIC_SURFACE___2019-01-30T18.00.00Z">
+   <wcs:CoverageDescription gml:id="VERTICAL_VELOCITY_GEOMETRIC__ISOBARIC_SURFACE___2019-02-02T18.00.00Z">
       <gml:boundedBy>
          <gml:EnvelopeWithTimePeriod srsName="http://meteofrance.fr/def/crs/3DLongLatPressure" axisLabels="long lat pressure time" uomLabels="deg deg hPa ISO8601" srsDimension="3">
             <gml:lowerCorner>-8 38 100</gml:lowerCorner>
             <gml:upperCorner>12 53 1000</gml:upperCorner>
-            <gml:beginPosition frame="#ISO-8601">2019-01-30T18:00:00Z</gml:beginPosition>
-            <gml:endPosition frame="#ISO-8601">2019-01-31T01:00:00Z</gml:endPosition>
+            <gml:beginPosition frame="#ISO-8601">2019-02-02T18:00:00Z</gml:beginPosition>
+            <gml:endPosition frame="#ISO-8601">2019-02-03T12:00:00Z</gml:endPosition>
          </gml:EnvelopeWithTimePeriod>
       </gml:boundedBy>
-      <wcs:CoverageId>TEMPERATURE__ISOBARIC_SURFACE___2019-01-30T18.00.00Z</wcs:CoverageId>
+      <wcs:CoverageId>VERTICAL_VELOCITY_GEOMETRIC__ISOBARIC_SURFACE___2019-02-02T18.00.00Z</wcs:CoverageId>
       <gml:domainSet>
-         <gmlrgrid:ReferenceableGridByVectors gml:id="grid_TEMPERATURE__ISOBARIC_SURFACE" dimension="4">
+         <gmlrgrid:ReferenceableGridByVectors gml:id="grid_VERTICAL_VELOCITY_GEOMETRIC__ISOBARIC_SURFACE" dimension="4">
             <gml:limits>
                <gml:GridEnvelope>
                   <gml:low>1 1 1 1</gml:low>
-                  <gml:high>1121 717 6 8</gml:high>
+                  <gml:high>1121 717 6 19</gml:high>
                </gml:GridEnvelope>
             </gml:limits>
             <gml:axisLabels>long lat pressure time</gml:axisLabels>
             <gmlrgrid:origin>
-               <gml:Point gml:id="grid_TEMPERATURE__ISOBARIC_SURFACE_origin" srsDimension="4" srsName="http://meteofrance.fr/def/crs/4DLongLatPressureTime">
+               <gml:Point gml:id="grid_VERTICAL_VELOCITY_GEOMETRIC__ISOBARIC_SURFACE_origin" srsDimension="4" srsName="http://meteofrance.fr/def/crs/4DLongLatPressureTime">
                   <gml:pos>-12.0 55.4 100 0</gml:pos>
                </gml:Point>
             </gmlrgrid:origin>
@@ -50,7 +50,7 @@
             <gmlrgrid:generalGridAxis>
                <gmlrgrid:GeneralGridAxis>
                   <gmlrgrid:offsetVector srsDimension="4" axisLabels="long lat pressure time" uomLabels="deg deg hPa s" srsName="http://meteofrance.fr/def/crs/4DLongLatPressureTime">0.0 0.0 0.0 1.0</gmlrgrid:offsetVector>
-                  <gmlrgrid:coefficients>0 3600 7200 10800 14400 18000 21600 25200</gmlrgrid:coefficients>
+                  <gmlrgrid:coefficients>0 3600 7200 10800 14400 18000 21600 25200 28800 32400 36000 39600 43200 46800 50400 54000 57600 61200 64800</gmlrgrid:coefficients>
                   <gmlrgrid:gridAxesSpanned>time</gmlrgrid:gridAxesSpanned>
                   <gmlrgrid:sequenceRule axisOrder="+1">Linear</gmlrgrid:sequenceRule>
                </gmlrgrid:GeneralGridAxis>
@@ -59,10 +59,10 @@
       </gml:domainSet>
       <gmlcov:rangeType>
          <swe:DataRecord>
-            <swe:field name="TEMPERATURE__ISOBARIC_SURFACE">
-               <swe:Quantity definition="http://codes.wmo.int/grib2/codeflag/4.2/_0-0-0">
-                  <swe:description>Température de l'air sur des surfaces isobares.</swe:description>
-                  <swe:uom code="K"/>
+            <swe:field name="VERTICAL_VELOCITY_GEOMETRIC__ISOBARIC_SURFACE">
+               <swe:Quantity definition="http://codes.wmo.int/grib2/codeflag/4.2/_0-2-9">
+                  <swe:description>Vitesse verticale sur des surfaces isobares.</swe:description>
+                  <swe:uom code="m s-1"/>
                </swe:Quantity>
             </swe:field>
          </swe:DataRecord>

@@ -42,7 +42,7 @@ for i in range(20):
         print Id.axeLati.valtick
         print Id.code,Id.nivGot,Id.unite,Id.chaineDatePreviGot,Id.espace2D.valeur(3.06,50.6)
         #print (json.dumps(Id.__dict__,indent=4,sort_keys=True))
-        """
+ """      
 
 for code in CatalogueWCS().cles() :
     #code="T(h)"
@@ -50,3 +50,9 @@ for code in CatalogueWCS().cles() :
     tab=profilVertical (reso,code,3.06,50.6)
     #print tab
     print (json.dumps(tab,indent=4,sort_keys=True))
+"""
+code="Tmin(h)"
+#print code
+tab=profilVertical (reso,code,3.06,50.6)
+print (json.dumps(tab,indent=4,sort_keys=True))
+"""
