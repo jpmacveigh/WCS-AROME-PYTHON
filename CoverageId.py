@@ -198,42 +198,11 @@ class CoverageId :
             r=requests.get(path)  # envoi d'une requête "getCoverage" du WCS
             status=r.status_code
             #print r.status_code
-        filename="WCSgetCoverage.tiff"
-        fichier = open(filename,"w")
+        self.filename="WCSgetCoverage.tiff"
+        fichier = open(self.filename,"w")
         print >> fichier,r.content  # le résultat de la requête est un geotiff que l'on écrit dans un ficheir
         fichier.close()
-        self.geotiff=WCSGeotiff(filename)
-    def valeur(self,longi,lati):
+        self.geotiff=WCSGeotiff(self.filename)
+    def valeur(self,longi,lati):  #  renvoi la valeur du champs sans interpolation
         return self.geotiff.valeur(longi,lati) 
-        
-        """
-        self.dataset=gdal.Open(filename, gdal.GA_ReadOnly)  # ouverture du fichier geotiff en écriture seule
-        self.RasterXSize=self.dataset.RasterXSize
-        self.RasterYSize=self.dataset.RasterYSize
-        print self.RasterXSize,self.RasterYSize
-        self.GT=self.dataset.GetGeoTransform()
-        print self.GT
-        self.npArray=self.dataset.GetRasterBand(1).ReadAsArray()
-        print self.npArray
-        self.argMin=self.npArray.argmin()
-        self.argMax=self.npArray.argmax()
-        self.valMoy=self.npArray.mean()
-        print self.argMin,self.argMax,self.valMoy
-        self.axeLongi=Axe("longi","deg",self.GT[0],self.GT[0]+(self.RasterXSize)*self.GT[1],self.RasterXSize,np.arange(self.RasterXSize))
-        print self.axeLongi.valtick
-        self.axeLati =Axe("lati", "deg",self.GT[3],self.GT[3]+(self.RasterYSize)*self.GT[5],self.RasterYSize,np.arange(self.RasterYSize))
-        print self.axeLati.valtick
-        self.espace2D=Espace2D(self.axeLongi,self.axeLati,self.npArray)
-    def valeurSurGrille(self,rangLongi,rangLati):  # renvoi la valeur du champs en un point de la grille 
-        if not (0<= rangLongi <= self.RasterXSize-1): raise Exception ("erreur rangLongi")
-        if not (0<= rangLati <= self.RasterYSize-1): raise Exception ("erreur rangLati")
-        longi = self.GT[0] + rangLongi*self.GT[1] + rangLati*self.GT[2]
-        lati = self.GT[3] + rangLongi*self.GT[4] + rangLati*self.GT[5]
-        val=self.npArray[rangLati,rangLongi]
-        return longi,lati,val
-    def valeur(self,longi,lati):
-        return self.espace2D.valeur(longi,lati)
-        """
-    def affiche (self):
-        print (json.dumps(self.__dict__,indent=4,sort_keys=True))
-        
+    

@@ -22,7 +22,8 @@ class Espace2D:
                 la=nlatimin+latit
                 dist=orthod(self.axeLongi.valtick[lo],self.axeLati.valtick[la],longi,lati)
                 #print dist
-                incr=self.valeurSurGrille(lo,la)   #  pondération des terms par linvers ede la distance au point
+                if (dist==0): return self.valeurSurGrille(lo,la)
+                incr=self.valeurSurGrille(lo,la)   #  pondération des terms par l'inverse de la distance au point
                 #print incr
                 incr=incr/dist
                 #print incr

@@ -1,5 +1,7 @@
 # coding: utf8
 import gdal
+from Axe import Axe
+from Espace2D import Espace2D
 import numpy as np
 class WCSGeotiff:
     def __init__(self,geotiffFileName):
@@ -21,15 +23,25 @@ class WCSGeotiff:
         #print("Raster Size = (X={}, Y={})".format(self.RasterXSize, self.RasterYSize))
         self.band = self.dataset.GetRasterBand(1)
         self.array=self.band.ReadAsArray()
+        self.valMin=self.array.argmin()
+        self.valMax=self.array.argmax()
+        self.valMoy=self.array.mean()
+        self.axeLongi=Axe("longi","deg",self.geotransform[0],self.geotransform[0]+(self.RasterXSize)*self.geotransform[1],self.RasterXSize,np.arange(self.RasterXSize))
+        self.axeLati =Axe("lati", "deg",self.geotransform[3],self.geotransform[3]+(self.RasterYSize)*self.geotransform[5],self.RasterYSize,np.arange(self.RasterYSize))
+        self.espace2D=Espace2D(self.axeLongi,self.axeLati,self.array)
         #print type(self.array)
         #print self.array.shape
-    def valeurSurGrille(self,rangLongi,rangLati):
+    def valeurSurGrille(self,rangLongi,rangLati):  # renvoi la valeur du champ au point de la grille [rangLati,rangLongi]
         if not (0<= rangLongi <= self.dataset.RasterXSize-1): raise Exception ("erreur rangLongi")
         if not (0<= rangLati <= self.dataset.RasterYSize-1): raise Exception ("erreur rangLati")
-        longi = self.geotransform[0] + rangLongi*self.geotransform[1] + rangLati*self.geotransform[2]
-        lati = self.geotransform[3] + rangLongi*self.geotransform[4] + rangLati*self.geotransform[5]
+        rlongi = self.geotransform[0] + rangLongi*self.geotransform[1] + rangLati*self.geotransform[2]
+        rlati = self.geotransform[3] + rangLongi*self.geotransform[4] + rangLati*self.geotransform[5]
         val=self.array[rangLati,rangLongi]
-        return longi,lati,val
+        return rlongi,rlati,val
+    def valeurInterpolee (self,rlongi,rlati):  # renvoi la valeur du champs interpolée sur la grille
+        # comme moyene des valeurs des 4 points entourants la position (longi,lati)
+        # pondérée par l'inverse de la distance orthodromique à chacun des 4 points 
+        return self.espace2D.valeur(rlongi,rlati)
     def valeur (self,rlongi,rlati):
         if not(self.origineX <= rlongi <= self.extremeX) : raise Exception ("erreur rlongi")
         s=cmp(self.pixelHeight,0)
@@ -44,13 +56,15 @@ class WCSGeotiff:
             yOffset = int((rlati -self.origineY)/self.pixelHeight)
         #print (xOffset,yOffset)
         return (self.array[yOffset,xOffset])
-
 """
 filename="WCSgetCoverage.tiff"
 geotiff=WCSGeotiff(filename)
 print geotiff.valeurSurGrille(0,0)   #  coin Ouest-Nord
 print geotiff.valeurSurGrille(geotiff.RasterXSize-1,geotiff.RasterYSize-1)
 print geotiff.valeur(geotiff.origineX,geotiff.origineY)
+print geotiff.valeurInterpolee(geotiff.origineX,geotiff.origineY)
 print geotiff.valeur(geotiff.extremeX,geotiff.extremeY)
+print geotiff.valeurInterpolee(geotiff.extremeX,geotiff.extremeY)
 print geotiff.valeur(3.06,50.6)
+print geotiff.valeurInterpolee(3.06,50.6)
 """
