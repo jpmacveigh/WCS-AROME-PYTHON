@@ -6,12 +6,11 @@ import time
 import calendar
 import gdal
 import json
-from Axe import Axe
-from Espace2D import Espace2D
 import numpy as np
 from xml.dom import minidom
 from catalogueWCS import catalogueWCS
 from WCSGeotiff import WCSGeotiff
+from nextChainesPrevi import chaineUTCFromTs,tsNow
 class CoverageId :
     def __init__(self, coverageId,resol):
         self.coverageId = coverageId  # le label renvoyé par la requête getCapabilities du WCS
@@ -172,6 +171,11 @@ class CoverageId :
             raise Exception ("Erreur timeFinTs")
         tsDeb=self.timeUTCRunTs+self.time[0]
         if tsDeb != self.timeDebTs : raise Exception ("Erreur timeDebTs")
+        chaineDateNow=chaineUTCFromTs(tsNow())  # calcul datePréviFutures
+        rep=[]
+        for date in self.timeDatePrevi:
+            if date>=chaineDateNow : rep.append(date)
+        self.timeDatePreviFutures=rep
     def niveau(self,numNiv):  #  renvoi la valeur du "numNiv" -ième niveau 
         if numNiv<0 or numNiv> len(self.__dict__[self.niv]):
             raise Exception ("Numéro de niveau non valide: %s" % numNiv)
@@ -204,5 +208,7 @@ class CoverageId :
         fichier.close()
         self.geotiff=WCSGeotiff(self.filename)
     def valeur(self,longi,lati):  #  renvoi la valeur du champs sans interpolation
-        return self.geotiff.valeur(longi,lati) 
+        return self.geotiff.valeur(longi,lati)
+    def affiche(self):
+        print (json.dumps(self.__dict__,indent=4,sort_keys=True))
     

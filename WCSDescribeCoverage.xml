@@ -1,20 +1,20 @@
 <wcs:CoverageDescriptions xmlns:wcs="http://www.opengis.net/wcs/2.0" xmlns:swe="http://www.opengis.net/swe/2.0" xmlns:gmlrgrid="http://www.opengis.net/gml/3.3/rgrid" xmlns:gmlcov="http://www.opengis.net/gmlcov/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gml="http://www.opengis.net/gml/3.2" xsi:schemaLocation="     http://www.opengis.net/wcs/2.0 http://schemas.opengis.net/wcs/2.0/wcsAll.xsd     http://www.opengis.net/gml/3.2 http://schemas.opengis.net/gml/3.2.1/gml.xsd     http://www.opengis.net/gmlcov/1.0 http://schemas.opengis.net/gmlcov/1.0/gmlcovAll.xsd     http://www.opengis.net/swe/2.0 http://schemas.opengis.net/sweCommon/2.0/swe.xsd     http://www.opengis.net/gml/3.3/rgrid http://schemas.opengis.net/gml/3.3/referenceableGrid.xsd">
-   <wcs:CoverageDescription gml:id="TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-02-03T03.00.00Z">
+   <wcs:CoverageDescription gml:id="TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-02-03T12.00.00Z">
       <gml:boundedBy>
          <gml:EnvelopeWithTimePeriod srsName="http://meteofrance.fr/def/crs/3DLongLatHeight" axisLabels="long lat height time" uomLabels="deg deg m ISO8601" srsDimension="3">
             <gml:lowerCorner>-8 38 2</gml:lowerCorner>
             <gml:upperCorner>12 53 3000</gml:upperCorner>
-            <gml:beginPosition frame="#ISO-8601">2019-02-03T03:00:00Z</gml:beginPosition>
-            <gml:endPosition frame="#ISO-8601">2019-02-05T00:00:00Z</gml:endPosition>
+            <gml:beginPosition frame="#ISO-8601">2019-02-03T12:00:00Z</gml:beginPosition>
+            <gml:endPosition frame="#ISO-8601">2019-02-03T22:00:00Z</gml:endPosition>
          </gml:EnvelopeWithTimePeriod>
       </gml:boundedBy>
-      <wcs:CoverageId>TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-02-03T03.00.00Z</wcs:CoverageId>
+      <wcs:CoverageId>TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-02-03T12.00.00Z</wcs:CoverageId>
       <gml:domainSet>
          <gmlrgrid:ReferenceableGridByVectors gml:id="grid_TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND" dimension="4">
             <gml:limits>
                <gml:GridEnvelope>
                   <gml:low>1 1 1 1</gml:low>
-                  <gml:high>1121 717 6 46</gml:high>
+                  <gml:high>1121 717 6 11</gml:high>
                </gml:GridEnvelope>
             </gml:limits>
             <gml:axisLabels>long lat height time</gml:axisLabels>
@@ -50,7 +50,7 @@
             <gmlrgrid:generalGridAxis>
                <gmlrgrid:GeneralGridAxis>
                   <gmlrgrid:offsetVector srsDimension="4" axisLabels="long lat height time" uomLabels="deg deg m s" srsName="http://meteofrance.fr/def/crs/4DLongLatHeightTime">0.0 0.0 0.0 1.0</gmlrgrid:offsetVector>
-                  <gmlrgrid:coefficients>0 3600 7200 10800 14400 18000 21600 25200 28800 32400 36000 39600 43200 46800 50400 54000 57600 61200 64800 68400 72000 75600 79200 82800 86400 90000 93600 97200 100800 104400 108000 111600 115200 118800 122400 126000 129600 133200 136800 140400 144000 147600 151200 154800 158400 162000</gmlrgrid:coefficients>
+                  <gmlrgrid:coefficients>0 3600 7200 10800 14400 18000 21600 25200 28800 32400 36000</gmlrgrid:coefficients>
                   <gmlrgrid:gridAxesSpanned>time</gmlrgrid:gridAxesSpanned>
                   <gmlrgrid:sequenceRule axisOrder="+1">Linear</gmlrgrid:sequenceRule>
                </gmlrgrid:GeneralGridAxis>

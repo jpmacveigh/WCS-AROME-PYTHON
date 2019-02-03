@@ -53,5 +53,10 @@ for code in CatalogueWCS().cles() :
 """
 code="T(h)"
 #print code
-tab=profilVertical (reso,code,3.06,50.6)
-print (json.dumps(tab,indent=4,sort_keys=True))
+#tab=profilVertical (reso,code,3.06,50.6)
+#print (json.dumps(tab,indent=4,sort_keys=True))
+
+Id=mostRecentId(reso,code)
+Id.describeCoverage()
+Id.affiche()
+#print (json.dumps(Id.__dict__,indent=4,sort_keys=True))

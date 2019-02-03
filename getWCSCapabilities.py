@@ -65,7 +65,7 @@ def profilVertical(resol,code,longi,lati):
         res["code"]=Id.code
         res["descr"]=Id.descr
         res["vertical"]=Id.niv
-        res["Run"]=Id.chaineDate()
+        res["run"]=Id.chaineDate()
         res["previ"]=Id.timeDatePrevi[0]
         res["unit"]=Id.unite
         res["niveaux"]=[]

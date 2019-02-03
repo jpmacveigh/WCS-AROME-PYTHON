@@ -1,2 +1,0 @@
-WIND_SPEED__ISOBARIC_SURFACE  Force du vent sur des surfaces isobares. 38
-U_COMPONENT_OF_WIND_GUST__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND  composante zonale de la rafale du vent, en niveaux hauteur 38
