@@ -5,6 +5,8 @@ import sys
 import time
 import calendar
 import os
+sys.path.insert(0, '/home/ubuntu/workspace/Utils') # insérer dans sys.path le dossier contenant le/les modules
+from Utils import chaineUTCFromTs
 from CoverageId import CoverageId
 #import xml.etree.ElementTree as ET
 from xml.dom import minidom
@@ -77,11 +79,35 @@ def profilVertical(resol,code,longi,lati):
             #print niv,Id.valeur(longi,lati)
             res["niveaux"].append({"niveau":niv,"valeur":Id.valeur(longi,lati)})
         ts= calendar.timegm(time.gmtime())
-        res["now"]=Id.chaineUTCFromTs(ts)
+        res["now"]=chaineUTCFromTs(ts)
         return res
     else : return None
 
-    
+def prevision(resol,code,longi,lati,niveau=None):  # A finir
+    Id=mostRecentId(resol,code)
+    if Id:
+        res={};
+        Id.describeCoverage();
+        if Id.dim==4 and niveau==None : # Cas où il manque le niveau
+            res={"error":"Previsions : le niveau est manquant"};
+            return res;
+        if Id.dim==3 and not(niveau==None): # Cas où le niveau n'est pas requis
+            res={"error":"Previsions : le niveau n'est pas requi"};
+            return res;  
+        res={};
+        res["titre"]="Previsions"
+        res["code"]=Id.code
+        res["descr"]=Id.descr
+        res["niveau"]=niveau
+        res["run"]=Id.chaineDate()
+        res["unit"]=Id.unite
+        res["position"]={"longitude":longi,"latitude":lati}
+        res["previsions"]=[]
+        for date in Id.timeDatePrevi:
+            Id.getCoverage(lati-.1,lati+.1,longi-.1,longi+.1,date,niveau)
+            res["previsions"].append({"date":date,"valeur":Id.valeur(longi,lati)})
+        return res;
+    return None;
 
 
 

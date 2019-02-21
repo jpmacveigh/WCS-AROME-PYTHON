@@ -1,4 +1,5 @@
 # coding: utf8
+import sys
 import requests
 import string
 import datetime
@@ -7,6 +8,8 @@ import calendar
 import gdal
 import json
 import numpy as np
+sys.path.insert(0, '/home/ubuntu/workspace/Utils') # insérer dans sys.path le dossier contenant le/les modules
+from Utils import chaineUTCFromTs
 from xml.dom import minidom
 from catalogueWCS import catalogueWCS
 from WCSGeotiff import WCSGeotiff
@@ -48,9 +51,7 @@ class CoverageId :
         return self.ts(dateUTC)
     def ts(self,dateUTC):  #  timestamp d'une date UTC
         return int(dateUTC.strftime('%s'))
-    def chaineUTCFromTs(self,tsUTC):  # chaine de date au format '%Y-%m-%dT%H:%M:%SZ' à partir d'un timestamp
-        rep=datetime.datetime.utcfromtimestamp(tsUTC).strftime('%Y-%m-%dT%H:%M:%SZ')
-        return rep
+    
     def ageRun(self):      # age du RUN en heures par différence à l'heure actuelle
         #ts = time.time()   
         ts= calendar.timegm(time.gmtime())
@@ -156,7 +157,7 @@ class CoverageId :
         tab=[]
         for ts in self.time:  # Ajout des dates des prévisions
             tsPrevi=self.timeUTCRunTs+ts
-            chainePrevi=self.chaineUTCFromTs(tsPrevi)
+            chainePrevi=chaineUTCFromTs(tsPrevi)
             tab.append(chainePrevi)
         self.timeDatePrevi=tab
         self.timeNbEch=len(self.time)  # nombre d'échéance temporelles dasn le CoverageId
@@ -172,10 +173,12 @@ class CoverageId :
         tsDeb=self.timeUTCRunTs+self.time[0]
         if tsDeb != self.timeDebTs : raise Exception ("Erreur timeDebTs")
         chaineDateNow=chaineUTCFromTs(tsNow())  # calcul datePréviFutures
+        self.timeUTCNow=chaineDateNow
         rep=[]
         for date in self.timeDatePrevi:
             if date>=chaineDateNow : rep.append(date)
         self.timeDatePreviFutures=rep
+        self.timeNbEchFutures=len(self.timeDatePreviFutures)
     def niveau(self,numNiv):  #  renvoi la valeur du "numNiv" -ième niveau 
         if numNiv<0 or numNiv> len(self.__dict__[self.niv]):
             raise Exception ("Numéro de niveau non valide: %s" % numNiv)

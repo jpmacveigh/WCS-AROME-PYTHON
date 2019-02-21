@@ -14,6 +14,11 @@ def profif(longi,lati,code="T(h)"):
     tab= profilVertical ("0025",code,longi,lati)
     return jsonify(tab)
 
+@app.route('/prevision/long=<float:longi>,lat=<float:lati>,param=<code>,niveau=<float:niveau>')
+def prevision(longi,lati,code="t(h)"):
+    return None
+
+
 if __name__ == '__main__':
     app.run(debug=True,host=os.getenv('IP', '0.0.0.0'),port=int(os.getenv('PORT', 8080)) )
 

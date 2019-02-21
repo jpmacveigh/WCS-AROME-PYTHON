@@ -3,6 +3,7 @@ import json
 import random
 from getWCSCapabilities import mostRecentId
 from getWCSCapabilities import profilVertical
+from getWCSCapabilities import prevision
 from CatalogueWCS import CatalogueWCS
 reso="0025"
 #code="Kte(h)"
@@ -52,11 +53,11 @@ for code in CatalogueWCS().cles() :
     print (json.dumps(tab,indent=4,sort_keys=True))
 """
 code="T(h)"
-#print code
-#tab=profilVertical (reso,code,3.06,50.6)
-#print (json.dumps(tab,indent=4,sort_keys=True))
-
+print code
 Id=mostRecentId(reso,code)
 Id.describeCoverage()
 Id.affiche()
-#print (json.dumps(Id.__dict__,indent=4,sort_keys=True))
+tab=profilVertical (reso,code,3.06,50.6)
+print (json.dumps(tab,indent=4,sort_keys=True))
+tab=prevision (reso,code,3.06,50.6)
+print (json.dumps(tab,indent=4,sort_keys=True))
