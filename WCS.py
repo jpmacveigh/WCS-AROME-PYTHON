@@ -1,10 +1,14 @@
 # coding: utf8
 import json
 import random
+import sys
 from getWCSCapabilities import mostRecentId
 from getWCSCapabilities import profilVertical
 from getWCSCapabilities import prevision
 from CatalogueWCS import CatalogueWCS
+sys.path.insert(0,'/home/jpmvjvmh/public_html/DarkSky/Utils')  # insérer dans sys.path le dossier contenant le/les modules
+#sys.path.insert(0, '/home/ubuntu/workspace/Utils') # insérer dans sys.path le dossier contenant le/les modules
+sys.path.insert(0, '../Utils') # insérer dans sys.path le dossier contenant le/les modules
 reso="0025"
 #code="Kte(h)"
 #code="Topo"
@@ -53,11 +57,15 @@ for code in CatalogueWCS().cles() :
     print (json.dumps(tab,indent=4,sort_keys=True))
 """
 code="T(h)"
+
+code ="FFgust(h)"
 print code
 Id=mostRecentId(reso,code)
 Id.describeCoverage()
 Id.affiche()
+"""
 tab=profilVertical (reso,code,3.06,50.6)
 print (json.dumps(tab,indent=4,sort_keys=True))
-tab=prevision (reso,code,3.06,50.6)
+"""
+tab=prevision (reso,"FFgust(h)",3.06,50.6,10)
 print (json.dumps(tab,indent=4,sort_keys=True))

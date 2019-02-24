@@ -184,6 +184,7 @@ class CoverageId :
             raise Exception ("Numéro de niveau non valide: %s" % numNiv)
         return self.__dict__[self.niv][numNiv]
     def getCoverage(self,latiSud,latiNord,longiOuest,longiEst,chaineDatePrevi,niv=None): # Envoi d'une requête "getCoverage" du service WCS
+        if not (niv in self.__dict__[self.niv]): raise Exception ("getCoverage: Le niveau= "+str(niv)+" n'existe pas" )
         """ https://geoservices.meteofrance.fr/api/__BvvAzSbJXLEdUJ--rRU0E1F8qi6cSxDp5x5AtPfCcuU__
          /MF-NWP-HIGHRES-AROME-0025-FRANCE-WCS?SERVICE=WCS&VERSION=2.0.1&REQUEST=GetCoverage
          &format=image/tiff&coverageId=GEOPOTENTIAL__ISOBARIC_SURFACE___2017-08-29T06.00.00Z

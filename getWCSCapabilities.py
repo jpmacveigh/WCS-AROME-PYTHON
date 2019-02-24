@@ -73,6 +73,7 @@ def profilVertical(resol,code,longi,lati):
         res["niveaux"]=[]
         res["position"]={"longitude":longi,"latitude":lati}
         niveaux=Id.__dict__[Id.niv]
+        res["nbNiv"]=len(niveaux);
         #print niveaux
         for niv in niveaux:
             Id.getCoverage(lati-.1,lati+.1,longi-.1,longi+.1,Id.timeDatePrevi[0],niv)
@@ -89,11 +90,9 @@ def prevision(resol,code,longi,lati,niveau=None):  # A finir
         res={};
         Id.describeCoverage();
         if Id.dim==4 and niveau==None : # Cas où il manque le niveau
-            res={"error":"Previsions : le niveau est manquant"};
-            return res;
+            return {"error":"Previsions : Le champs est de dim=4, le niveau est manquant"};
         if Id.dim==3 and not(niveau==None): # Cas où le niveau n'est pas requis
-            res={"error":"Previsions : le niveau n'est pas requi"};
-            return res;  
+            return {"error":"Previsions : Le champs est de dim=3, le niveau n'est pas requi"};  
         res={};
         res["titre"]="Previsions"
         res["code"]=Id.code
@@ -103,11 +102,12 @@ def prevision(resol,code,longi,lati,niveau=None):  # A finir
         res["unit"]=Id.unite
         res["position"]={"longitude":longi,"latitude":lati}
         res["previsions"]=[]
+        res["nbPrevi"]= len(Id.timeDatePrevi);
         for date in Id.timeDatePrevi:
             Id.getCoverage(lati-.1,lati+.1,longi-.1,longi+.1,date,niveau)
             res["previsions"].append({"date":date,"valeur":Id.valeur(longi,lati)})
         return res;
-    return None;
+    return {"error":"Previsions : mostRecentId was not found : Check the given code"};
 
 
 
