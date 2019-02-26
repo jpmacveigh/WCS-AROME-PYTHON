@@ -61,7 +61,7 @@ def profilVertical(resol,code,longi,lati):
     if Id:
         res={}
         Id.describeCoverage()
-        if (Id.dim!=4): return None #raise Exception ("profilVertical : %s n'est pas de dimension 4" %(code))
+        if (Id.dim!=4): raise Exception ("profilVertical : %s n'est pas de dimension 4" %(code))
         #print (Id.code,Id.descr,Id.niv)
         res["titre"]="Profil vertical"
         res["code"]=Id.code

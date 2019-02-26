@@ -58,14 +58,14 @@ for code in CatalogueWCS().cles() :
 """
 code="T(h)"
 
-code ="FFgust(h)"
+#code ="FFgust(h)"
+"""
 print code
 Id=mostRecentId(reso,code)
 Id.describeCoverage()
 Id.affiche()
-"""
-tab=profilVertical (reso,code,3.06,50.6)
+tab=profilVertical (reso,"T(h)",3.06,50.6)
 print (json.dumps(tab,indent=4,sort_keys=True))
 """
-tab=prevision (reso,"FFgust(h)",3.06,50.6,10)
+tab=prevision (reso,"T(h)",3.06,50.6,2)
 print (json.dumps(tab,indent=4,sort_keys=True))

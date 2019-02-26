@@ -13,3 +13,6 @@ Installer Flask :   (fait le 29 janvier 2019)
     sudo pip install flask
     
     
+Installer arrow (fait le 24 février 2019)
+
+    sudo pip install arrow
