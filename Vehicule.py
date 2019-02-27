@@ -2,6 +2,7 @@
 import json
 import requests
 import arrow
+import math
 class Vehicule:  # un véhicule qui se déplace
     def __init__(self,lat,lng,alt):
         if not(-180.<=lng<=180.): raise Exception ("Vehicule : lng doit être dans [-180,+180]")
@@ -12,6 +13,7 @@ class Vehicule:  # un véhicule qui se déplace
         self.alt=alt
         self.getTimeZone()
         self.getSunRiseSunSet()
+        self.hauteur()
     def getTime(self):  # Quelle heure UTC est-il ?
         self.heureUTC=arrow.utcnow()
         self.tsUTC=self.heureUTC.timestamp;
@@ -52,17 +54,31 @@ class Vehicule:  # un véhicule qui se déplace
         if (self.heureSunsetLocale.day!=self.heureLocale.day):
             self.heureSunsetLocale=self.heureSunsetLocale.replace(day=self.heureLocale.day)       
         self.tsSunsetUTC=self.heureSunsetLocale.timestamp
-        if (self.tsSunriseUTC<=self.tsUTC<=self.tsSunsetUTC):  # Fait-il jour ou nuit ?
-            self.dayPhase="day"
-        else:
-            self.dayPhase="night"
         self.dayPosition=(self.tsUTC-self.tsSunriseUTC)/1./self.sunRiseSunSet["results"]["day_length"]*100.  # Où en est-on de la journée dans [0%,100%]
+        if self.dayPosition <0.:
+            self.dayPhase="night morning"
+        elif 0<=self.dayPosition <=100.:
+            self.dayPhase="day"
+        else :
+           self.dayPhase="night evening" 
+    def hauteur(self):
+        hautNuit=10.
+        if 0<=self.dayPosition <=100.:
+            hautMidi=10000.
+            x=(self.dayPosition/100.*2.*math.pi)-(math.pi/2.)
+            self.haut=((math.sin(x)+1.)*0.5*(hautMidi-hautNuit))+hautNuit
+        else:
+            self.haut=hautNuit
+        
     def affiche(self):
         for k in sorted(self.__dict__.keys()):
             print (k+":  "+str(self.__dict__[k]))
 
-#v=Vehicule (13.6,103.06,20.)    # Vietnam
-#v=Vehicule (50.6,3.06,20.)       # Lille
-#v=Vehicule (-22.26,166.15,20.)  # Nouméa
-v=Vehicule (-17.54,-149.57,20.)  # Papeete
+v=Vehicule (13.6,103.06,20.)    # Vietnam
+v.affiche()
+v=Vehicule (50.6,3.06,20.)      # Lille
+v.affiche()
+v=Vehicule (-22.26,166.15,20.)  # Nouméa
+v.affiche()
+v=Vehicule (-17.54,-149.57,20.) # Papeete
 v.affiche()
