@@ -3,6 +3,9 @@ import json
 import requests
 import arrow
 import math
+import sys
+sys.path.insert(0, '/home/ubuntu/workspace/Utils') # insérer dans sys.path le dossier contenant le/les modules
+from Utils import *
 class Vehicule:  # un véhicule qui se déplace
     def __init__(self,lat,lng,alt):
         if not(-180.<=lng<=180.): raise Exception ("Vehicule : lng doit être dans [-180,+180]")
@@ -57,8 +60,10 @@ class Vehicule:  # un véhicule qui se déplace
         self.dayPosition=(self.tsUTC-self.tsSunriseUTC)/1./self.sunRiseSunSet["results"]["day_length"]*100.  # Où en est-on de la journée dans [0%,100%]
         if self.dayPosition <0.:
             self.dayPhase="night morning"
-        elif 0<=self.dayPosition <=100.:
-            self.dayPhase="day"
+        elif 0<=self.dayPosition <50.:
+            self.dayPhase="day morning"
+        elif 50<=self.dayPosition <=100.:
+            self.dayPhase="day afternoon"
         else :
            self.dayPhase="night evening" 
     def hauteur(self):
@@ -69,11 +74,13 @@ class Vehicule:  # un véhicule qui se déplace
             self.haut=((math.sin(x)+1.)*0.5*(hautMidi-hautNuit))+hautNuit
         else:
             self.haut=hautNuit
-        
+    def moove (self,u,v,dt) : # le déplace pendant dt*unités de temps avec les vitesses zonale et méridienne (u,v) en m/unité de temps
+        self.lat=self.lat+vLat(u)*dt
+        self.lng=self.lng+uLng(v,self.lat)*dt
     def affiche(self):
         for k in sorted(self.__dict__.keys()):
             print (k+":  "+str(self.__dict__[k]))
-
+"""
 v=Vehicule (13.6,103.06,20.)    # Vietnam
 v.affiche()
 v=Vehicule (50.6,3.06,20.)      # Lille
@@ -82,3 +89,9 @@ v=Vehicule (-22.26,166.15,20.)  # Nouméa
 v.affiche()
 v=Vehicule (-17.54,-149.57,20.) # Papeete
 v.affiche()
+"""
+
+v=Vehicule (50.6,3.06,20.)      # Lille
+print v.dayPhase,v.dayPosition,v.haut,v.lat,v.lng
+v.moove(5,5,3600)
+print v.dayPhase,v.dayPosition,v.haut,v.lat,v.lng

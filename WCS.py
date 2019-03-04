@@ -64,8 +64,10 @@ print code
 Id=mostRecentId(reso,code)
 Id.describeCoverage()
 Id.affiche()
-tab=profilVertical (reso,"T(h)",3.06,50.6)
+"""
+tab=profilVertical (reso,"Geop(p)",3.06,50.6)
 print (json.dumps(tab,indent=4,sort_keys=True))
 """
 tab=prevision (reso,"T(h)",3.06,50.6,2)
 print (json.dumps(tab,indent=4,sort_keys=True))
+"""
