@@ -256,6 +256,11 @@
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
+         <ows:Title>Altitude géométrique.</ows:Title>
+         <wcs:CoverageId>GEOMETRIC_HEIGHT__GROUND_OR_WATER_SURFACE___2019-03-09T15.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
          <ows:Title>Température de brillance dans le canal infrarouge 10.8 microns.</ows:Title>
          <wcs:CoverageId>BRIGHTNESS_TEMPERATURE__GROUND_OR_WATER_SURFACE___2019-03-05T00.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
@@ -438,6 +443,11 @@
       <wcs:CoverageSummary>
          <ows:Title>Température de brillance dans le canal infrarouge 10.8 microns.</ows:Title>
          <wcs:CoverageId>BRIGHTNESS_TEMPERATURE__GROUND_OR_WATER_SURFACE___2019-03-09T12.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
+         <ows:Title>Température de brillance dans le canal infrarouge 10.8 microns.</ows:Title>
+         <wcs:CoverageId>BRIGHTNESS_TEMPERATURE__GROUND_OR_WATER_SURFACE___2019-03-09T15.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
@@ -626,6 +636,11 @@
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
+         <ows:Title>CAPE de la particule la plus instable en basses couches avec coefficient d'entraînement.</ows:Title>
+         <wcs:CoverageId>CONVECTIVE_AVAILABLE_POTENTIAL_ENERGY__GROUND_OR_WATER_SURFACE___2019-03-09T15.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
          <ows:Title>Glace nuageuse en niveaux hauteur.</ows:Title>
          <wcs:CoverageId>SPECIFIC_CLOUD_ICE_WATER_CONTENT__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-03-05T00.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
@@ -808,6 +823,11 @@
       <wcs:CoverageSummary>
          <ows:Title>Glace nuageuse en niveaux hauteur.</ows:Title>
          <wcs:CoverageId>SPECIFIC_CLOUD_ICE_WATER_CONTENT__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-03-09T12.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
+         <ows:Title>Glace nuageuse en niveaux hauteur.</ows:Title>
+         <wcs:CoverageId>SPECIFIC_CLOUD_ICE_WATER_CONTENT__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-03-09T15.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
@@ -996,6 +1016,11 @@
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
+         <ows:Title>Glace nuageuse sur des surfaces isobares.</ows:Title>
+         <wcs:CoverageId>SPECIFIC_CLOUD_ICE_WATER_CONTENT__ISOBARIC_SURFACE___2019-03-09T15.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
          <ows:Title>Contenu en eau sous forme de pluie du nuage en niveaux hauteur.</ows:Title>
          <wcs:CoverageId>SPECIFIC_RAIN_WATER_CONTENT__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-03-05T00.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
@@ -1178,6 +1203,11 @@
       <wcs:CoverageSummary>
          <ows:Title>Contenu en eau sous forme de pluie du nuage en niveaux hauteur.</ows:Title>
          <wcs:CoverageId>SPECIFIC_RAIN_WATER_CONTENT__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-03-09T12.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
+         <ows:Title>Contenu en eau sous forme de pluie du nuage en niveaux hauteur.</ows:Title>
+         <wcs:CoverageId>SPECIFIC_RAIN_WATER_CONTENT__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-03-09T15.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
@@ -1366,6 +1396,11 @@
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
+         <ows:Title>Contenu en eau sous forme de pluie du nuage sur des surfaces isobares.</ows:Title>
+         <wcs:CoverageId>SPECIFIC_RAIN_WATER_CONTENT__ISOBARIC_SURFACE___2019-03-09T15.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
          <ows:Title>Contenu en eau sous forme de neige du nuage en niveaux hauteur.</ows:Title>
          <wcs:CoverageId>SPECIFIC_SNOW_WATER_CONTENT__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-03-05T00.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
@@ -1551,6 +1586,11 @@
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
+         <ows:Title>Contenu en eau sous forme de neige du nuage en niveaux hauteur.</ows:Title>
+         <wcs:CoverageId>SPECIFIC_SNOW_WATER_CONTENT__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-03-09T15.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
          <ows:Title>Contenu en eau sous forme de neige du nuage sur des surfaces isobares.</ows:Title>
          <wcs:CoverageId>SPECIFIC_SNOW_WATER_CONTENT__ISOBARIC_SURFACE___2019-03-05T00.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
@@ -1733,6 +1773,11 @@
       <wcs:CoverageSummary>
          <ows:Title>Contenu en eau sous forme de neige du nuage sur des surfaces isobares.</ows:Title>
          <wcs:CoverageId>SPECIFIC_SNOW_WATER_CONTENT__ISOBARIC_SURFACE___2019-03-09T12.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
+         <ows:Title>Contenu en eau sous forme de neige du nuage sur des surfaces isobares.</ows:Title>
+         <wcs:CoverageId>SPECIFIC_SNOW_WATER_CONTENT__ISOBARIC_SURFACE___2019-03-09T15.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
@@ -2821,6 +2866,21 @@
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
+         <ows:Title>Quantité de précipitations sous forme liquide.</ows:Title>
+         <wcs:CoverageId>TOTAL_WATER_PRECIPITATION__GROUND_OR_WATER_SURFACE___2019-03-09T15.00.00Z_PT1H</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
+         <ows:Title>Quantité de précipitations sous forme liquide.</ows:Title>
+         <wcs:CoverageId>TOTAL_WATER_PRECIPITATION__GROUND_OR_WATER_SURFACE___2019-03-09T15.00.00Z_PT3H</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
+         <ows:Title>Quantité de précipitations sous forme liquide.</ows:Title>
+         <wcs:CoverageId>TOTAL_WATER_PRECIPITATION__GROUND_OR_WATER_SURFACE___2019-03-09T15.00.00Z_PT6H</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
          <ows:Title>Rafale de vent en niveaux hauteur.</ows:Title>
          <wcs:CoverageId>WIND_SPEED_GUST__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-03-05T00.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
@@ -3003,6 +3063,11 @@
       <wcs:CoverageSummary>
          <ows:Title>Rafale de vent en niveaux hauteur.</ows:Title>
          <wcs:CoverageId>WIND_SPEED_GUST__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-03-09T12.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
+         <ows:Title>Rafale de vent en niveaux hauteur.</ows:Title>
+         <wcs:CoverageId>WIND_SPEED_GUST__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-03-09T15.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
@@ -3191,6 +3256,11 @@
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
+         <ows:Title>Force du vent en niveaux hauteur.</ows:Title>
+         <wcs:CoverageId>WIND_SPEED__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-03-09T15.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
          <ows:Title>Force du vent sur des surfaces isobares.</ows:Title>
          <wcs:CoverageId>WIND_SPEED__ISOBARIC_SURFACE___2019-03-05T00.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
@@ -3373,6 +3443,11 @@
       <wcs:CoverageSummary>
          <ows:Title>Force du vent sur des surfaces isobares.</ows:Title>
          <wcs:CoverageId>WIND_SPEED__ISOBARIC_SURFACE___2019-03-09T12.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
+         <ows:Title>Force du vent sur des surfaces isobares.</ows:Title>
+         <wcs:CoverageId>WIND_SPEED__ISOBARIC_SURFACE___2019-03-09T15.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
@@ -4461,6 +4536,21 @@
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
+         <ows:Title>Flux solaire descendant</ows:Title>
+         <wcs:CoverageId>DOWNWARD_SHORT_WAVE_RADIATION_FLUX__GROUND_OR_WATER_SURFACE___2019-03-09T15.00.00Z_PT1H</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
+         <ows:Title>Flux solaire descendant</ows:Title>
+         <wcs:CoverageId>DOWNWARD_SHORT_WAVE_RADIATION_FLUX__GROUND_OR_WATER_SURFACE___2019-03-09T15.00.00Z_PT3H</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
+         <ows:Title>Flux solaire descendant</ows:Title>
+         <wcs:CoverageId>DOWNWARD_SHORT_WAVE_RADIATION_FLUX__GROUND_OR_WATER_SURFACE___2019-03-09T15.00.00Z_PT6H</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
          <ows:Title>Flux solaire</ows:Title>
          <wcs:CoverageId>SHORT_WAVE_RADIATION_FLUX__GROUND_OR_WATER_SURFACE___2019-03-05T00.00.00Z_P1D</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
@@ -5546,6 +5636,21 @@
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
+         <ows:Title>Flux solaire</ows:Title>
+         <wcs:CoverageId>SHORT_WAVE_RADIATION_FLUX__GROUND_OR_WATER_SURFACE___2019-03-09T15.00.00Z_PT1H</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
+         <ows:Title>Flux solaire</ows:Title>
+         <wcs:CoverageId>SHORT_WAVE_RADIATION_FLUX__GROUND_OR_WATER_SURFACE___2019-03-09T15.00.00Z_PT3H</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
+         <ows:Title>Flux solaire</ows:Title>
+         <wcs:CoverageId>SHORT_WAVE_RADIATION_FLUX__GROUND_OR_WATER_SURFACE___2019-03-09T15.00.00Z_PT6H</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
          <ows:Title>Humidité relative en niveaux hauteur.</ows:Title>
          <wcs:CoverageId>RELATIVE_HUMIDITY__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-03-05T00.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
@@ -5728,6 +5833,11 @@
       <wcs:CoverageSummary>
          <ows:Title>Humidité relative en niveaux hauteur.</ows:Title>
          <wcs:CoverageId>RELATIVE_HUMIDITY__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-03-09T12.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
+         <ows:Title>Humidité relative en niveaux hauteur.</ows:Title>
+         <wcs:CoverageId>RELATIVE_HUMIDITY__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-03-09T15.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
@@ -5916,6 +6026,11 @@
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
+         <ows:Title>Humidité relative sur des surfaces isobares.</ows:Title>
+         <wcs:CoverageId>RELATIVE_HUMIDITY__ISOBARIC_SURFACE___2019-03-09T15.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
          <ows:Title>Hauteur de la couche limite.</ows:Title>
          <wcs:CoverageId>PLANETARY_BOUNDARY_LAYER_HEIGHT__GROUND_OR_WATER_SURFACE___2019-03-05T00.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
@@ -6098,6 +6213,11 @@
       <wcs:CoverageSummary>
          <ows:Title>Hauteur de la couche limite.</ows:Title>
          <wcs:CoverageId>PLANETARY_BOUNDARY_LAYER_HEIGHT__GROUND_OR_WATER_SURFACE___2019-03-09T12.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
+         <ows:Title>Hauteur de la couche limite.</ows:Title>
+         <wcs:CoverageId>PLANETARY_BOUNDARY_LAYER_HEIGHT__GROUND_OR_WATER_SURFACE___2019-03-09T15.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
@@ -6286,6 +6406,11 @@
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
+         <ows:Title>Nébulosité de l'étage inférieur.</ows:Title>
+         <wcs:CoverageId>LOW_CLOUD_COVER__GROUND_OR_WATER_SURFACE___2019-03-09T15.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
          <ows:Title>Nébulosité associée à la convection.</ows:Title>
          <wcs:CoverageId>CONVECTIVE_CLOUD_COVER__GROUND_OR_WATER_SURFACE___2019-03-05T00.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
@@ -6468,6 +6593,11 @@
       <wcs:CoverageSummary>
          <ows:Title>Nébulosité associée à la convection.</ows:Title>
          <wcs:CoverageId>CONVECTIVE_CLOUD_COVER__GROUND_OR_WATER_SURFACE___2019-03-09T12.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
+         <ows:Title>Nébulosité associée à la convection.</ows:Title>
+         <wcs:CoverageId>CONVECTIVE_CLOUD_COVER__GROUND_OR_WATER_SURFACE___2019-03-09T15.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
@@ -6656,6 +6786,11 @@
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
+         <ows:Title>Nébulosité de l'étage supérieur.</ows:Title>
+         <wcs:CoverageId>HIGH_CLOUD_COVER__GROUND_OR_WATER_SURFACE___2019-03-09T15.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
          <ows:Title>Nébulosité de l'étage moyen.</ows:Title>
          <wcs:CoverageId>MEDIUM_CLOUD_COVER__GROUND_OR_WATER_SURFACE___2019-03-05T00.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
@@ -6841,6 +6976,11 @@
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
+         <ows:Title>Nébulosité de l'étage moyen.</ows:Title>
+         <wcs:CoverageId>MEDIUM_CLOUD_COVER__GROUND_OR_WATER_SURFACE___2019-03-09T15.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
          <ows:Title>Nébulosité totale.</ows:Title>
          <wcs:CoverageId>TOTAL_CLOUD_COVER__GROUND_OR_WATER_SURFACE___2019-03-05T00.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
@@ -7023,6 +7163,11 @@
       <wcs:CoverageSummary>
          <ows:Title>Nébulosité totale.</ows:Title>
          <wcs:CoverageId>TOTAL_CLOUD_COVER__GROUND_OR_WATER_SURFACE___2019-03-09T12.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
+         <ows:Title>Nébulosité totale.</ows:Title>
+         <wcs:CoverageId>TOTAL_CLOUD_COVER__GROUND_OR_WATER_SURFACE___2019-03-09T15.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
@@ -8111,6 +8256,21 @@
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
+         <ows:Title>Quantité de précipitations sous forme de neige.</ows:Title>
+         <wcs:CoverageId>TOTAL_SNOW_PRECIPITATION__GROUND_OR_WATER_SURFACE___2019-03-09T15.00.00Z_PT1H</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
+         <ows:Title>Quantité de précipitations sous forme de neige.</ows:Title>
+         <wcs:CoverageId>TOTAL_SNOW_PRECIPITATION__GROUND_OR_WATER_SURFACE___2019-03-09T15.00.00Z_PT3H</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
+         <ows:Title>Quantité de précipitations sous forme de neige.</ows:Title>
+         <wcs:CoverageId>TOTAL_SNOW_PRECIPITATION__GROUND_OR_WATER_SURFACE___2019-03-09T15.00.00Z_PT6H</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
          <ows:Title>Quantité totale de précipitations.</ows:Title>
          <wcs:CoverageId>TOTAL_PRECIPITATION__GROUND_OR_WATER_SURFACE___2019-03-05T00.00.00Z_P1D</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
@@ -9196,6 +9356,21 @@
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
+         <ows:Title>Quantité totale de précipitations.</ows:Title>
+         <wcs:CoverageId>TOTAL_PRECIPITATION__GROUND_OR_WATER_SURFACE___2019-03-09T15.00.00Z_PT1H</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
+         <ows:Title>Quantité totale de précipitations.</ows:Title>
+         <wcs:CoverageId>TOTAL_PRECIPITATION__GROUND_OR_WATER_SURFACE___2019-03-09T15.00.00Z_PT3H</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
+         <ows:Title>Quantité totale de précipitations.</ows:Title>
+         <wcs:CoverageId>TOTAL_PRECIPITATION__GROUND_OR_WATER_SURFACE___2019-03-09T15.00.00Z_PT6H</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
          <ows:Title>Pression sol.</ows:Title>
          <wcs:CoverageId>PRESSURE__GROUND_OR_WATER_SURFACE___2019-03-05T00.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
@@ -9378,6 +9553,11 @@
       <wcs:CoverageSummary>
          <ows:Title>Pression sol.</ows:Title>
          <wcs:CoverageId>PRESSURE__GROUND_OR_WATER_SURFACE___2019-03-09T12.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
+         <ows:Title>Pression sol.</ows:Title>
+         <wcs:CoverageId>PRESSURE__GROUND_OR_WATER_SURFACE___2019-03-09T15.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
@@ -9566,6 +9746,11 @@
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
+         <ows:Title>Pression en niveaux hauteur.</ows:Title>
+         <wcs:CoverageId>PRESSURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-03-09T15.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
          <ows:Title>Pression réduite au niveau de la mer.</ows:Title>
          <wcs:CoverageId>PRESSURE__MEAN_SEA_LEVEL___2019-03-05T00.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
@@ -9748,6 +9933,11 @@
       <wcs:CoverageSummary>
          <ows:Title>Pression réduite au niveau de la mer.</ows:Title>
          <wcs:CoverageId>PRESSURE__MEAN_SEA_LEVEL___2019-03-09T12.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
+         <ows:Title>Pression réduite au niveau de la mer.</ows:Title>
+         <wcs:CoverageId>PRESSURE__MEAN_SEA_LEVEL___2019-03-09T15.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
@@ -9936,6 +10126,11 @@
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
+         <ows:Title>Intensité des précipitations en niveaux hauteur.</ows:Title>
+         <wcs:CoverageId>TOTAL_PRECIPITATION_RATE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-03-09T15.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
          <ows:Title>Intensité des précipitations sur des surfaces isobares.</ows:Title>
          <wcs:CoverageId>TOTAL_PRECIPITATION_RATE__ISOBARIC_SURFACE___2019-03-05T00.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
@@ -10118,6 +10313,11 @@
       <wcs:CoverageSummary>
          <ows:Title>Intensité des précipitations sur des surfaces isobares.</ows:Title>
          <wcs:CoverageId>TOTAL_PRECIPITATION_RATE__ISOBARIC_SURFACE___2019-03-09T12.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
+         <ows:Title>Intensité des précipitations sur des surfaces isobares.</ows:Title>
+         <wcs:CoverageId>TOTAL_PRECIPITATION_RATE__ISOBARIC_SURFACE___2019-03-09T15.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
@@ -10306,6 +10506,11 @@
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
+         <ows:Title>Tourbillon absolu sur des surfaces isobares.</ows:Title>
+         <wcs:CoverageId>ABSOLUTE_VORTICITY__ISOBARIC_SURFACE___2019-03-09T15.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
          <ows:Title>Température du point de rosée en niveaux hauteur.</ows:Title>
          <wcs:CoverageId>DEW_POINT_TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-03-05T00.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
@@ -10488,6 +10693,11 @@
       <wcs:CoverageSummary>
          <ows:Title>Température du point de rosée en niveaux hauteur.</ows:Title>
          <wcs:CoverageId>DEW_POINT_TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-03-09T12.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
+         <ows:Title>Température du point de rosée en niveaux hauteur.</ows:Title>
+         <wcs:CoverageId>DEW_POINT_TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-03-09T15.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
@@ -10676,6 +10886,11 @@
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
+         <ows:Title>Température du point de rosée sur des surfaces isobares.</ows:Title>
+         <wcs:CoverageId>DEW_POINT_TEMPERATURE__ISOBARIC_SURFACE___2019-03-09T15.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
          <ows:Title>Energie cinétique turbulente en niveaux hauteur.</ows:Title>
          <wcs:CoverageId>TURBULENT_KINETIC_ENERGY__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-03-05T00.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
@@ -10858,6 +11073,11 @@
       <wcs:CoverageSummary>
          <ows:Title>Energie cinétique turbulente en niveaux hauteur.</ows:Title>
          <wcs:CoverageId>TURBULENT_KINETIC_ENERGY__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-03-09T12.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
+         <ows:Title>Energie cinétique turbulente en niveaux hauteur.</ows:Title>
+         <wcs:CoverageId>TURBULENT_KINETIC_ENERGY__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-03-09T15.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
@@ -11046,6 +11266,11 @@
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
+         <ows:Title>Energie cinétique turbulente sur des surfaces isobares.</ows:Title>
+         <wcs:CoverageId>TURBULENT_KINETIC_ENERGY__ISOBARIC_SURFACE___2019-03-09T15.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
          <ows:Title>Température maximale de l'air en niveaux hauteur</ows:Title>
          <wcs:CoverageId>MAXIMUM_TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-03-05T00.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
@@ -11228,6 +11453,11 @@
       <wcs:CoverageSummary>
          <ows:Title>Température maximale de l'air en niveaux hauteur</ows:Title>
          <wcs:CoverageId>MAXIMUM_TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-03-09T12.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
+         <ows:Title>Température maximale de l'air en niveaux hauteur</ows:Title>
+         <wcs:CoverageId>MAXIMUM_TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-03-09T15.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
@@ -11416,6 +11646,11 @@
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
+         <ows:Title>Température minimale de l'air en niveaux hauteur</ows:Title>
+         <wcs:CoverageId>MINIMUM_TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-03-09T15.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
          <ows:Title>Température pseudo-adiabatique potentielle du thermomètre mouillé sur des surfaces isobares.</ows:Title>
          <wcs:CoverageId>PSEUDO_ADIABATIC_POTENTIAL_TEMPERATURE__ISOBARIC_SURFACE___2019-03-05T00.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
@@ -11598,6 +11833,11 @@
       <wcs:CoverageSummary>
          <ows:Title>Température pseudo-adiabatique potentielle du thermomètre mouillé sur des surfaces isobares.</ows:Title>
          <wcs:CoverageId>PSEUDO_ADIABATIC_POTENTIAL_TEMPERATURE__ISOBARIC_SURFACE___2019-03-09T12.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
+         <ows:Title>Température pseudo-adiabatique potentielle du thermomètre mouillé sur des surfaces isobares.</ows:Title>
+         <wcs:CoverageId>PSEUDO_ADIABATIC_POTENTIAL_TEMPERATURE__ISOBARIC_SURFACE___2019-03-09T15.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
@@ -11786,6 +12026,11 @@
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
+         <ows:Title>Tourbillon potentiel sur des surfaces isobares.</ows:Title>
+         <wcs:CoverageId>POTENTIAL_VORTICITY__ISOBARIC_SURFACE___2019-03-09T15.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
          <ows:Title>Température de surface.</ows:Title>
          <wcs:CoverageId>TEMPERATURE__GROUND_OR_WATER_SURFACE___2019-03-05T00.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
@@ -11968,6 +12213,11 @@
       <wcs:CoverageSummary>
          <ows:Title>Température de surface.</ows:Title>
          <wcs:CoverageId>TEMPERATURE__GROUND_OR_WATER_SURFACE___2019-03-09T12.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
+         <ows:Title>Température de surface.</ows:Title>
+         <wcs:CoverageId>TEMPERATURE__GROUND_OR_WATER_SURFACE___2019-03-09T15.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
@@ -12156,6 +12406,11 @@
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
+         <ows:Title>Température de l'air en niveaux hauteur.</ows:Title>
+         <wcs:CoverageId>TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-03-09T15.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
          <ows:Title>Température de l'air sur des surfaces isobares.</ows:Title>
          <wcs:CoverageId>TEMPERATURE__ISOBARIC_SURFACE___2019-03-05T00.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
@@ -12338,6 +12593,11 @@
       <wcs:CoverageSummary>
          <ows:Title>Température de l'air sur des surfaces isobares.</ows:Title>
          <wcs:CoverageId>TEMPERATURE__ISOBARIC_SURFACE___2019-03-09T12.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
+         <ows:Title>Température de l'air sur des surfaces isobares.</ows:Title>
+         <wcs:CoverageId>TEMPERATURE__ISOBARIC_SURFACE___2019-03-09T15.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
@@ -12526,6 +12786,11 @@
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
+         <ows:Title>composante zonale de la rafale du vent, en niveaux hauteur</ows:Title>
+         <wcs:CoverageId>U_COMPONENT_OF_WIND_GUST__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-03-09T15.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
          <ows:Title>composante zonale du vent, en niveaux hauteur</ows:Title>
          <wcs:CoverageId>U_COMPONENT_OF_WIND__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-03-05T00.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
@@ -12708,6 +12973,11 @@
       <wcs:CoverageSummary>
          <ows:Title>composante zonale du vent, en niveaux hauteur</ows:Title>
          <wcs:CoverageId>U_COMPONENT_OF_WIND__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-03-09T12.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
+         <ows:Title>composante zonale du vent, en niveaux hauteur</ows:Title>
+         <wcs:CoverageId>U_COMPONENT_OF_WIND__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-03-09T15.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
@@ -12896,6 +13166,11 @@
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
+         <ows:Title>composante zonale du vent, sur des surfaces isobares.</ows:Title>
+         <wcs:CoverageId>U_COMPONENT_OF_WIND__ISOBARIC_SURFACE___2019-03-09T15.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
          <ows:Title>composante zonale du vent, sur la surface 1.5 PVU</ows:Title>
          <wcs:CoverageId>U_COMPONENT_OF_WIND__POTENTIAL_VORTICITY_SURFACE_1500___2019-03-05T00.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
@@ -13081,6 +13356,11 @@
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
+         <ows:Title>composante zonale du vent, sur la surface 1.5 PVU</ows:Title>
+         <wcs:CoverageId>U_COMPONENT_OF_WIND__POTENTIAL_VORTICITY_SURFACE_1500___2019-03-09T15.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
          <ows:Title>composante zonale du vent, sur la surface 2.0 PVU</ows:Title>
          <wcs:CoverageId>U_COMPONENT_OF_WIND__POTENTIAL_VORTICITY_SURFACE_2000___2019-03-05T00.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
@@ -13263,6 +13543,11 @@
       <wcs:CoverageSummary>
          <ows:Title>composante zonale du vent, sur la surface 2.0 PVU</ows:Title>
          <wcs:CoverageId>U_COMPONENT_OF_WIND__POTENTIAL_VORTICITY_SURFACE_2000___2019-03-09T12.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
+         <ows:Title>composante zonale du vent, sur la surface 2.0 PVU</ows:Title>
+         <wcs:CoverageId>U_COMPONENT_OF_WIND__POTENTIAL_VORTICITY_SURFACE_2000___2019-03-09T15.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
@@ -13452,6 +13737,11 @@
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
          <ows:Title>Vitesse verticale sur des surfaces isobares.</ows:Title>
+         <wcs:CoverageId>VERTICAL_VELOCITY_GEOMETRIC__ISOBARIC_SURFACE___2019-03-09T15.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
+         <ows:Title>Vitesse verticale sur des surfaces isobares.</ows:Title>
          <wcs:CoverageId>VERTICAL_VELOCITY_PRESSURE__ISOBARIC_SURFACE___2019-03-05T00.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
@@ -13633,6 +13923,11 @@
       <wcs:CoverageSummary>
          <ows:Title>Vitesse verticale sur des surfaces isobares.</ows:Title>
          <wcs:CoverageId>VERTICAL_VELOCITY_PRESSURE__ISOBARIC_SURFACE___2019-03-09T12.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
+         <ows:Title>Vitesse verticale sur des surfaces isobares.</ows:Title>
+         <wcs:CoverageId>VERTICAL_VELOCITY_PRESSURE__ISOBARIC_SURFACE___2019-03-09T15.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
@@ -13821,6 +14116,11 @@
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
+         <ows:Title>composante méridienne de la rafale du vent, en niveau hauteur</ows:Title>
+         <wcs:CoverageId>V_COMPONENT_OF_WIND_GUST__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-03-09T15.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
          <ows:Title>composante méridienne du vent, en niveau hauteur</ows:Title>
          <wcs:CoverageId>V_COMPONENT_OF_WIND__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-03-05T00.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
@@ -14003,6 +14303,11 @@
       <wcs:CoverageSummary>
          <ows:Title>composante méridienne du vent, en niveau hauteur</ows:Title>
          <wcs:CoverageId>V_COMPONENT_OF_WIND__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-03-09T12.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
+         <ows:Title>composante méridienne du vent, en niveau hauteur</ows:Title>
+         <wcs:CoverageId>V_COMPONENT_OF_WIND__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND___2019-03-09T15.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
@@ -14191,6 +14496,11 @@
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
+         <ows:Title>composante méridienne du vent, sur des surfaces isobares.</ows:Title>
+         <wcs:CoverageId>V_COMPONENT_OF_WIND__ISOBARIC_SURFACE___2019-03-09T15.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
          <ows:Title>composante méridienne du vent, sur la surface 1.5 PVU</ows:Title>
          <wcs:CoverageId>V_COMPONENT_OF_WIND__POTENTIAL_VORTICITY_SURFACE_1500___2019-03-05T00.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
@@ -14373,6 +14683,11 @@
       <wcs:CoverageSummary>
          <ows:Title>composante méridienne du vent, sur la surface 1.5 PVU</ows:Title>
          <wcs:CoverageId>V_COMPONENT_OF_WIND__POTENTIAL_VORTICITY_SURFACE_1500___2019-03-09T12.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
+         <ows:Title>composante méridienne du vent, sur la surface 1.5 PVU</ows:Title>
+         <wcs:CoverageId>V_COMPONENT_OF_WIND__POTENTIAL_VORTICITY_SURFACE_1500___2019-03-09T15.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
@@ -14561,6 +14876,11 @@
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
       <wcs:CoverageSummary>
+         <ows:Title>composante méridienne du vent, sur la surface 2.0 PVU</ows:Title>
+         <wcs:CoverageId>V_COMPONENT_OF_WIND__POTENTIAL_VORTICITY_SURFACE_2000___2019-03-09T15.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
          <ows:Title>Altitude géopotentielle sur des surfaces isobares.</ows:Title>
          <wcs:CoverageId>GEOPOTENTIAL__ISOBARIC_SURFACE___2019-03-05T00.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
@@ -14743,6 +15063,11 @@
       <wcs:CoverageSummary>
          <ows:Title>Altitude géopotentielle sur des surfaces isobares.</ows:Title>
          <wcs:CoverageId>GEOPOTENTIAL__ISOBARIC_SURFACE___2019-03-09T12.00.00Z</wcs:CoverageId>
+         <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
+      </wcs:CoverageSummary>
+      <wcs:CoverageSummary>
+         <ows:Title>Altitude géopotentielle sur des surfaces isobares.</ows:Title>
+         <wcs:CoverageId>GEOPOTENTIAL__ISOBARIC_SURFACE___2019-03-09T15.00.00Z</wcs:CoverageId>
          <wcs:CoverageSubtype>ReferenceableGridCoverage</wcs:CoverageSubtype>
       </wcs:CoverageSummary>
    </wcs:Contents>

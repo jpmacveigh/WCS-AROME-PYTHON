@@ -18,9 +18,10 @@ class Vehicule:  # un véhicule qui se déplace
         self.lng=lng
         self.lat=lat
         self.alt=alt
-        self.getTimeZone()
-        self.getSunRiseSunSet()
-        self.hauteur()
+        self.getTimeZone()   #  la timezone du lieu
+        self.getSunRiseSunSet()  #  détermination heures locales de lever et de coucher du soleil du lieu du véhicule
+        self.getHauteur()  #  aquisition de la hauteur en fonction de l'heure
+        self.getVille()  # recherche du nom de la ville qui est en dessous
     def getTime(self):  # Quelle heure UTC est-il ?
         self.heureUTC=arrow.utcnow()
         self.tsUTC=self.heureUTC.timestamp;
@@ -70,48 +71,60 @@ class Vehicule:  # un véhicule qui se déplace
             self.dayPhase="day afternoon"
         else :
            self.dayPhase="night evening" 
-    def hauteur(self):   # calcul l'altitude du véhicule en fonction de l'heure locale
+    def getHauteur(self):   # calcul l'altitude du véhicule en fonction de l'heure locale
         hautNuit=10.
         if 0<=self.dayPosition <=100.:
             hautMidi=3000.
             x=(self.dayPosition/100.*2.*math.pi)-(math.pi/2.)
-            self.haut=((math.sin(x)+1.)*0.5*(hautMidi-hautNuit))+hautNuit
+            self.hauteur=((math.sin(x)+1.)*0.5*(hautMidi-hautNuit))+hautNuit
         else:
-            self.haut=hautNuit
-    def moove (self,u,v,dt) : # le déplace pendant dt*unités de temps avec les vitesses zonale et méridienne (u,v) en m/unité de temps
+            self.hauteur=hautNuit
+    def moove (self,u,v,dt) : # le déplace pendant dt unités de temps avec les vitesses zonale et méridienne (u,v) en m/unité de temps
         self.lat=self.lat+vLat(u)*dt
         self.lng=self.lng+uLng(v,self.lat)*dt
-    def getVentActuel (self):
+    def getVentActuel (self):   #  Aquisition du vent Arome 0025 actuel à la hauteur du véhicule
         lesDeuxDates=lesChainesDateEntourantes()
         IdU=mostRecentId("0025","U(h)")    #  composante zonale du vent (positive vers l'Est)
         IdU.describeCoverage()
-        print IdU.height
-        lesDeuxHauteurs=AxeVertical(IdU.height).encadrement(self.haut)
-        print (lesDeuxDates,self.haut,lesDeuxHauteurs)
+        #print IdU.height
+        lesDeuxHauteurs=AxeVertical(IdU.height).encadrement(self.hauteur)
+        #print (lesDeuxDates,self.haut,lesDeuxHauteurs)
         uBasBefore=prevision (IdU,self.lng,self.lat,lesDeuxDates[0],lesDeuxHauteurs[0])
         uBasAfter =prevision (IdU,self.lng,self.lat,lesDeuxDates[1],lesDeuxHauteurs[0])
         uBas=(uBasBefore*(100.-lesDeuxDates[2])+lesDeuxDates[2]*uBasAfter)/100.     #  interpolation temporelle
-        print uBasBefore,uBasAfter,uBas
+        #print uBasBefore,uBasAfter,uBas
         uHautBefore=prevision (IdU,self.lng,self.lat,lesDeuxDates[0],lesDeuxHauteurs[1])
         uHautAfter =prevision (IdU,self.lng,self.lat,lesDeuxDates[1],lesDeuxHauteurs[1])
         uHaut=(uHautBefore*(100.-lesDeuxDates[2])+lesDeuxDates[2]*uHautAfter)/100.  #  interpolation temporelle
-        print uHautBefore,uHautAfter,uHaut
+        #print uHautBefore,uHautAfter,uHaut
         u=(uBas*(100.-lesDeuxHauteurs[2])+lesDeuxHauteurs[2]*uHaut)/100.  # interpolation verticale
-        print uBas,uHaut,u
+        #print uBas,uHaut,u
         IdV=mostRecentId("0025","V(h)")   #  composante méridienne du vent
         IdV.describeCoverage()
         vBasBefore=prevision (IdV,self.lng,self.lat,lesDeuxDates[0],lesDeuxHauteurs[0])
         vBasAfter =prevision (IdV,self.lng,self.lat,lesDeuxDates[1],lesDeuxHauteurs[0])
         vBas=(vBasBefore*(100.-lesDeuxDates[2])+lesDeuxDates[2])*vBasAfter/100.  #  interpolation temporelle
-        print vBasBefore,vBasAfter,vBas
+        #print vBasBefore,vBasAfter,vBas
         vHautBefore=prevision (IdV,self.lng,self.lat,lesDeuxDates[0],lesDeuxHauteurs[1])
         vHautAfter =prevision (IdV,self.lng,self.lat,lesDeuxDates[1],lesDeuxHauteurs[1])
         vHaut=(vHautBefore*(100.-lesDeuxDates[2])+lesDeuxDates[2])*vHautAfter/100.  #  interpolation temporelle
-        print vHautBefore,vHautAfter,vHaut
+        #print vHautBefore,vHautAfter,vHaut
         v=(vBas*(100.-lesDeuxHauteurs[2])+lesDeuxHauteurs[2]*vHaut)/100.  # interpolation verticale
-        print vBas,vHaut,v
+        #print vBas,vHaut,v
         print (u,v)
         return (u,v)
+    def getVille(self):   # détermination de la villeau dessus de laquelle est le véhicule
+        path="https://nominatim.openstreetmap.org/reverse?format=json&lat="+str(self.lat)+"&lon="+str(self.lng)+"&zoom=18&addressdetails=1"
+        print path
+        status=0
+        while status != 200:
+            r=requests.get(path,verify=False)
+            status=r.status_code
+        #print r.content  # le résultat de la requête
+        self.localisation=json.loads(r.content)
+        self.ville=self.localisation["display_name"]
+        return self.ville
+
     def affiche(self):
         for k in sorted(self.__dict__.keys()):
             print (k+":  "+str(self.__dict__[k]))
@@ -125,14 +138,22 @@ v.affiche()
 v=Vehicule (-17.54,-149.57,20.) # Papeete
 v.affiche()
 """
-reso="0025"
-v=Vehicule (50.6,3.06,20.)      # Lille
-v.getVentActuel()
+#reso="0025"
+#v=Vehicule (50.6,3.06,20.)      # Lille
+#v=Vehicule (-22.26,166.15,20.)  # Nouméa
+v=Vehicule (45.6,5.06,20.)      # Lille
+print v.ville
+vent=v.getVentActuel()
+v.moove(vent[0],vent[1],3600)
+v=Vehicule(v.lat,v.lng,v.hauteur)
+print v.ville
+
+"""
 tab=profilVertical (reso,"U(h)",3.06,50.6)
 print (json.dumps(tab,indent=4,sort_keys=True))
 tab=profilVertical (reso,"V(h)",3.06,50.6)
 print (json.dumps(tab,indent=4,sort_keys=True))
-""""
+
 print v.dayPhase,v.dayPosition,v.haut,v.lat,v.lng
 v.moove(5,5,3600)
 print v.dayPhase,v.dayPosition,v.haut,v.lat,v.lng

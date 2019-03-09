@@ -118,8 +118,3 @@ def prevision (Id,longi,lati,date,niveau=None):
         raise Exception ("prevision : Le champs est de dim=3, le niveau n'est pas requi");  
     Id.getCoverage(lati-.1,lati+.1,longi-.1,longi+.1,date,niveau)
     return Id.valeur(longi,lati)
-
-    
-
-
-
