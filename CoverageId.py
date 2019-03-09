@@ -9,11 +9,10 @@ import gdal
 import json
 import numpy as np
 sys.path.insert(0, '/home/ubuntu/workspace/Utils') # insérer dans sys.path le dossier contenant le/les modules
-from Utils import chaineUTCFromTs
+from Utils import chaineUTCFromTs,tsNow
 from xml.dom import minidom
 from catalogueWCS import catalogueWCS
 from WCSGeotiff import WCSGeotiff
-from nextChainesPrevi import chaineUTCFromTs,tsNow
 class CoverageId :
     def __init__(self, coverageId,resol):
         self.coverageId = coverageId  # le label renvoyé par la requête getCapabilities du WCS

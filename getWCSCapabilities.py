@@ -6,6 +6,7 @@ import time
 import calendar
 import os
 sys.path.insert(0, '/home/ubuntu/workspace/Utils') # insérer dans sys.path le dossier contenant le/les modules
+from Utils import lesChainesDateEntourantes
 from Utils import chaineUTCFromTs
 from CoverageId import CoverageId
 #import xml.etree.ElementTree as ET
@@ -55,20 +56,20 @@ def mostRecentId(resol,code):   # renvoi le plus récent des CoverageId de resol
             res=Id
             ts=Id.timeUTCRunTs
     return res
-    
-def profilVertical(resol,code,longi,lati):
+def profilVertical(resol,code,longi,lati):   #  renvoi le profil vertical à l'heure précedante
     Id=mostRecentId(resol,code)
     if Id:
         res={}
         Id.describeCoverage()
         if (Id.dim!=4): raise Exception ("profilVertical : %s n'est pas de dimension 4" %(code))
         #print (Id.code,Id.descr,Id.niv)
+        chaineDate=lesChainesDateEntourantes()[0]
         res["titre"]="Profil vertical"
         res["code"]=Id.code
         res["descr"]=Id.descr
         res["vertical"]=Id.niv
         res["run"]=Id.chaineDate()
-        res["previ"]=Id.timeDatePrevi[0]
+        res["previ"]=chaineDate
         res["unit"]=Id.unite
         res["niveaux"]=[]
         res["position"]={"longitude":longi,"latitude":lati}
@@ -76,7 +77,8 @@ def profilVertical(resol,code,longi,lati):
         res["nbNiv"]=len(niveaux);
         #print niveaux
         for niv in niveaux:
-            Id.getCoverage(lati-.1,lati+.1,longi-.1,longi+.1,Id.timeDatePrevi[0],niv)
+            #Id.getCoverage(lati-.1,lati+.1,longi-.1,longi+.1,Id.timeDatePrevi[0],niv)
+            Id.getCoverage(lati-.1,lati+.1,longi-.1,longi+.1,chaineDate,niv)
             #print niv,Id.valeur(longi,lati)
             res["niveaux"].append({"niveau":niv,"valeur":Id.valeur(longi,lati)})
         ts= calendar.timegm(time.gmtime())
@@ -84,7 +86,7 @@ def profilVertical(resol,code,longi,lati):
         return res
     else : return None
 
-def prevision(resol,code,longi,lati,niveau=None):  # A finir
+def previsions (resol,code,longi,lati,niveau=None):  # A finir
     Id=mostRecentId(resol,code)
     if Id:
         res={};
@@ -104,10 +106,20 @@ def prevision(resol,code,longi,lati,niveau=None):  # A finir
         res["previsions"]=[]
         res["nbPrevi"]= len(Id.timeDatePrevi);
         for date in Id.timeDatePrevi:
-            Id.getCoverage(lati-.1,lati+.1,longi-.1,longi+.1,date,niveau)
-            res["previsions"].append({"date":date,"valeur":Id.valeur(longi,lati)})
+            #Id.getCoverage(lati-.1,lati+.1,longi-.1,longi+.1,date,niveau)
+            previ=prevision(Id,longi,lati,date,niveau)
+            res["previsions"].append({"date":date,"valeur":previ})
         return res;
     return {"error":"Previsions : mostRecentId was not found : Check the given code"};
+def prevision (Id,longi,lati,date,niveau=None):
+    if Id.dim==4 and niveau==None : # Cas où il manque le niveau
+        raise Exception ("prevision : Le champs est de dim=4, le niveau est manquant");
+    if Id.dim==3 and not(niveau==None): # Cas où le niveau n'est pas requis
+        raise Exception ("prevision : Le champs est de dim=3, le niveau n'est pas requi");  
+    Id.getCoverage(lati-.1,lati+.1,longi-.1,longi+.1,date,niveau)
+    return Id.valeur(longi,lati)
+
+    
 
 
 
