@@ -1,0 +1,387 @@
+jpmv:~/workspace/WCSenPython (master) $ python Vehicule.py
+https://nominatim.openstreetmap.org/reverse?format=json&lat=50.635472&lon=3.055083&zoom=18&addressdetails=1
+2019-03-10 04:38:53.150771
+Speedy Lille, 33, Boulevard de la Liberté, Lille, Nord, Hauts-de-France, France métropolitaine, 59000, France
+0 2019-03-10 04:43:53.232759
+(4.3361364597744405, 6.019785228472575)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=50.65171316875687&lon=3.073534322051407&zoom=18&addressdetails=1
+Bibliothèque pour tous, 116, Rue du Général de Gaulle, La Madeleine, Lille, Nord, Hauts-de-France, France métropolitaine, 59110, France
+1 2019-03-10 04:49:58.261031
+(5.3804201507568346, 4.840179744515506)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=50.66477180341919&lon=3.096435693568759&zoom=18&addressdetails=1
+969, Avenue de la République, Parc Europe, Marcq-en-Barœul, Lille, Nord, Hauts-de-France, France métropolitaine, 59700, France
+2 2019-03-10 04:55:06.493382
+(6.771845550537109, 4.198154453316457)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=50.67609827643375&lon=3.1252665223979315&zoom=18&addressdetails=1
+Avenue du Molinel, Pilaterie Les Prés, Wasquehal, Lille, Nord, Hauts-de-France, France métropolitaine, 59290, France
+3 2019-03-10 05:00:56.877406
+(7.382517276340061, 11.196844135060124)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=50.70630696798004&lon=3.1567175054102345&zoom=18&addressdetails=1
+Bricorama, Rue François Mauriac, Tourcoing, Lille, Nord, Hauts-de-France, France métropolitaine, 59200, France
+4 2019-03-10 05:06:25.461407
+(6.690990556610955, 9.80890631002005)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=50.73277105210514&lon=3.18523854936421&zoom=18&addressdetails=1
+Tourcoing, Lille, Nord, Hauts-de-France, France métropolitaine, 59200, France
+5 2019-03-10 05:12:00.885371
+(6.280332756042481, 9.464034542825539)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=50.75830468433571&lon=3.2120237251767265&zoom=18&addressdetails=1
+Rue de la potence, Mouscron, Hainaut, Wallonie, 8511, België / Belgique / Belgien
+6 2019-03-10 05:17:30.261358
+(6.770918448766071, 12.288516165563124)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=50.79145866861283&lon=3.2409216915618835&zoom=18&addressdetails=1
+Smokkelpotstraat, Marke, Kortrijk, West-Vlaanderen, Vlaanderen, 8510, België / Belgique / Belgien
+7 2019-03-10 05:23:15.153451
+(6.058554911613465, 11.597641574932094)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=50.82274869755095&lon=3.2667966478657675&zoom=18&addressdetails=1
+Beverlaai, Begijnhof Sint-Elisabeth, Kortrijk, West-Vlaanderen, Vlaanderen, 8500, België / Belgique / Belgien
+8 2019-03-10 05:28:24.629331
+(5.254363276163738, 12.04116612655877)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=50.85523534012516&lon=3.2892526798285227&zoom=18&addressdetails=1
+Kuurne Kruiske, Bavikhoofsestraat, Kuurne, Kortrijk, West-Vlaanderen, Vlaanderen, 8520, België / Belgique / Belgien
+9 2019-03-10 05:34:03.976648
+(5.118374743461609, 10.369992883534177)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=50.883213216085316&lon=3.311140658959674&zoom=18&addressdetails=1
+Ooigemse Voetweg, Bavikhove, Harelbeke, Kortrijk, West-Vlaanderen, Vlaanderen, 8531, België / Belgique / Belgien
+10 2019-03-10 05:39:11.101420
+(6.340404028892517, 13.37325028400041)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=50.919293774850594&lon=3.338275486075034&zoom=18&addressdetails=1
+26, Dalakkerstraat, Oostrozebeke, Tielt, West-Vlaanderen, Vlaanderen, 8780, België / Belgique / Belgien
+11 2019-03-10 05:44:19.875113
+(5.762220640712314, 10.685102748807003)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=50.94812180614098&lon=3.362951170796921&zoom=18&addressdetails=1
+Lijsterstraat, De Ginste, Oostrozebeke, Tielt, West-Vlaanderen, Vlaanderen, 8780, België / Belgique / Belgien
+12 2019-03-10 05:49:27.449931
+(6.730413120587667, 9.94318094205173)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=50.974948158499224&lon=3.391789613954514&zoom=18&addressdetails=1
+Katteknok, Dentergem, Tielt, West-Vlaanderen, Vlaanderen, 8720, België / Belgique / Belgien
+13 2019-03-10 05:54:35.333416
+(6.7823425796296855, 6.8063961624653135)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=50.993311575881265&lon=3.4208620619314067&zoom=18&addressdetails=1
+47, Aarselestraat, Aarsele, Tielt, West-Vlaanderen, Vlaanderen, 8700, België / Belgique / Belgien
+14 2019-03-10 05:59:42.977371
+(6.809182195663452, 4.829042911550569)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=51.006340163760065&lon=3.450057754778525&zoom=18&addressdetails=1
+Vinktstraat, Aarsele, Tielt, Oost-Vlaanderen, Vlaanderen, 8700, België / Belgique / Belgien
+15 2019-03-10 06:04:50.934119
+(7.095145236121283, 14.145193379662237)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=51.04450339783875&lon=3.480504625748106&zoom=18&addressdetails=1
+56A, Nevelestraat, Lotenhulle, Aalter, Gent, Oost-Vlaanderen, Vlaanderen, 9880, België / Belgique / Belgien
+16 2019-03-10 06:09:58.357447
+(6.856164222293429, 11.590892090087113)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=51.07577521690422&lon=3.5099458545842754&zoom=18&addressdetails=1
+Katteschootweg, Hansbeke, Deinze, Gent, Oost-Vlaanderen, Vlaanderen, 9850, België / Belgique / Belgien
+17 2019-03-10 06:15:06.652816
+(5.869058208465576, 8.911917415442392)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=51.09981925654983&lon=3.535161431300493&zoom=18&addressdetails=1
+Rostraat, Zomergem, Lievegem, Gent, Oost-Vlaanderen, Vlaanderen, 9930, België / Belgique / Belgien
+18 2019-03-10 06:20:13.709489
+(6.628528609983513, 11.48329461882369)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=51.130800781423346&lon=3.56365906621351&zoom=18&addressdetails=1
+Daelmenbrug, Zomergem, Lievegem, Gent, Oost-Vlaanderen, Vlaanderen, 9930, België / Belgique / Belgien
+19 2019-03-10 06:25:22.525401
+(5.8206727897215185, 11.33608798932602)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=51.161385147989535&lon=3.5887001226583752&zoom=18&addressdetails=1
+Dam, Waarschoot, Lievegem, Gent, Oost-Vlaanderen, Vlaanderen, 9950, België / Belgique / Belgien
+20 2019-03-10 06:30:30.299284
+(6.290560221337967, 12.418480246214678)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=51.194889770783824&lon=3.6157823514147585&zoom=18&addressdetails=1
+9, Westermolenstraat, Lembeke, Kaprijke, Eeklo, Oost-Vlaanderen, Vlaanderen, 9971, België / Belgique / Belgien
+21 2019-03-10 06:35:39.921447
+(6.4262795296390935, 11.650403091488277)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=51.22632214843734&lon=3.64346777228794&zoom=18&addressdetails=1
+Bassevelde, Kaprijke, Eeklo, Oost-Vlaanderen, Vlaanderen, 9968, België / Belgique / Belgien
+22 2019-03-10 06:41:08.677485
+(7.428687190634019, 11.437538198280818)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=51.25718022409804&lon=3.675493199841943&zoom=18&addressdetails=1
+Sint-Jorispolderstraat, Boekhoute, Assenede, Eeklo, Oost-Vlaanderen, Vlaanderen, 9961, België / Belgique / Belgien
+23 2019-03-10 06:46:17.921411
+(8.422390951661065, 11.27513002407288)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=51.28760012821862&lon=3.7118265786924223&zoom=18&addressdetails=1
+Spanjaardsweg, Philippine, Terneuzen, Zeeland, Nederland, 4553PM, Nederland
+24 2019-03-10 06:51:25.353451
+(7.76855563186213, 9.288382569430773)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=51.31265985760481&lon=3.745357676119387&zoom=18&addressdetails=1
+Kreekweg, Hoek, Terneuzen, Zeeland, Nederland, 4542NL, Nederland
+25 2019-03-10 06:56:33.144859
+(7.696619468671879, 7.712121519390673)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=51.33346689013438&lon=3.778593352750636&zoom=18&addressdetails=1
+5d, Herbert H. Dowweg, Hoek, Terneuzen, Zeeland, Nederland, 4542NM, Nederland
+26 2019-03-10 07:01:41.211232
+(9.1214293900927, 34.21133026303828)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=51.4257678555527&lon=3.8180611766786114&zoom=18&addressdetails=1
+19, Plataanweg, Ovezande, Borsele, Zeeland, Nederland, 4441SB, Nederland
+27 2019-03-10 07:06:50.153498
+(6.3299754159375246, 45.06217268084025)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=51.54734401205726&lon=3.8455236894417424&zoom=18&addressdetails=1
+Oost-Bermweg, Kortgene, Noord-Beveland, Zeeland, Nederland, 4484 SR, Nederland
+28 2019-03-10 07:11:57.169420
+(2.9613464908069305, 42.37354345513593)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=51.66166634150288&lon=3.8584038406804564&zoom=18&addressdetails=1
+Kerkwerve, Schouwen-Duiveland, Zeeland, Nederland
+29 2019-03-10 07:17:05.716819
+(0.8949839123056634, 41.7594147085948)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=51.77433177319676&lon=3.862306215709615&zoom=18&addressdetails=1
+Brouwersdam buitenzijde, Ouddorp, Goeree-Overflakkee, Zuid-Holland, Nederland, 3253MD, Nederland
+jpmv:~/workspace/WCSenPython (master) $ 
+https://nominatim.openstreetmap.org/reverse?format=json&lat=50.635472&lon=3.055083&zoom=18&addressdetails=1
+2019-03-10 08:00:25.651360
+Speedy Lille, 33, Boulevard de la Liberté, Lille, Nord, Hauts-de-France, France métropolitaine, 59000, France
+0 2019-03-10 08:05:25.751631
+(26.560427220954956, 60.181741713127415)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=50.79784022181331&lon=3.1684571522452116&zoom=18&addressdetails=1
+Menenstraat, Lauwe, Menen, Kortrijk, West-Vlaanderen, Vlaanderen, 8930, België / Belgique / Belgien
+1 2019-03-10 08:10:35.701686
+(26.11070520629738, 68.12996883250597)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=50.981652480758235&lon=3.280352336714117&zoom=18&addressdetails=1
+Claerhoutdreef, Pittem, Tielt, West-Vlaanderen, Vlaanderen, 8740, België / Belgique / Belgien
+2 2019-03-10 08:15:42.764938
+(23.647219556368846, 72.23292782534762)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=51.17653437871454&lon=3.3821182197002355&zoom=18&addressdetails=1
+Ruweschuurstraat, Oedelem, Beernem, Brugge, West-Vlaanderen, Vlaanderen, 8730, België / Belgique / Belgien
+3 2019-03-10 08:20:51.525387
+(25.370589088077804, 59.27546054772249)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=51.336457485828596&lon=3.4916810874876223&zoom=18&addressdetails=1
+2, Stampershoekweg, Oostburg, Sluis, Zeeland, Nederland, 4501PN, Nederland
+4 2019-03-10 08:26:00.505406
+(26.652929350769487, 55.20016728896182)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=51.48538559510847&lon=3.6071572747007394&zoom=18&addressdetails=1
+21, Cassinstraat, Middelburg-Zuid, Middelburg, Zeeland, Nederland, 4336LE, Nederland
+5 2019-03-10 08:31:08.989358
+(25.4952621651426, 41.72404831148976)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=51.597955609507224&lon=3.7178913481137843&zoom=18&addressdetails=1
+Roompot Marina, Sophia Boulevard, Kamperland, Noord-Beveland, Zeeland, Nederland, 4493PL, Nederland
+6 2019-03-10 08:36:16.601547
+(23.91416437998677, 14.953820801469872)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=51.63830049192062&lon=3.8218505866339645&zoom=18&addressdetails=1
+Kerkwerve, Schouwen-Duiveland, Zeeland, Nederland
+7 2019-03-10 08:41:24.757396
+(23.3900556550037, 12.041504883082705)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=51.67078804844802&lon=3.923604339333468&zoom=18&addressdetails=1
+Heuvelsweg, Zierikzee, Schouwen-Duiveland, Zeeland, Nederland, 4301TD, Nederland
+8 2019-03-10 08:47:23.041536
+(23.230796528723914, 9.61198801975458)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=51.69672085395401&lon=4.024723168682703&zoom=18&addressdetails=1
+Dreischor, Schouwen-Duiveland, Zeeland, Nederland
+9 2019-03-10 08:52:31.145429
+(23.15215855810064, 9.150573926859897)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=51.72140878047096&lon=4.125554719445689&zoom=18&addressdetails=1
+Wellestrijpsedijk, Herkingen, Goeree-Overflakkee, Zuid-Holland, Nederland, 3249LC, Nederland
+10 2019-03-10 08:57:38.210734
+(23.342549927061988, 8.348661798318851)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=51.74393317627817&lon=4.227266133620091&zoom=18&addressdetails=1
+Piersweg, Stad aan 't Haringvliet, Goeree-Overflakkee, Zuid-Holland, Nederland, 3243BB, Nederland
+11 2019-03-10 09:02:47.256757
+(23.484536295053104, 13.59627855661908)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=51.78061545747634&lon=4.329679405702137&zoom=18&addressdetails=1
+Kostverlorendijk, Piershil, Hoeksche Waard, Zuid-Holland, Nederland, 3265LD, Nederland
+12 2019-03-10 09:07:55.117388
+(28.1935950929123, 26.202670465593982)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=51.85130934052377&lon=4.452821361188979&zoom=18&addressdetails=1
+Essendijk, Rhoon, Albrandswaard, Zuid-Holland, Nederland, 3161ES, Nederland
+13 2019-03-10 09:13:03.273416
+(22.05162255216581, 40.81936669113305)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=51.961438555739534&lon=4.5493732997484715&zoom=18&addressdetails=1
+328, G.B. Shawplaats, Baersmeer, Rotterdam, Zuid-Holland, Nederland, 3068WJ, Nederland
+14 2019-03-10 09:18:11.623520
+(22.860633977355565, 30.111704334014277)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=52.04267887463538&lon=4.649649288527457&zoom=18&addressdetails=1
+2, Spoorpad, Gouweplein, Waddinxveen, Zuid-Holland, Nederland, 2741NJ, Nederland
+15 2019-03-10 09:23:19.977448
+(21.750822490870206, 37.831952587139696)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=52.1447481517025&lon=4.745275724069522&zoom=18&addressdetails=1
+Nieuwkoopseweg, Aarlanderveen, Alphen aan den Rijn, Zuid-Holland, Nederland, 2445NA, Nederland
+16 2019-03-10 09:28:27.865440
+(21.90968446295554, 30.827208855617563)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=52.22791887662458&lon=4.841780930399179&zoom=18&addressdetails=1
+13, Mijdrechtse Zuwe, Amstelhoek, De Ronde Venen, Utrecht, Nederland, 3641PE, Nederland
+17 2019-03-10 09:33:36.033452
+(23.049492324588154, 20.959517151656595)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=52.2844669164969&lon=4.943436151125386&zoom=18&addressdetails=1
+Amstelweg, Ouderkerk aan de Amstel, Ouder-Amstel, Noord-Holland, Nederland, 1191LJ, Nederland
+18 2019-03-10 09:38:43.065548
+(21.26992103302618, 20.83303452665341)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=52.34067371069691&lon=5.037362119766892&zoom=18&addressdetails=1
+Diemen, Noord-Holland, Nederland
+19 2019-03-10 09:43:51.023484
+(21.204190588771517, 13.380117562318164)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=52.37677279713749&lon=5.131074352703912&zoom=18&addressdetails=1
+Almere, Flevoland, Nederland
+20 2019-03-10 09:48:57.796905
+(21.431806319182684, 15.47852610527923)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=52.41853331600026&lon=5.225882216839395&zoom=18&addressdetails=1
+Oostvaardersdijk, Almere, Flevoland, Nederland, 1332CN, Nederland
+21 2019-03-10 09:54:06.203150
+(23.65715823131287, 14.008615950141191)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=52.4563280689792&lon=5.3306241694123395&zoom=18&addressdetails=1
+Lelystad, Flevoland, Nederland
+22 2019-03-10 09:59:15.061526
+(24.993049072349795, 8.032392221402477)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=52.477999180594956&lon=5.441335265959383&zoom=18&addressdetails=1
+Torenvalktocht, Buizerdweg, Lelystad, Flevoland, Nederland, 8245AA, Nederland
+23 2019-03-10 10:05:28.126032
+(22.447153769287752, 22.56239684331237)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=52.538871733482466&lon=5.540906683837859&zoom=18&addressdetails=1
+Edelhertweg, Lelystad, Flevoland, Nederland, 8219PH, Nederland
+24 2019-03-10 10:10:35.349182
+(20.638321146838187, 32.4333120943573)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=52.626375668436346&lon=5.632637392849735&zoom=18&addressdetails=1
+Swifterbant, Dronten, Flevoland, Nederland
+25 2019-03-10 10:16:44.697422
+(20.902874607521415, 42.02463690344568)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=52.73975666028082&lon=5.725785460507927&zoom=18&addressdetails=1
+20-TR, Onderduikersweg, Emmelhage-Boswonen, Emmeloord, Noordoostpolder, Flevoland, Nederland, 8302AG, Nederland
+26 2019-03-10 10:21:52.660894
+(14.78324189978437, 16.701794112725054)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=52.784817513190355&lon=5.79173122178778&zoom=18&addressdetails=1
+De Kuilen, Hopweg, Bant, Noordoostpolder, Flevoland, Nederland, 8374EV, Nederland
+27 2019-03-10 10:28:06.773452
+(16.318915935813326, 15.166942225028361)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=52.82573738970642&lon=5.864595927720749&zoom=18&addressdetails=1
+254, Grindweg, Scherpenzeel, Weststellingwerf, Fryslân, Nederland, 8483JN, Nederland
+28 2019-03-10 10:33:14.799338
+(15.555855208429005, 10.25101616268805)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=52.8533942706596&lon=5.934097780865254&zoom=18&addressdetails=1
+Pieter Stuyvesantweg, Oldetrijne, Weststellingwerf, Fryslân, Nederland, 8479HK, Nederland
+29 2019-03-10 10:38:54.021418
+(15.944349747362855, 9.739543382647767)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=52.879671216046994&lon=6.005378544337765&zoom=18&addressdetails=1
+PostNL, Stationsweg, Wolvega, Weststellingwerf, Fryslân, Nederland, 8471AN, Nederland
+30 2019-03-10 10:44:01.821376
+(16.16989515383903, 8.865864449775039)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=52.90359100641148&lon=6.07770753337677&zoom=18&addressdetails=1
+Stellingenweg, Nijeholtpade, Weststellingwerf, Fryslân, Nederland, 8475CD, Nederland
+31 2019-03-10 10:49:58.325451
+(16.34643697290836, 7.313858694062733)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=52.9233235398501&lon=6.150859525706857&zoom=18&addressdetails=1
+Madenweg, Zandhuizen, Weststellingwerf, Fryslân, Nederland, 8421SB, Nederland
+32 2019-03-10 10:55:06.762741
+(16.165277158921036, 5.761600347984887)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=52.93886813488294&lon=6.223226794028722&zoom=18&addressdetails=1
+De Riete, Elsloo, Ooststellingwerf, Fryslân, Nederland, 8424SM, Nederland
+33 2019-03-10 11:00:15.860027
+(15.887209032671876, 31.550320547534852)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=53.02398978970912&lon=6.294489495388621&zoom=18&addressdetails=1
+Haulerdiek, Haule, Ooststellingwerf, Fryslân, Nederland, 8432PP, Nederland
+34 2019-03-10 11:05:22.709524
+(15.68795873980787, 27.1027955850854)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=53.09711217866052&lon=6.364977993148757&zoom=18&addressdetails=1
+11, Amerika, Een, Noordenveld, Drenthe, Nederland, 9342TC, Nederland
+35 2019-03-10 11:10:31.197419
+(15.726065618634996, 22.99638914197104)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=53.159155627500986&lon=6.435739797260726&zoom=18&addressdetails=1
+13, De Ring, Leutingewolde, Noordenveld, Drenthe, Nederland, 9313TE, Nederland
+36 2019-03-10 11:15:38.129429
+(15.341971612634172, 21.581999193570113)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=53.21738310202208&lon=6.504867115705838&zoom=18&addressdetails=1
+184-am, Hoendiep, Groningen, Nederland, 9744, Nederland
+37 2019-03-10 11:20:47.247135
+(12.129262946798903, 26.797070707751264)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=53.28968065601052&lon=6.5596111640046235&zoom=18&addressdetails=1
+51, Wolddijk, Noordwolde, Het Hogeland, Groningen, Nederland, 9781TJ, Nederland
+38 2019-03-10 11:25:54.862207
+(10.697561301449909, 24.4908958404715)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=53.35575623134344&lon=6.607968211153988&zoom=18&addressdetails=1
+Bredeweg, Stitswerd, Het Hogeland, Groningen, Nederland, 9995NC, Nederland
+39 2019-03-10 11:31:03.481708
+(10.697062481689322, 20.50977646092473)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=53.41109088665506&lon=6.656385887524521&zoom=18&addressdetails=1
+22e, Lageweg, Het Hogeland, Groningen, Nederland, 9981HE, Nederland
+40 2019-03-10 11:36:10.529406
+(10.248068776212847, 15.713852183865797)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=53.45348630699855&lon=6.702817594755934&zoom=18&addressdetails=1
+Middenweg, Uithuizermeeden, Het Hogeland, Groningen, Nederland, 9981VG, Nederland
+41 2019-03-10 11:41:20.045717
+(8.506236105502996, 16.80209541811508)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=53.498817769301205&lon=6.74139864163311&zoom=18&addressdetails=1
+Uithuizen, Leer (Ostfriesland), Niedersachsen, Deutschland
+42 2019-03-10 11:46:27.331744
+(7.581327528321257, 14.751014910091481)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=53.538615488554825&lon=6.77581697089104&zoom=18&addressdetails=1
+Niedersachsen, Deutschland
+43 2019-03-10 11:51:36.437409
+(6.580292581765356, 10.364887193722017)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=53.5665795895435&lon=6.805710468641578&zoom=18&addressdetails=1
+Niedersachsen, Deutschland
+44 2019-03-10 11:56:43.897785
+(6.148406691240302, 6.661913970130438)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=53.58455319905383&lon=6.833653835928414&zoom=18&addressdetails=1
+Niedersachsen, Deutschland
+45 2019-03-10 12:01:53.102145
+(6.010631407456788, 1.0046351268680664)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=53.5872636692808&lon=6.860972792087588&zoom=18&addressdetails=1
+Niedersachsen, Deutschland
+46 2019-03-10 12:07:00.549736
+(5.618994001777748, -22.122333972603066)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=53.527578390536064&lon=6.886475711443231&zoom=18&addressdetails=1
+Niedersachsen, Deutschland
+47 2019-03-10 12:12:43.621991
+(5.643854264109345, 27.783245410038177)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=53.60253660917543&lon=6.912136901238533&zoom=18&addressdetails=1
+Niedersachsen, Deutschland
+Niedersachsen48 2019-03-10 12:17:51.163457
+(5.569265919332424, -23.3894712254578)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=53.539432638703225&lon=6.937421197061958&zoom=18&addressdetails=1
+Niedersachsen, Deutschland
+49 2019-03-10 12:23:32.671607
+(5.160029513894623, 2.379498223947867)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=53.54585244119535&lon=6.9608511252776974&zoom=18&addressdetails=1
+Niedersachsen, Deutschland
+50 2019-03-10 12:28:40.082200
+(5.042126639946571, 0.3352588846816565)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=53.54675695787106&lon=6.98374618616909&zoom=18&addressdetails=1
+Niedersachsen, Deutschland
+51 2019-03-10 12:34:09.325529
+(4.923376917347769, -2.2996858037142145)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=53.54055248648075&lon=7.0060987570738416&zoom=18&addressdetails=1
+Niedersachsen, Deutschland
+52 2019-03-10 12:39:16.579268
+(4.7702671633804, -4.927415995963741)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=53.52725849148119&lon=7.0277493977185514&zoom=18&addressdetails=1
+Niedersachsen, Deutschland
+53 2019-03-10 12:44:25.865422
+(4.531042375483333, -4.9991271955453)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=53.51377102218812&lon=7.048307731311231&zoom=18&addressdetails=1
+Leyhörn, Greetsiel, Krummhörn, Landkreis Aurich, Niedersachsen, Deutschland
+54 2019-03-10 12:49:33.893416
+(4.3552792363616, -6.839530983339122)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=53.49531820822512&lon=7.0680599886544&zoom=18&addressdetails=1
+Kleinbahnstraße, Greetsiel, Krummhörn, Landkreis Aurich, Niedersachsen, 26736, Deutschland
+55 2019-03-10 12:54:42.833417
+(4.161020001962253, -5.367297153337725)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=53.480837429338976&lon=7.086924791161716&zoom=18&addressdetails=1
+4, Appinger Weg, Appingen, Visquard, Krummhörn, Landkreis Aurich, Niedersachsen, 26736, Deutschland
+56 2019-03-10 12:59:49.865739
+(3.855108656638121, -3.526845394301962)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=53.471322124547484&lon=7.104398765628746&zoom=18&addressdetails=1
+Mannenmeedeweg, Appingen, Visquard, Krummhörn, Landkreis Aurich, Niedersachsen, 26736, Deutschland
+57 2019-03-10 13:04:59.034057
+(3.826876340055228, 18.153723728892363)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=53.5203002324793&lon=7.121764819271472&zoom=18&addressdetails=1
+Leybuchtpolder, Landkreis Aurich, Niedersachsen, Deutschland
+58 2019-03-10 13:10:07.176056
+(3.7221391566280646, 17.16296982486153)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=53.56660532123499&lon=7.138674071378297&zoom=18&addressdetails=1
+Langer Weg, Westermarsch I, Norden, Landkreis Aurich, Niedersachsen, 26506, Deutschland
+59 2019-03-10 13:15:16.289492
+(3.03545903501362, 18.971994722224323)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=53.61779109551821&lon=7.1524805290291&zoom=18&addressdetails=1
+Freibad Norddeich (geschlossen), Deichkronenweg, Norddeich, Norden, Landkreis Aurich, Niedersachsen, 26506, Deutschland
+60 2019-03-10 13:20:23.970819
+(2.3427622199270135, 23.64548504712976)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=53.68158578227414&lon=7.163152464035902&zoom=18&addressdetails=1
+Leer (Ostfriesland), Niedersachsen, 26789, Deutschland
+61 2019-03-10 13:25:36.278557
+(2.4418792274446073, 42.397893553758)
+https://nominatim.openstreetmap.org/reverse?format=json&lat=53.79597380742915&lon=7.174306220500733&zoom=18&addressdetails=1
+Niedersachsen, Deutschland
+62 2019-03-10 13:30:43.357409
+(2.02854544308826, 53.208631797533336)
+Traceback (most recent call last):
+  File "Vehicule.py", line 156, in <module>
+    vent=v.getVentActuel()
+  File "Vehicule.py", line 22, in __init__
+    self.getTimeZone()   #  la timezone du lieu
+  File "Vehicule.py", line 40, in getTimeZone
+    # tester :  http://api.geonames.org/timezoneJSON?lat=49.11&lng=-27.82&username=demo
+Exception: Vehicule : timeZone inconnu de Google
+jpmv:~/workspace/WCSenPython (master) $ Niedersachsen

@@ -1,9 +1,11 @@
 #coding: utf8
 import json
+import sqlite3
 import requests
 import arrow
 import math
 import sys
+import datetime
 from getWCSCapabilities import profilVertical
 from getWCSCapabilities import mostRecentId
 from getWCSCapabilities import prevision
@@ -22,6 +24,7 @@ class Vehicule:  # un véhicule qui se déplace
         self.getSunRiseSunSet()  #  détermination heures locales de lever et de coucher du soleil du lieu du véhicule
         self.getHauteur()  #  aquisition de la hauteur en fonction de l'heure
         self.getVille()  # recherche du nom de la ville qui est en dessous
+        self.initDB()
     def getTime(self):  # Quelle heure UTC est-il ?
         self.heureUTC=arrow.utcnow()
         self.tsUTC=self.heureUTC.timestamp;
@@ -35,6 +38,8 @@ class Vehicule:  # un véhicule qui se déplace
             r=requests.get(urlGetTZ)
             status=r.status_code
         #print r.content  # le résultat de la requête
+        # tester :  http://api.timezonedb.com/v2.1/get-time-zone?key=TE4GPIYXBN1Y&format=json&by=position&lat=50.6&lng=3.06&time=1552207312
+        # tester :  http://api.geonames.org/timezoneJSON?lat=49.11&lng=-27.82&username=demo
         self.timeZone=json.loads(r.content)
         if (self.timeZone["status"]=="ZERO_RESULTS"): raise Exception ("Vehicule : timeZone inconnu de Google")
         #print self.timeZone["timeZoneId"]
@@ -80,8 +85,8 @@ class Vehicule:  # un véhicule qui se déplace
         else:
             self.hauteur=hautNuit
     def moove (self,u,v,dt) : # le déplace pendant dt unités de temps avec les vitesses zonale et méridienne (u,v) en m/unité de temps
-        self.lat=self.lat+vLat(u)*dt
-        self.lng=self.lng+uLng(v,self.lat)*dt
+        self.lat=self.lat+vLat(v)*dt           # la latitude varie en fonction de v (vitesse méridienne)
+        self.lng=self.lng+uLng(u,self.lat)*dt  # la longitude varie en fonction de u (vitesse zonale)
     def getVentActuel (self):   #  Aquisition du vent Arome 0025 actuel à la hauteur du véhicule
         lesDeuxDates=lesChainesDateEntourantes()
         IdU=mostRecentId("0025","U(h)")    #  composante zonale du vent (positive vers l'Est)
@@ -124,7 +129,24 @@ class Vehicule:  # un véhicule qui se déplace
         self.localisation=json.loads(r.content)
         self.ville=self.localisation["display_name"]
         return self.ville
-
+    def initDB(self):
+        self.conn = sqlite3.connect('traject.sqlite')
+        c = self.conn.cursor()
+        c.execute("CREATE TABLE IF NOT EXISTS trajectoire (ts num,lat real,lng real,haut real,lieu text)")
+    def savePosition(self):
+        sql="INSERT INTO trajectoire VALUES ("
+        sql=sql+str(self.tsUTC)
+        sql=sql+","+str(self.lat)+","+str(self.lng)+","+str(self.hauteur)+","
+        sql=sql+'"'+self.ville+'")'
+        #print sql
+        c=self.conn.cursor()
+        #c.execute("INSERT INTO trajectoire VALUES (150.,50.6,3.06,22.0,'Lille')")
+        c.execute(sql)
+        self.conn.commit()
+    def listPositions(self):
+        c=self.conn.cursor()
+        for row in c.execute("SELECT * FROM trajectoire"):
+            print row
     def affiche(self):
         for k in sorted(self.__dict__.keys()):
             print (k+":  "+str(self.__dict__[k]))
@@ -139,15 +161,30 @@ v=Vehicule (-17.54,-149.57,20.) # Papeete
 v.affiche()
 """
 #reso="0025"
-#v=Vehicule (50.6,3.06,20.)      # Lille
-#v=Vehicule (-22.26,166.15,20.)  # Nouméa
-v=Vehicule (45.6,5.06,20.)      # Lille
-print v.ville
-vent=v.getVentActuel()
-v.moove(vent[0],vent[1],3600)
-v=Vehicule(v.lat,v.lng,v.hauteur)
-print v.ville
+from time import sleep
 
+#v.savePosition()
+#v.listPositions()
+"""
+#v=Vehicule(51.77433177319676,3.862306215709615,200)
+#v=Vehicule (-22.26,166.15,20.)  # Nouméa
+
+"""
+v=Vehicule (50.635472,3.055083,20.)      # Lille
+print str(datetime.datetime.now())
+print v.ville
+v.savePosition()
+v.listPositions()
+dt=300. # interval d'itération en secondes
+for i in range(100):
+    sleep(dt)    #in seconds
+    print i,str(datetime.datetime.now())
+    vent=v.getVentActuel()
+    v.moove(vent[0],vent[1],dt)
+    v=Vehicule(v.lat,v.lng,v.hauteur)
+    v.savePosition()
+    v.listPositions()
+    print v.ville
 """
 tab=profilVertical (reso,"U(h)",3.06,50.6)
 print (json.dumps(tab,indent=4,sort_keys=True))
