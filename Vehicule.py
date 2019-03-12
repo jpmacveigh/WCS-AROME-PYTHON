@@ -170,7 +170,8 @@ from time import sleep
 #v=Vehicule (-22.26,166.15,20.)  # Nouméa
 
 """
-v=Vehicule (50.635472,3.055083,20.)      # Lille
+#v=Vehicule (50.635472,3.055083,20.)      # Lille
+v=Vehicule(45,6,20)
 print str(datetime.datetime.now())
 print v.ville
 v.savePosition()
