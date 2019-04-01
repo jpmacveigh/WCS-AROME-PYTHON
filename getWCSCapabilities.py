@@ -86,7 +86,8 @@ def profilVertical(resol,code,longi,lati):   #  renvoi le profil vertical à l'h
         return res
     else : return None
 
-def previsions (resol,code,longi,lati,niveau=None):  # A finir
+def previsions (resol,code,longi,lati,niveau=None): 
+    if not(niveau==None): niveau = int(niveau)
     Id=mostRecentId(resol,code)
     if Id:
         res={};

@@ -10,6 +10,7 @@ from getWCSCapabilities import profilVertical
 from getWCSCapabilities import mostRecentId
 from getWCSCapabilities import prevision
 from AxeVertical import AxeVertical
+from VentHorizontal import VentHorizontal
 sys.path.insert(0, '/home/ubuntu/workspace/Utils') # insérer dans sys.path le dossier contenant le/les modules
 from Utils import *
 class Vehicule:  # un véhicule qui se déplace
@@ -87,40 +88,58 @@ class Vehicule:  # un véhicule qui se déplace
     def moove (self,u,v,dt) : # le déplace pendant dt unités de temps avec les vitesses zonale et méridienne (u,v) en m/unité de temps
         self.lat=self.lat+vLat(v)*dt           # la latitude varie en fonction de v (vitesse méridienne)
         self.lng=self.lng+uLng(u,self.lat)*dt  # la longitude varie en fonction de u (vitesse zonale)
-    def getVentActuel (self):   #  Aquisition du vent Arome 0025 actuel à la hauteur du véhicule
+    def getVentActuelArome (self):   #  Aquisition du vent Arome 0025 actuel à la hauteur du véhicule
         lesDeuxDates=lesChainesDateEntourantes()
         IdU=mostRecentId("0025","U(h)")    #  composante zonale du vent (positive vers l'Est)
         IdU.describeCoverage()
         #print IdU.height
         lesDeuxHauteurs=AxeVertical(IdU.height).encadrement(self.hauteur)
-        #print (lesDeuxDates,self.haut,lesDeuxHauteurs)
+        #print (lesDeuxDates,self.hauteur,lesDeuxHauteurs)
         uBasBefore=prevision (IdU,self.lng,self.lat,lesDeuxDates[0],lesDeuxHauteurs[0])
         uBasAfter =prevision (IdU,self.lng,self.lat,lesDeuxDates[1],lesDeuxHauteurs[0])
-        uBas=(uBasBefore*(100.-lesDeuxDates[2])+lesDeuxDates[2]*uBasAfter)/100.     #  interpolation temporelle
+        uBas=self.interpole(uBasBefore,uBasAfter,lesDeuxDates[2])  #  interpolation temporelle de uBas
         #print uBasBefore,uBasAfter,uBas
         uHautBefore=prevision (IdU,self.lng,self.lat,lesDeuxDates[0],lesDeuxHauteurs[1])
         uHautAfter =prevision (IdU,self.lng,self.lat,lesDeuxDates[1],lesDeuxHauteurs[1])
-        uHaut=(uHautBefore*(100.-lesDeuxDates[2])+lesDeuxDates[2]*uHautAfter)/100.  #  interpolation temporelle
+        uHaut=self.interpole(uHautBefore,uHautAfter,lesDeuxDates[2])  #  interpolation temporelle de uHaut
         #print uHautBefore,uHautAfter,uHaut
-        u=(uBas*(100.-lesDeuxHauteurs[2])+lesDeuxHauteurs[2]*uHaut)/100.  # interpolation verticale
+        u=self.interpole (uBas,uHaut,lesDeuxHauteurs[2])  # interpolation verticale de u
         #print uBas,uHaut,u
-        IdV=mostRecentId("0025","V(h)")   #  composante méridienne du vent
+        IdV=mostRecentId("0025","V(h)")   #  composante méridienne du vent (positive vers le Nord)
         IdV.describeCoverage()
         vBasBefore=prevision (IdV,self.lng,self.lat,lesDeuxDates[0],lesDeuxHauteurs[0])
         vBasAfter =prevision (IdV,self.lng,self.lat,lesDeuxDates[1],lesDeuxHauteurs[0])
-        vBas=(vBasBefore*(100.-lesDeuxDates[2])+lesDeuxDates[2])*vBasAfter/100.  #  interpolation temporelle
+        vBas=self.interpole(vBasBefore,vBasAfter,lesDeuxDates[2])  #  interpolation temporelle de vBas
         #print vBasBefore,vBasAfter,vBas
         vHautBefore=prevision (IdV,self.lng,self.lat,lesDeuxDates[0],lesDeuxHauteurs[1])
         vHautAfter =prevision (IdV,self.lng,self.lat,lesDeuxDates[1],lesDeuxHauteurs[1])
-        vHaut=(vHautBefore*(100.-lesDeuxDates[2])+lesDeuxDates[2])*vHautAfter/100.  #  interpolation temporelle
+        vHaut=self.interpole(vHautBefore,vHautAfter,lesDeuxDates[2])   #  interpolation temporelle de vHaut
         #print vHautBefore,vHautAfter,vHaut
-        v=(vBas*(100.-lesDeuxHauteurs[2])+lesDeuxHauteurs[2]*vHaut)/100.  # interpolation verticale
+        v=self.interpole(vBas,vHaut,lesDeuxHauteurs[2])  # interpolation verticale de v
         #print vBas,vHaut,v
         print (u,v)
+        print (VentHorizontal(u,v).toStringKmh())
+        return (u,v)
+    def interpole (self,xinf,xsup,alpha):   # i nterpolation temporelle ou verticale
+        rep = ((100.-alpha)*xinf + alpha*xsup)/100.
+        return rep
+    def getVentActuelMeteomatics(self):  #  Vent là où je metrouve actuellemente ?
+        url="https://domicile_macveigh:MHSglNtCk5y78@api.meteomatics.com/now/wind_speed_u_"+str(int(round(self.hauteur,0)))+"m:ms,wind_speed_v_"+str(int(round(self.hauteur,0)))+"m:ms/"+str(self.lat)+","+str(self.lng)+"/json"
+        print url
+        status=0
+        while status != 200:
+            r=requests.get(url)
+            status=r.status_code
+            print status
+        self.ventMeteomatics=json.loads(r.content)
+        u= self.ventMeteomatics["data"][0]["coordinates"][0]["dates"][0]["value"]
+        v= self.ventMeteomatics["data"][1]["coordinates"][0]["dates"][0]["value"]
+        print (u,v)
+        print (VentHorizontal(u,v).toStringKmh())
         return (u,v)
     def getVille(self):   # détermination de la villeau dessus de laquelle est le véhicule
         path="https://nominatim.openstreetmap.org/reverse?format=json&lat="+str(self.lat)+"&lon="+str(self.lng)+"&zoom=18&addressdetails=1"
-        print path
+        #print path
         status=0
         while status != 200:
             r=requests.get(path,verify=False)
@@ -133,7 +152,7 @@ class Vehicule:  # un véhicule qui se déplace
         self.conn = sqlite3.connect('traject.sqlite')
         c = self.conn.cursor()
         c.execute("CREATE TABLE IF NOT EXISTS trajectoire (ts num,lat real,lng real,haut real,lieu text)")
-    def savePosition(self):
+    def savePosition(self):  #  sauvegarde la postion actuelle
         sql="INSERT INTO trajectoire VALUES ("
         sql=sql+str(self.tsUTC)
         sql=sql+","+str(self.lat)+","+str(self.lng)+","+str(self.hauteur)+","
@@ -143,56 +162,10 @@ class Vehicule:  # un véhicule qui se déplace
         #c.execute("INSERT INTO trajectoire VALUES (150.,50.6,3.06,22.0,'Lille')")
         c.execute(sql)
         self.conn.commit()
-    def listPositions(self):
+    def listPositions(self):  #  liste toutes les positions archivées dans la base de données sqlite
         c=self.conn.cursor()
         for row in c.execute("SELECT * FROM trajectoire"):
             print row
     def affiche(self):
         for k in sorted(self.__dict__.keys()):
             print (k+":  "+str(self.__dict__[k]))
-"""
-v=Vehicule (13.6,103.06,20.)    # Vietnam
-v.affiche()
-v=Vehicule (50.6,3.06,20.)      # Lille
-v.affiche()
-v=Vehicule (-22.26,166.15,20.)  # Nouméa
-v.affiche()
-v=Vehicule (-17.54,-149.57,20.) # Papeete
-v.affiche()
-"""
-#reso="0025"
-from time import sleep
-
-#v.savePosition()
-#v.listPositions()
-"""
-#v=Vehicule(51.77433177319676,3.862306215709615,200)
-#v=Vehicule (-22.26,166.15,20.)  # Nouméa
-
-"""
-#v=Vehicule (50.635472,3.055083,20.)      # Lille
-v=Vehicule(45,6,20)
-print str(datetime.datetime.now())
-print v.ville
-v.savePosition()
-v.listPositions()
-dt=300. # interval d'itération en secondes
-for i in range(100):
-    sleep(dt)    #in seconds
-    print i,str(datetime.datetime.now())
-    vent=v.getVentActuel()
-    v.moove(vent[0],vent[1],dt)
-    v=Vehicule(v.lat,v.lng,v.hauteur)
-    v.savePosition()
-    v.listPositions()
-    print v.ville
-"""
-tab=profilVertical (reso,"U(h)",3.06,50.6)
-print (json.dumps(tab,indent=4,sort_keys=True))
-tab=profilVertical (reso,"V(h)",3.06,50.6)
-print (json.dumps(tab,indent=4,sort_keys=True))
-
-print v.dayPhase,v.dayPosition,v.haut,v.lat,v.lng
-v.moove(5,5,3600)
-print v.dayPhase,v.dayPosition,v.haut,v.lat,v.lng
-"""

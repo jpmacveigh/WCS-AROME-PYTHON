@@ -199,12 +199,13 @@ class CoverageId :
         path=path+"&subset=time("+chaineDatePrevi+")"
         self.chaineDatePreviGot=chaineDatePrevi
         self.nivGot=niv
-        #print path
+        #print ("getCoverage path: "+path)
         status=-1
         while status != 200:
+            if not(status==-1): time.sleep(0.5)    # sauf la première fois, wait in seconds pour ne pas surcharger le serveur
             r=requests.get(path)  # envoi d'une requête "getCoverage" du WCS
             status=r.status_code
-            #print r.status_code
+            #print ("getCoverage code: "+str(r.status_code))
         self.filename="WCSgetCoverage.tiff"
         fichier = open(self.filename,"w")
         print >> fichier,r.content  # le résultat de la requête est un geotiff que l'on écrit dans un ficheir
