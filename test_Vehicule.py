@@ -37,10 +37,10 @@ from time import sleep
 #v=Vehicule (-22.26,166.15,20.)  # Nouméa
 
 #v=Vehicule (50.635472,3.055083,20.)      # Lille
-v=Vehicule (48.794954,7.816429,20.)      # Haguenau
+#v=Vehicule (48.794954,7.816429,20.)      # Haguenau
 #v=Vehicule (44.056286,5.991998,20.)      # Saint-Auban
 #v=Vehicule(48.06448117986679,11.180390198888135,10.0)  # Lavey les Bains (Suisse)
-#v=Vehicule(44.841662,-0.569312,10)  # Bordeaux
+v=Vehicule(44.841662,-0.569312,10)  # Bordeaux
 #v=Vehicule(46.5675203751551,4.39642168158707,10);  # Charolles
 print str(datetime.datetime.now())
 print v.ville

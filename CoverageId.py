@@ -210,7 +210,7 @@ class CoverageId :
         fichier = open(self.filename,"w")
         print >> fichier,r.content  # le résultat de la requête est un geotiff que l'on écrit dans un ficheir
         fichier.close()
-        self.geotiff=WCSGeotiff(self.filename)
+        self.geotiff=WCSGeotiff(path,self.filename)
     def valeur(self,longi,lati):  #  renvoi la valeur du champs sans interpolation
         return self.geotiff.valeur(longi,lati)
     def affiche(self):
