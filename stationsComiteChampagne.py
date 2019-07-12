@@ -40,6 +40,7 @@ for station in stationsComiteChampagne :
     for previ in previs["previsions"]:
         res["previsions"].append(
             {"date":previ["date"],"Tmini 2m":previ["valeur"]})
+        print ("date:"+str(previ["date"])+"  Tmini 2m:"+str(previ["valeur"]))
     result.append(res)
-print (json.dumps(result, indent=4))
+#print (json.dumps(result, indent=4))
     

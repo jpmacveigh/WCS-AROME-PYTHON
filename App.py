@@ -8,10 +8,12 @@ from flask import jsonify,render_template,make_response
 from flask import Flask
 app = Flask(__name__)
 @app.route('/profil_vertical/long=<float:longi>,lat=<float:lati>,param=<code>')
+# exemple de requête : http://54.229.138.69/profil_vertical/long=3.06,lat=50.6,param=T(h)
+#  où 54.229.138.69 est l'IP publique de l'instance EC2 allumée)
 def profif(longi,lati,code="T(h)"):
     #return "Hello les mecs il est : "+ str(datetime.datetime.utcnow())
     #code="T(h)"
-    #print code
+    print code
     tab= profilVertical ("0025",code,longi,lati)
     return jsonify(tab)
 
@@ -40,4 +42,4 @@ def trajectoire():
 
 if __name__ == '__main__':
    #app.run(debug=True,host=os.getenv('IP', '0.0.0.0'),port=int(os.getenv('PORT',8080)) )
-    app.run(debug=True,host=os.getenv('IP', '0.0.0.0'),port=int(os.getenv('PORT',9080))) 
+    app.run(debug=True,host=os.getenv('IP', '0.0.0.0'),port=int(os.getenv('PORT',80))) 

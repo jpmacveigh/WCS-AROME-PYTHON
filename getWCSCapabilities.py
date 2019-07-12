@@ -6,6 +6,7 @@ import time
 import calendar
 import os
 sys.path.insert(0, '/home/ubuntu/workspace/Utils') # insérer dans sys.path le dossier contenant le/les modules
+sys.path.insert(0, '/home/ubuntu/environment/node_jpmv/Utils') # insérer dans sys.path le dossier contenant le/les modules
 from Utils import lesChainesDateEntourantes
 from Utils import chaineUTCFromTs
 from CoverageId import CoverageId
