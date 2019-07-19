@@ -11,7 +11,8 @@ from getWCSCapabilities import mostRecentId
 from getWCSCapabilities import prevision
 from AxeVertical import AxeVertical
 from VentHorizontal import VentHorizontal
-sys.path.insert(0, '/home/ubuntu/workspace/Utils') # insérer dans sys.path le dossier contenant le/les modules
+from Utils import getHeureLocale
+sys.path.insert(0,'/home/ubuntu/node_jpmv/Utils') # insérer dans sys.path le dossier contenant le/les modules
 from Utils import *
 class Vehicule:  # un véhicule qui se déplace
     def __init__(self,lat,lng,alt):
@@ -168,4 +169,7 @@ class Vehicule:  # un véhicule qui se déplace
             print row
     def affiche(self):
         for k in sorted(self.__dict__.keys()):
-            print (k+":  "+str(self.__dict__[k]))
+            #print (k+":  "+str(self.__dict__[k]))
+            print (k)
+v=Vehicule(50.6,3.06,200)
+v.affiche()

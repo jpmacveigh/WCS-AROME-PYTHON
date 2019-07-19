@@ -11,6 +11,7 @@ class WCSGeotiff:
             self.geotransform = self.dataset.GetGeoTransform()
             #print self.geotransform
             self.origineX = self.geotransform[0]
+            if (self.origineX > 180.): self.origineX=self.origineX-360.
             self.origineY = self.geotransform[3]
             self.pixelWidth = self.geotransform[1]
             self.pixelHeight = self.geotransform[5]
@@ -47,7 +48,9 @@ class WCSGeotiff:
         # pondérée par l'inverse de la distance orthodromique à chacun des 4 points 
         return self.espace2D.valeur(rlongi,rlati)
     def valeur (self,rlongi,rlati):
-        if not(self.origineX <= rlongi <= self.extremeX) : raise Exception ("erreur rlongi")
+        if not(self.origineX <= rlongi <= self.extremeX) : 
+            print ("Anomalie rlongi : "+ str(rlongi) + " "+str(self.origineX)+" "+str(self.extremeX))
+            raise Exception ("erreur rlongi")
         s=cmp(self.pixelHeight,0)
         if not(self.origineY*s <= s*rlati <= s*self.extremeY) : raise Exception ("erreur rlati")
         if rlongi==self.extremeX:
@@ -61,7 +64,7 @@ class WCSGeotiff:
         #print (xOffset,yOffset)
         return (self.array[yOffset,xOffset])
 
-"""
+'''
 filename="WCSgetCoverage.tiff"
 geotiff=WCSGeotiff(filename)
 print geotiff.valeurSurGrille(0,0)   #  coin Ouest-Nord
@@ -72,4 +75,4 @@ print geotiff.valeur(geotiff.extremeX,geotiff.extremeY)
 print geotiff.valeurInterpolee(geotiff.extremeX,geotiff.extremeY)
 print geotiff.valeur(3.06,50.6)
 print geotiff.valeurInterpolee(3.06,50.6)
-"""
+'''

@@ -50,17 +50,36 @@
 	            		var marker = L.marker([res["points"][i]["lat"],res["points"][i]["lng"]]).addTo(macarte)
 	            		.bindPopup(popup);
             		}
-            		else {
+            		else {  // affichage du dernier point de la trajectoire
             			var redIcon = new L.Icon({
-            			  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+            			  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',  // marker de couleur rouge
 						  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
 						  iconSize: [25, 41],
 						  iconAnchor: [12, 41],
 						  popupAnchor: [1, -34],
 						  shadowSize: [41, 41]							
 						});
-            			L.marker([res["points"][i]["lat"],res["points"][i]["lng"]], {icon: redIcon}).addTo(macarte).bindPopup(popup);  // les dernier point est en rouge
-            		}
+						var blackIcon = new L.Icon({
+            			  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-black.png',  // marker de couleur rouge
+						  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+						  iconSize: [25, 41],
+						  iconAnchor: [12, 41],
+						  popupAnchor: [1, -34],
+						  shadowSize: [41, 41]							
+						});
+            			var ageMarker=0.;   // calcul  de l'age du dernier marker pour déterminer sa couleur
+						var maintenant=Date.now();
+						console.log(maintenant);
+						ageMarker=(maintenant-res["points"][i]["ts"]*1000.)/1000.;
+						console.log(ageMarker);
+						if (ageMarker < 3600*6.) { // si le marker a moins de 6 minutes, on le trace en rouge
+            				L.marker([res["points"][i]["lat"],res["points"][i]["lng"]], {icon: redIcon}).addTo(macarte).bindPopup(popup);  // les dernier point est en rouge
+						}
+            			else { // sinon on le trace en noir
+            				L.marker([res["points"][i]["lat"],res["points"][i]["lng"]], {icon: blackIcon}).addTo(macarte).bindPopup(popup);  // les dernier point est en noir
+            			}
+            				
+        			}
           		
 			  	}
             	var poly=L.polyline(latlng).addTo(macarte);   // afficahge du tracé de la trajectoire
@@ -79,7 +98,7 @@
 			var host=window.location.host;
 			console.log (host);
 			//var url = "https://node-jpmv-jpmv.c9users.io:8080/getTrajectoire"
-			var url = "https://"+host+"/getTrajectoire";
+			var url = "http://"+host+"/getTrajectoire";
 			console.log(url);
 			return new Promise(function(resolve,reject){
 				$.ajax({  
