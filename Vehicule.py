@@ -43,11 +43,19 @@ class Vehicule:  # un véhicule qui se déplace
         # tester :  http://api.timezonedb.com/v2.1/get-time-zone?key=TE4GPIYXBN1Y&format=json&by=position&lat=50.6&lng=3.06&time=1552207312
         # tester :  http://api.geonames.org/timezoneJSON?lat=49.11&lng=-27.82&username=demo
         self.timeZone=json.loads(r.content)
-        if (self.timeZone["status"]=="ZERO_RESULTS"): raise Exception ("Vehicule : timeZone inconnu de Google")
-        #print self.timeZone["timeZoneId"]
-        self.heureLocale=self.heureUTC.to(self.timeZone["timeZoneId"])
-        #print ("heure locale du lieu: "+str(self.heureLocale))
+        if (self.timeZone["status"]=="ZERO_RESULTS"):  # si Google ne fournit pas le timezone
+            #raise Exception ("Vehicule : timeZone inconnu de Google")
+            print ("Vehicule : timeZone inconnu de Google")
+            #self.heureLocale=getHeureLocale(self.heureUTC,self.lng)
+            locale =float(self.heureUTC.timestamp)+(43200.*float(self.lng)/180.);  # décalage horaire géogrphique qui ne dépend que de la longitude du lieu
+            self.heureLocale=arrow.get(locale)
+            print ("heure UTC           : "+str(self.heureUTC))
+            print ("heure locale du lieu: "+str(self.heureLocale))
+        else:    
+            self.heureLocale=self.heureUTC.to(self.timeZone["timeZoneId"])
+        
     def getSunRiseSunSet(self):  # heures locales de lever et de coucher du soleil
+        #https://api.sunrise-sunset.org/json?lat=50.6&lng=-34&formatted=0
         url="https://api.sunrise-sunset.org/json?lat="+str(self.lat)+"&lng="+str(self.lng)+"&date=today&formatted=0"
         #print url
         status=0
@@ -57,19 +65,26 @@ class Vehicule:  # un véhicule qui se déplace
         #print r.content  # le résultat de la requête
         self.sunRiseSunSet=json.loads(r.content)
         sunrise=arrow.get(self.sunRiseSunSet["results"]["sunrise"])
+        sunriseTs=sunrise.timestamp
+        sunset=arrow.get(self.sunRiseSunSet["results"]["sunset"])
+        sunsetTs=sunset.timestamp
+        self.dayPosition= 100.*(self.tsUTC-sunriseTs)/(sunsetTs-sunriseTs)
+        print self.dayPosition
         self.heureSunriseLocale=sunrise.to(self.timeZone["timeZoneId"])
         if (self.heureSunriseLocale.day!=self.heureLocale.day):
             self.heureSunriseLocale=self.heureSunriseLocale.replace(day=self.heureLocale.day)
         #print sunrise
         self.tsSunriseUTC=self.heureSunriseLocale.timestamp
         #print sunrise.to(self.timeZone["timeZoneId"])
-        sunset=arrow.get(self.sunRiseSunSet["results"]["sunset"])
+        
         #print sunset
         self.heureSunsetLocale=sunset.to(self.timeZone["timeZoneId"])
-        if (self.heureSunsetLocale.day!=self.heureLocale.day):
-            self.heureSunsetLocale=self.heureSunsetLocale.replace(day=self.heureLocale.day)       
+        if (self.heureSunsetLocale.day!=self.heureLocale.day):  # si ce n'est pas le sunset d'aujourd'hui
+            self.heureSunsetLocale=self.heureSunsetLocale.replace(day=self.heureLocale.day)   # on le force à aujourd'hui    
         self.tsSunsetUTC=self.heureSunsetLocale.timestamp
         self.dayPosition=(self.tsUTC-self.tsSunriseUTC)/1./self.sunRiseSunSet["results"]["day_length"]*100.  # Où en est-on de la journée dans [0%,100%]
+        print self.dayPosition
+        
         if self.dayPosition <0.:
             self.dayPhase="night morning"
         elif 0<=self.dayPosition <50.:
@@ -121,7 +136,7 @@ class Vehicule:  # un véhicule qui se déplace
         print (u,v)
         print (VentHorizontal(u,v).toStringKmh())
         return (u,v)
-    def interpole (self,xinf,xsup,alpha):   # i nterpolation temporelle ou verticale
+    def interpole (self,xinf,xsup,alpha):   # interpolation temporelle ou verticale
         rep = ((100.-alpha)*xinf + alpha*xsup)/100.
         return rep
     def getVentActuelMeteomatics(self):  #  Vent là où je metrouve actuellemente ?
@@ -169,7 +184,7 @@ class Vehicule:  # un véhicule qui se déplace
             print row
     def affiche(self):
         for k in sorted(self.__dict__.keys()):
-            #print (k+":  "+str(self.__dict__[k]))
-            print (k)
-v=Vehicule(50.6,3.06,200)
+            print (k+":  "+str(self.__dict__[k]))
+            #print (k)
+v=Vehicule(50.6,-3.06,200)
 v.affiche()

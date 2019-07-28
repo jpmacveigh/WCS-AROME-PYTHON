@@ -50,7 +50,6 @@ class CoverageId :
         return self.ts(dateUTC)
     def ts(self,dateUTC):  #  timestamp d'une date UTC
         return int(dateUTC.strftime('%s'))
-    
     def ageRun(self):      # age du RUN en heures par différence à l'heure actuelle
         #ts = time.time()   
         ts= calendar.timegm(time.gmtime())
@@ -89,9 +88,15 @@ class CoverageId :
     def describeCoverage(self):  # Envoi et traitement d'une requette describeCoverage pour ce CoverageId
         path = self.describeCoveragePath()
         status=-1
-        while status != 200:
+        retry=0
+        while status != 200 and retry<=10:
+            retry=retry+1
             r=requests.get(path)  # envoi d'une requête "describeCoverage" du WCS
             status=r.status_code
+            #print("path: ",path," status decribeCoverage : ",str(status))
+        if retry>10 :
+            print("retry : "+str(retry)+" path: ",path," status decribeCoverage : ",str(status))
+            sys.exit(retry)
         fichier = open("WCSDescribeCoverage.xml","w")
         print >> fichier,r.content  # le résultat de la requête est un XML qui l'on écrit dans un ficheir
         fichier.close()
@@ -162,12 +167,12 @@ class CoverageId :
         self.timeNbEch=len(self.time)  # nombre d'échéance temporelles dasn le CoverageId
         tsFin=self.timeUTCRunTs+self.time[-1]
         if tsFin != self.timeFinTs :
-            print self.timeDeb
-            print self.timeDebTs
-            print self.time[-1]
-            print tsFin
-            print self.timeFin
-            print self.timeFinTs
+            print (self.timeDeb)
+            print (self.timeDebTs)
+            print (self.time[-1])
+            print (tsFin)
+            print (self.timeFin)
+            print (self.timeFinTs)
             raise Exception ("Erreur timeFinTs")
         tsDeb=self.timeUTCRunTs+self.time[0]
         if tsDeb != self.timeDebTs : raise Exception ("Erreur timeDebTs")
