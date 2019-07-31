@@ -5,10 +5,12 @@ import sys
 import time
 import calendar
 import os
+import json
 sys.path.insert(0, '/home/ubuntu/workspace/Utils') # insérer dans sys.path le dossier contenant le/les modules
 sys.path.insert(0, '/home/ubuntu/environment/node_jpmv/Utils') # insérer dans sys.path le dossier contenant le/les modules
 from Utils import lesChainesDateEntourantes
 from Utils import chaineUTCFromTs
+from Utils import tsNow
 from CoverageId import CoverageId
 #import xml.etree.ElementTree as ET
 from xml.dom import minidom
@@ -120,3 +122,24 @@ def prevision (Id,longi,lati,date,niveau=None):
         raise Exception ("prevision : Le champs est de dim=3, le niveau n'est pas requi");  
     Id.getCoverage(lati-.1,lati+.1,longi-.1,longi+.1,date,niveau)
     return Id.valeur(longi,lati)
+def allFuturesPrevisionsForId (Id,longi,lati):
+    result=[]
+    Id.describeCoverage()
+    for date in Id.timeDatePreviFutures :
+        res={}  # dictionnaire résultat
+        res["abrev"]=Id.code
+        res["run"]=Id.timeUTCRun
+        res["unit"]=Id.unite
+        res["nom"]=Id.chaineNom()
+        res["now"]=chaineUTCFromTs(tsNow())
+        if Id.dim==4 : niveau=Id.__dict__[Id.niv][0] # Cas où il faut le niveau
+        if Id.dim==3 : niveau=None  # Cas où le niveau n'est pas requis
+        res["z"]=niveau
+        res["niv"]=Id.niv
+         # on prend la première date des prévisions
+        res["date"]=date
+        Id.getCoverage(lati-.1,lati+.1,longi-.1,longi+.1,date,niveau)
+        res["val"]= Id.valeur(longi,lati)
+        print (res["abrev"],res["run"],res["date"],res["z"],res["niv"],res["val"])
+        result.append(json.dumps(res)) # renvoi une liste de json
+    return result
