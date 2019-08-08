@@ -208,18 +208,25 @@ class CoverageId :
         path=path+"&subset=time("+chaineDatePrevi+")"
         self.chaineDatePreviGot=chaineDatePrevi
         self.nivGot=niv
+        self.filename="WCSgetCoverage.tiff"
         #print ("getCoverage path: "+path)
         status=-1
-        while status != 200:
+        isGeotiff=False
+        while status != 200 and not isGeotiff:
             if not(status==-1): time.sleep(0.5)    # sauf la première fois, wait in seconds pour ne pas surcharger le serveur
             r=requests.get(path)  # envoi d'une requête "getCoverage" du WCS
             status=r.status_code
             #print ("getCoverage code: "+str(r.status_code))
-        self.filename="WCSgetCoverage.tiff"
+            #print ("premier octet : "+str(r.content[0]))
+            debut=r.content[0]  # lecture du premier octet du buffer retourné
+            if debut=="I" or debut == "M":  # on vérifie que le buffer retourné est bien un Geotiff
+                isGeotiff=True
+            else :
+                isGeotiff=False
         fichier = open(self.filename,"w")
         print >> fichier,r.content  # le résultat de la requête est un geotiff que l'on écrit dans un ficheir
         fichier.close()
-        self.geotiff=WCSGeotiff(path,self.filename)
+        self.geotiff=WCSGeotiff(path,self.filename)  # décodage du Geotiff
     def valeur(self,longi,lati):  #  renvoi la valeur du champs sans interpolation
         return self.geotiff.valeur(longi,lati)
     def aIgnorer(self):  # Faut-il le traiter pour l'actualisation des prévisions ?

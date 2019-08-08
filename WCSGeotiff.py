@@ -5,7 +5,7 @@ from Espace2D import Espace2D
 import numpy as np
 class WCSGeotiff:
     def __init__(self,pathGetCoverage,geotiffFileName):
-        self.dataset = gdal.Open(geotiffFileName, gdal.GA_ReadOnly)  # ouvertif du fichier geotiff en écriture seule
+        self.dataset = gdal.Open(geotiffFileName, gdal.GA_ReadOnly)  # ouverture du fichier geotiff en écriture seule
         #print self.dataset.RasterCount
         if (self.dataset) :
             self.geotransform = self.dataset.GetGeoTransform()

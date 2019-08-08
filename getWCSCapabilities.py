@@ -49,7 +49,6 @@ def getWCSCapabilities(resol):  # Lance une requête "getCapabilities" du WCS po
         print titre
     print len(titres)"""
     return res    # renvoi la liste des objets CoverageId exposés par le WCS de MF
-
 def mostRecentId(resol,code):   # renvoi le plus récent des CoverageId de resolution "resol" et dont le code du la variable est "code"
     tab=getWCSCapabilities(resol)   #  envoi d'ue requête getCapabilities au WCS pour la résolution "resol"
     ts=-sys.maxint-1    #  le plus grand des entiers
@@ -88,7 +87,6 @@ def profilVertical(resol,code,longi,lati):   #  renvoi le profil vertical à l'h
         res["now"]=chaineUTCFromTs(ts)
         return res
     else : return None
-
 def previsions (resol,code,longi,lati,niveau=None): 
     if not(niveau==None): niveau = int(niveau)
     Id=mostRecentId(resol,code)
@@ -125,21 +123,22 @@ def prevision (Id,longi,lati,date,niveau=None):
 def allFuturesPrevisionsForId (Id,longi,lati):
     result=[]
     Id.describeCoverage()
-    for date in Id.timeDatePreviFutures :
-        res={}  # dictionnaire résultat
+    #Id.affiche()
+    for date in Id.timeDatePreviFutures : # boucle sur toutes les dates futures
+        res={}  # dictionnaire résultat pour une prévision
         res["abrev"]=Id.code
         res["run"]=Id.timeUTCRun
         res["unit"]=Id.unite
         res["nom"]=Id.chaineNom()
-        res["now"]=chaineUTCFromTs(tsNow())
+        res["now"]=chaineUTCFromTs(tsNow())  # heure actuelle à laquelle on extrait la prévision des bases de MF
         if Id.dim==4 : niveau=Id.__dict__[Id.niv][0] # Cas où il faut le niveau
         if Id.dim==3 : niveau=None  # Cas où le niveau n'est pas requis
-        res["z"]=niveau
-        res["niv"]=Id.niv
+        res["z"]=niveau  # position sur la verticale (ou None si dim=3)
+        res["niv"]=Id.niv # nom de la coordonnée verticale (ou None si dim=3)
          # on prend la première date des prévisions
         res["date"]=date
         Id.getCoverage(lati-.1,lati+.1,longi-.1,longi+.1,date,niveau)
         res["val"]= Id.valeur(longi,lati)
         print (res["abrev"],res["run"],res["date"],res["z"],res["niv"],res["val"])
-        result.append(json.dumps(res)) # renvoi une liste de json
+        result.append(json.dumps(res)) # renvoi une liste de prévisiosn transformée en json 
     return result
