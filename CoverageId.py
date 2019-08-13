@@ -212,19 +212,21 @@ class CoverageId :
         #print ("getCoverage path: "+path)
         status=-1
         isGeotiff=False
-        while status != 200 and not isGeotiff:
+        while status != 200 or not isGeotiff:
             if not(status==-1): time.sleep(0.5)    # sauf la première fois, wait in seconds pour ne pas surcharger le serveur
             r=requests.get(path)  # envoi d'une requête "getCoverage" du WCS
             status=r.status_code
-            #print ("getCoverage code: "+str(r.status_code))
-            #print ("premier octet : "+str(r.content[0]))
-            debut=r.content[0]  # lecture du premier octet du buffer retourné
-            if debut=="I" or debut == "M":  # on vérifie que le buffer retourné est bien un Geotiff
+            print (path)
+            print ("getCoverage code: "+str(r.status_code))
+            print ("longueur retournée: "+ str(len(r.content)))
+            print ("deux premiers octets : "+str(r.content[0:2]))
+            debut=r.content[0:2]  # lecture des deux premiers octets du buffer retourné
+            if debut=="II" or debut == "MM":  # on vérifie que le buffer retourné est bien un Geotiff
                 isGeotiff=True
             else :
                 isGeotiff=False
-        fichier = open(self.filename,"w")
-        print >> fichier,r.content  # le résultat de la requête est un geotiff que l'on écrit dans un ficheir
+        fichier = open(self.filename,"w")  # quand le buffer retourné est correct, on le traite
+        print >> fichier,r.content  # le résultat de la requête est un geotiff que l'on écrit dans un fichier
         fichier.close()
         self.geotiff=WCSGeotiff(path,self.filename)  # décodage du Geotiff
     def valeur(self,longi,lati):  #  renvoi la valeur du champs sans interpolation

@@ -22,7 +22,7 @@ class Vehicule:  # un véhicule qui se déplace
         self.lng=lng
         self.lat=lat
         self.alt=alt
-        self.getTimeZone()   #  la timezone du lieu
+        self.getTimeZoneParIpgeolocation()   #  la timezone du lieu
         self.getSunRiseSunSet()  #  détermination heures locales de lever et de coucher du soleil du lieu du véhicule
         self.getHauteur()  #  aquisition de la hauteur en fonction de l'heure
         self.getVille()  # recherche du nom de la ville qui est en dessous
@@ -53,7 +53,19 @@ class Vehicule:  # un véhicule qui se déplace
             print ("heure locale du lieu: "+str(self.heureLocale))
         else:    
             self.heureLocale=self.heureUTC.to(self.timeZone["timeZoneId"])
-        
+    def getTimeZoneParIpgeolocation(self):  #  Dans quel fuseau horaire suis-je ?
+        self.getTime();
+        # https://api.ipgeolocation.io/timezone?apiKey=87922ec82b4846b0aa6e6ffcf7ccbb78&lat=-27.4748&long=153.017
+        urlGetTZ="https://api.ipgeolocation.io/timezone?apiKey=87922ec82b4846b0aa6e6ffcf7ccbb78&lat="+str(self.lat)+"&long="+str(self.lng)
+        status=0
+        while status != 200:
+            r=requests.get(urlGetTZ)
+            status=r.status_code
+        #print r.content  # le résultat de la requête
+        # tester :  http://api.timezonedb.com/v2.1/get-time-zone?key=TE4GPIYXBN1Y&format=json&by=position&lat=50.6&lng=3.06&time=1552207312
+        # tester :  http://api.geonames.org/timezoneJSON?lat=49.11&lng=-27.82&username=demo
+        self.timeZone=json.loads(r.content)
+        self.heureLocale=self.heureUTC.to(self.timeZone["timezone"])        
     def getSunRiseSunSet(self):  # heures locales de lever et de coucher du soleil
         #https://api.sunrise-sunset.org/json?lat=50.6&lng=-34&formatted=0
         url="https://api.sunrise-sunset.org/json?lat="+str(self.lat)+"&lng="+str(self.lng)+"&date=today&formatted=0"
@@ -69,16 +81,15 @@ class Vehicule:  # un véhicule qui se déplace
         sunset=arrow.get(self.sunRiseSunSet["results"]["sunset"])
         sunsetTs=sunset.timestamp
         self.dayPosition= 100.*(self.tsUTC-sunriseTs)/(sunsetTs-sunriseTs)
-        print self.dayPosition
-        self.heureSunriseLocale=sunrise.to(self.timeZone["timeZoneId"])
+        #print self.dayPosition
+        self.heureSunriseLocale=sunrise.to(self.timeZone["timezone"])
         if (self.heureSunriseLocale.day!=self.heureLocale.day):
             self.heureSunriseLocale=self.heureSunriseLocale.replace(day=self.heureLocale.day)
         #print sunrise
         self.tsSunriseUTC=self.heureSunriseLocale.timestamp
         #print sunrise.to(self.timeZone["timeZoneId"])
-        
         #print sunset
-        self.heureSunsetLocale=sunset.to(self.timeZone["timeZoneId"])
+        self.heureSunsetLocale=sunset.to(self.timeZone["timezone"])
         if (self.heureSunsetLocale.day!=self.heureLocale.day):  # si ce n'est pas le sunset d'aujourd'hui
             self.heureSunsetLocale=self.heureSunsetLocale.replace(day=self.heureLocale.day)   # on le force à aujourd'hui    
         self.tsSunsetUTC=self.heureSunsetLocale.timestamp
@@ -150,8 +161,8 @@ class Vehicule:  # un véhicule qui se déplace
         self.ventMeteomatics=json.loads(r.content)
         u= self.ventMeteomatics["data"][0]["coordinates"][0]["dates"][0]["value"]
         v= self.ventMeteomatics["data"][1]["coordinates"][0]["dates"][0]["value"]
-        print (u,v)
-        print (VentHorizontal(u,v).toStringKmh())
+        #print (u,v)
+        #print (VentHorizontal(u,v).toStringKmh())
         return (u,v)
     def getVille(self):   # détermination de la villeau dessus de laquelle est le véhicule
         path="https://nominatim.openstreetmap.org/reverse?format=json&lat="+str(self.lat)+"&lon="+str(self.lng)+"&zoom=18&addressdetails=1"
@@ -162,7 +173,10 @@ class Vehicule:  # un véhicule qui se déplace
             status=r.status_code
         #print r.content  # le résultat de la requête
         self.localisation=json.loads(r.content)
-        self.ville=self.localisation["display_name"]
+        if ("error" in self.localisation): 
+            self.ville="ville inconnue"
+        else :
+            self.ville=self.localisation["address"]["town"]
         return self.ville
     def initDB(self):
         self.conn = sqlite3.connect('traject.sqlite')
@@ -186,5 +200,5 @@ class Vehicule:  # un véhicule qui se déplace
         for k in sorted(self.__dict__.keys()):
             print (k+":  "+str(self.__dict__[k]))
             #print (k)
-v=Vehicule(50.6,-3.06,200)
+v=Vehicule(50.6,-43.06,200)
 v.affiche()
