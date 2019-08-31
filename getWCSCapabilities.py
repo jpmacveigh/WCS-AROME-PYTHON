@@ -120,25 +120,28 @@ def prevision (Id,longi,lati,date,niveau=None):
         raise Exception ("prevision : Le champs est de dim=3, le niveau n'est pas requi");  
     Id.getCoverage(lati-.1,lati+.1,longi-.1,longi+.1,date,niveau)
     return Id.valeur(longi,lati)
-def allFuturesPrevisionsForId (Id,longi,lati):
+def allFuturesPrevisionsForId (Id,longi,lati):  # renvoi toutes les prévisions (au premier niveau quand il y a plusiuers) futures en (longi,lati) contenues dans Id
     result=[]
-    Id.describeCoverage()
-    #Id.affiche()
-    for date in Id.timeDatePreviFutures : # boucle sur toutes les dates futures
-        res={}  # dictionnaire résultat pour une prévision
-        res["abrev"]=Id.code
-        res["run"]=Id.timeUTCRun
-        res["unit"]=Id.unite
-        res["nom"]=Id.chaineNom()
-        res["now"]=chaineUTCFromTs(tsNow())  # heure actuelle à laquelle on extrait la prévision des bases de MF
-        if Id.dim==4 : niveau=Id.__dict__[Id.niv][0] # Cas où il faut le niveau
-        if Id.dim==3 : niveau=None  # Cas où le niveau n'est pas requis
-        res["z"]=niveau  # position sur la verticale (ou None si dim=3)
-        res["niv"]=Id.niv # nom de la coordonnée verticale (ou None si dim=3)
-         # on prend la première date des prévisions
-        res["date"]=date
-        Id.getCoverage(lati-.1,lati+.1,longi-.1,longi+.1,date,niveau)
-        res["val"]= Id.valeur(longi,lati)
-        print (res["abrev"],res["run"],res["date"],res["z"],res["niv"],res["val"])
-        result.append(json.dumps(res)) # renvoi une liste de prévisiosn transformée en json 
+    Id.describeCoverage()  # On complète la description de l'Id
+    Id.affiche()
+    if Id.dim==3 : nbIterationsNiv = 1            
+    if Id.dim==4 : nbIterationsNiv = len(Id.__dict__[Id.niv])
+    for numNiv in range(0, nbIterationsNiv) :  # boucle sur les niveaux disponibles dans l'Id
+        for date in Id.timeDatePreviFutures :  # boucle sur toutes les dates futures
+            res={}  # dictionnaire résultat pour une prévision
+            res["abrev"]=Id.code
+            res["run"]=Id.timeUTCRun
+            res["unit"]=Id.unite
+            res["nom"]=Id.chaineNom()
+            res["now"]=chaineUTCFromTs(tsNow())  # heure actuelle à laquelle on extrait la prévision des bases de MF
+            if Id.dim==4 : niveau=Id.__dict__[Id.niv][numNiv] # Cas où il faut le niveau, et dans ce cas, on prend le premier (TODO : itérer sur tous les niveaux disponibles)
+            if Id.dim==3 : niveau=None  # Cas où le niveau n'est pas requis
+            res["z"]=niveau  # position sur la verticale (ou None si dim=3)
+            res["niv"]=Id.niv # nom de la coordonnée verticale (ou None si dim=3)
+             # on prend la première date des prévisions
+            res["date"]=date
+            Id.getCoverage(lati-.1,lati+.1,longi-.1,longi+.1,date,niveau)
+            res["val"]= Id.valeur(longi,lati)
+            print (res["abrev"],res["run"],res["date"],res["z"],res["niv"],res["val"])
+            result.append(json.dumps(res)) # renvoi une liste de prévisiosn transformée en json 
     return result

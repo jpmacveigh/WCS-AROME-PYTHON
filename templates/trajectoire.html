@@ -72,7 +72,7 @@
 						console.log(maintenant);
 						ageMarker=(maintenant-res["points"][i]["ts"]*1000.)/1000.;
 						console.log(ageMarker);
-						if (ageMarker < 3600*6.) { // si le marker a moins de 6 minutes, on le trace en rouge
+						if (ageMarker < 60*6.) { // si le marker a moins de 6 minutes, on le trace en rouge
             				L.marker([res["points"][i]["lat"],res["points"][i]["lng"]], {icon: redIcon}).addTo(macarte).bindPopup(popup);  // les dernier point est en rouge
 						}
             			else { // sinon on le trace en noir

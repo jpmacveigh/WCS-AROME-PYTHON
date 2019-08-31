@@ -15,7 +15,7 @@ from Utils import getHeureLocale
 sys.path.insert(0,'/home/ubuntu/node_jpmv/Utils') # insérer dans sys.path le dossier contenant le/les modules
 from Utils import *
 class Vehicule:  # un véhicule qui se déplace
-    def __init__(self,lat,lng,alt):
+    def __init__(self,lat,lng,alt):  # constructeur
         if not(-180.<=lng<=180.): raise Exception ("Vehicule : lng doit être dans [-180,+180]")
         if not(-90.<=lat<=90.): raise Exception ("Vehicule : lat doit être dans [-90,+90]")
         if not(alt>=0.): raise Exception ("Vehicule : alt être >= 0.")
@@ -72,7 +72,7 @@ class Vehicule:  # un véhicule qui se déplace
         #print url
         status=0
         while status != 200:
-            r=requests.get(url,verify=False)
+            r=requests.get(url)
             status=r.status_code
         #print r.content  # le résultat de la requête
         self.sunRiseSunSet=json.loads(r.content)
@@ -94,7 +94,7 @@ class Vehicule:  # un véhicule qui se déplace
             self.heureSunsetLocale=self.heureSunsetLocale.replace(day=self.heureLocale.day)   # on le force à aujourd'hui    
         self.tsSunsetUTC=self.heureSunsetLocale.timestamp
         self.dayPosition=(self.tsUTC-self.tsSunriseUTC)/1./self.sunRiseSunSet["results"]["day_length"]*100.  # Où en est-on de la journée dans [0%,100%]
-        print self.dayPosition
+        #print self.dayPosition
         
         if self.dayPosition <0.:
             self.dayPhase="night morning"
@@ -169,14 +169,14 @@ class Vehicule:  # un véhicule qui se déplace
         #print path
         status=0
         while status != 200:
-            r=requests.get(path,verify=False)
+            r=requests.get(path)
             status=r.status_code
-        #print r.content  # le résultat de la requête
+        print r.content  # le résultat de la requête
         self.localisation=json.loads(r.content)
         if ("error" in self.localisation): 
             self.ville="ville inconnue"
         else :
-            self.ville=self.localisation["address"]["town"]
+            self.ville=self.localisation["display_name"]
         return self.ville
     def initDB(self):
         self.conn = sqlite3.connect('traject.sqlite')
@@ -200,5 +200,5 @@ class Vehicule:  # un véhicule qui se déplace
         for k in sorted(self.__dict__.keys()):
             print (k+":  "+str(self.__dict__[k]))
             #print (k)
-v=Vehicule(50.6,-43.06,200)
-v.affiche()
+#v=Vehicule(-21.566896, 165.498048,200)
+#v.affiche()

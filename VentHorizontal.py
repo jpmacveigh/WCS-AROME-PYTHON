@@ -26,7 +26,7 @@ class VentHorizontal :  # Un vent horizontal défini par sa composante zonale u 
         x=str(self.direction360()).zfill(3)
         return (x+"/"+str(int(round(self.vitesse_kmh(),0)))+" km/h")
         
-
+'''
 
 v=VentHorizontal(-3,-3)
 print v.direction()
@@ -38,3 +38,4 @@ print v.vitesse_kt()
 print v.capVitesse()
 print v.toStringKmh()
 
+'''
