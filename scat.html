@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Scat</title>
+    <script src="https://cdn.anychart.com/releases/8.1.0/js/anychart-base.min.js" type="text/javascript"></script>
+    <style>
+    html, body {
+        width: 100%;
+        height: 100%;
+        margin:  0;
+        padding: 0;
+    }
+    #container {
+       width:  85%;
+       height: 500px;
+       margin: auto;
+    }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <script src="plot_points.js" type="text/javascript" ></script>
+    <script>
+    //var plot_points;
+    var data=[];
+    for (var i=0;i<=10;i++){
+        data[i]={x:i*4*Math.PI/10,value:Math.sin(i*4*Math.PI/10)/(i+1)};
+    }
+    var transLabel=function(x){  // fonction de transformation des Xlabels
+        var ret= new Date(Math.round(60*60*24*1000*x)).toISOString();
+        return ret;
+    };
+    plot_points(data,"container","sinus(x)/(x+1)",transLabel);
+    </script>
+</body>
+</html>

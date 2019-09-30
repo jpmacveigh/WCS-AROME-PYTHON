@@ -6,7 +6,7 @@ import time
 import calendar
 import os
 import json
-sys.path.insert(0, '/home/ubuntu/workspace/Utils') # insérer dans sys.path le dossier contenant le/les modules
+#sys.path.insert(0, '/home/ubuntu/workspace/Utils') # insérer dans sys.path le dossier contenant le/les modules
 sys.path.insert(0, '/home/ubuntu/environment/node_jpmv/Utils') # insérer dans sys.path le dossier contenant le/les modules
 from Utils import lesChainesDateEntourantes
 from Utils import chaineUTCFromTs
@@ -134,7 +134,7 @@ def allFuturesPrevisionsForId (Id,longi,lati):  # renvoi toutes les prévisions 
             res["unit"]=Id.unite
             res["nom"]=Id.chaineNom()
             res["now"]=chaineUTCFromTs(tsNow())  # heure actuelle à laquelle on extrait la prévision des bases de MF
-            if Id.dim==4 : niveau=Id.__dict__[Id.niv][numNiv] # Cas où il faut le niveau, et dans ce cas, on prend le premier (TODO : itérer sur tous les niveaux disponibles)
+            if Id.dim==4 : niveau=Id.__dict__[Id.niv][numNiv] # Cas où il faut le niveau.
             if Id.dim==3 : niveau=None  # Cas où le niveau n'est pas requis
             res["z"]=niveau  # position sur la verticale (ou None si dim=3)
             res["niv"]=Id.niv # nom de la coordonnée verticale (ou None si dim=3)

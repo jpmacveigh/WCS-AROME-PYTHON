@@ -1,0 +1,33 @@
+C'est la base de données sqlite qui contient les prévisions Arome obtenues des WCS de MF
+
+- ouverture de la base Arome.sqlite :
+
+ubuntu@ip-172-31-42-195:~/environment/node_jpmv/Essais-java$ sqlite3 Arome.sqlite 
+SQLite version 3.22.0 2018-01-22 18:45:57
+Enter ".help" for usage hints.
+
+- structure de la bases de données Arome.sqlite qui contient les prévisions Arome un point :
+sqlite> .schema
+CREATE TABLE prevision (now text,nom text,abrev text,niv text,unit text,run text,date text,val text, hauteur text);
+
+now         heure UTC de d'extraction de la prévision des bases de MF
+nom         nom de la variable prévue
+abrev       petit nom de la variable prévue
+niv         nom du niveau vertical ("height" ou "pressure")
+unit        unité de la variable prévue
+run         heure UTC du run de la prévision
+date        heure UTC pour laquelle la variable est prévue
+val         valeur de la variable prévue par Arome
+hauteur     valeur du niveau vertical (en m ou hPa)
+
+- nombre d'enregistremants de la table prevision :
+sqlite> select count(*) from prevision;
+17807
+
+- liste des enregistrements de la table prevision :
+sqlite> select * from prevision;
+qui donne une liste telle que :
+2019-09-18T20:52:28Z|V_COMPONENT_OF_WIND__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND|V(h)|height|m s-1|2019-09-18T15:00:00Z|2019-09-18T21:00:00Z|-8.75606346130371|500
+
+- supprimer les enregistrements de la table prevision antérieurs à une date :
+sqlite> delete from prevision where now <="2019-09-16T00:00:00Z";

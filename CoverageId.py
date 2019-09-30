@@ -49,10 +49,14 @@ class CoverageId :
         dateUTC=self.dateUTCRun()
         return self.ts(dateUTC)
     def ts(self,dateUTC):  #  timestamp d'une date UTC
-        return int(dateUTC.strftime('%s'))
+        #return int(dateUTC.strftime('%s'))
+        epoch=datetime.datetime(1970,1,1)
+        dt=dateUTC-epoch
+        ts=(dt.microseconds + (dt.seconds + dt.days * 86400) * 10**6) / 10**6
+        return ts
     def ageRun(self):      # age du RUN en heures par différence à l'heure actuelle
-        #ts = time.time()   
-        ts= calendar.timegm(time.gmtime())
+        ts = time.time()   
+        #ts= calendar.timegm(time.gmtime())
         return (ts-self.tsUTCRun())/60./60.
     def isCumul(self):    # le CoverageId concerne-t-il une donnée cumulée ou intégrée sur une durée ?
         index=string.find(self.coverageId,"Z_P")

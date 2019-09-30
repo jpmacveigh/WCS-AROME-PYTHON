@@ -1,0 +1,24 @@
+*** Traitement du WCS de Météo-France  ***   
+
+bash /Essais-java/InterrogationWCSMF.sh resol fichCoverageIDLabels
+    bash ./fabriquelesCoverageIDLabels $resol $fichCoverageIDLabels  // requete "getCapabilities"
+    java TraiteLesCoveragesIDLabels.java $resol $fichCoverageIDLabels
+        boucle sur les Labels
+            si ageLabel<= 8 heure et !aIgnorer
+                getLesCoveragesPaths(50,51,3,4)   // requete "describeCoverage"
+                boucle sur les getCoveragePaths
+                    si le path est une prévision
+                        lancer commande = "../getEtAnalyseCoverage.sh "+path.getCoveragePath()+" "+path.getNomDeLaVariable()
+                            curl $path > tifftempo  // requete "getCoverage"
+                            node ./test_geotiff.js $nomDeLaVariable > resultNode 2>resultNode
+                        sleep (500 msec)
+                    finsi
+                finboucle
+                sleep (1 sec)
+            finsi
+        finboucle
+    finjava
+finbash
+                
+            
+                

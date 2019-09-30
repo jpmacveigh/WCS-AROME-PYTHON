@@ -1,0 +1,20 @@
+
+liste des prévisions pour une même date:
+sqlite> select run,val from prevision where nom="DEW_POINT_TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND" and niv="height" and hauteur="100" and date="2019-09-24T03:00:00Z";
+2019-09-22T12:00:00Z|11.3423095703125
+2019-09-22T18:00:00Z|12.2857299804688
+2019-09-23T03:00:00Z|12.147119140625
+2019-09-23T06:00:00Z|11.4065490722656
+2019-09-23T12:00:00Z|10.9974609375
+2019-09-23T18:00:00Z|12.5741821289063
+2019-09-23T21:00:00Z|12.0786987304688
+
+moyenne des prévisions pour une même date:
+sqlite> select avg(val) from prevision where nom="DEW_POINT_TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND" and niv="height" and hauteur="100" and date="2019-09-24T03:00:00Z";
+11.833149937221
+sqlite> 
+
+et plus encore:
+sqlite> select count(val) as compteur, min(val), max(val),avg(val) from prevision where nom="DEW_POINT_TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND" and niv="height" and hauteur="100" and date="2019-09-24T03:00:00Z";
+7|10.9974609375|12.5741821289063|11.833149937221
+sqlite> 

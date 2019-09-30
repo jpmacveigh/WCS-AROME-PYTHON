@@ -1,0 +1,11 @@
+/home/ubuntu/environment/node_jpmv/node_modules/geotiff/dist/dataview64.js:51
+      return this._dataView.getUint16(offset, littleEndian);
+                            ^
+
+RangeError: Offset is outside the bounds of the DataView
+    at DataView.getUint16 (native)
+    at DataView64.getUint16 (/home/ubuntu/environment/node_jpmv/node_modules/geotiff/dist/dataview64.js:51:29)
+    at Object.GeoTIFF (/home/ubuntu/environment/node_jpmv/node_modules/geotiff/dist/geotiff.js:24:27)
+    at Object.parse (/home/ubuntu/environment/node_jpmv/node_modules/geotiff/dist/main.js:25:10)
+    at /home/ubuntu/environment/node_jpmv/Essais-java/traiteGeotiff.js:10:25
+    at FSReqWrap.readFileAfterClose [as oncomplete] (fs.js:447:3)

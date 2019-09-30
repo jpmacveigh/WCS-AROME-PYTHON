@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>tt</title>
+
+<style type="text/css">
+
+body{
+	background-color:gray;	
+}
+
+.deco{
+
+display:inline-block;
+border:solid 1px;
+
+}
+
+</style>
+
+<script src="graph_k.js"></script>
+
+<script>
+
+
+addEventListener("load",function(){;
+
+		var data=[
+			{ nom: "math", valeur: 3 },
+			{ nom: "francais", valeur: 2 },
+			{ nom: "science", valeur: 1 },
+			{ nom: "javascript", valeur: 4 },
+			{ nom: "anglais", valeur: 7 },
+			{ nom: "histoire", valeur: 3 },
+			{ nom: "javascript", valeur: 4 },
+			{ nom: "geographie", valeur: 6 },
+			{ nom: "css", valeur: 4 }
+		];
+
+
+		var config={
+			canvas:"cvsgraph_2",	// id du canvas conteneur
+			data:data,				// objet json contenant les donnés
+			requete:false,			// si l'objet json provient du serveur par l'intermediaire d'une requete en ajax
+			adresse_req:null,		// adresse du fichier pour la requete
+			rang:8,					// définit le nombre de polygones
+			repere:6,				// pour mettre en surimpression un des polygones
+			titre:"bilan de note",// titre affiché sur le haut du canvas
+			couleur_fond:"#595959",	// couleur de fond
+			police:"14px Verdana",	// police.
+			couleur_graph:"blue",	// couleur de la forme de mise en evidence.
+			couleur_police:"white",	// couleur de la police
+			multicolor:false,		// true ou false les branche et le texte seront de différentes couleurs a false elles auront la couleur de la police.
+			cvs_detecte:true		// true ou false affiche une info bull avec le nom et la valeur du point survolée
+		}
+		new graph_araignee(config)
+		
+		
+//////////////////////////////////////////////////////////////////////////////////
+		
+		
+		var data=[
+
+				{ nom: "science", valeur: 34 },
+				{ nom: "geographie", valeur: 32 },
+				{ nom: "histoire", valeur: 29 },
+				{ nom: "javascript", valeur: 20 },
+				{ nom: "francais", valeur: 18 },
+				{ nom: "anglais", valeur: 16 },
+				{ nom: "css", valeur: 10 },
+				{ nom: "math", valeur: 7 }
+			];
+
+
+		var config={
+			canvas:"cvsgraph_1",	// id du canvas conteneur
+			data:data,				// objet json contenant les donnés
+			requete:false,			//  si l'objet json provient du serveur par l'intermediaire d'une requete en ajax
+			adresse_req:null,		// adresse du fichier pour la requete
+			espace:0,				// espace entre chaque barres
+			bord:20,				// taille de bordure du canvas
+			bord_bas:50,			// distance du bord bas du canvas
+			axe_y_max:30,			// valeur maxi de l'axe verticale (y)
+			ligne_repere:true,		// true ou false  affiche une ligne horizontal pour chaques repere
+			pourcentage_courbe:true,// true ou false affiche ou cache les pourcentage cumulé sur la courbe
+			pourcentage_barre:true,	// true ou false affiche ou cache le pourcentage de chaques barre
+			valeur_barre:true,		// true ou false affiche ou cache la valeur de chaque barre
+			titre:"Pareto",			// titre affiché sur le haut du canvas
+			couleur_fond:"white",	// couleur de fond
+			police:"12px Verdana",	// police
+			couleur_barre:"#4F81BC",// la couleur des barre
+			cvs_detecte:true		// true ou false affiche une info bull avec le nom et la valeur du point survolée
+		}
+		new graph_pareto(config)
+		
+		
+		
+		
+///////////////////////////////////////////////////////////////////////////////////
+		
+		
+		
+		
+		var data=[
+			[
+				"janvier", 
+				"fevrier",
+				"mars",
+				"avril",
+				"mai",
+				"juin",
+				"juillet",
+				"aout",
+				"septembre",
+				"octobre",
+				"novembre",
+				"decembre"
+			],
+			
+			[
+				{ nom: "parfum"},
+				{ valeur:44 },
+				{ valeur: 48 },
+				{ valeur: 40 },
+				{ valeur: 60 },
+				{ valeur: 75 },
+				{ valeur: 70 },
+				{ valeur: 90 },
+				{ valeur: 103 },
+				{ valeur: 120 },
+				{ valeur: 100 },
+				{ valeur: 90 },
+				{ valeur: 105 }
+			],
+			
+			[
+				{ nom: "chocolat"},
+				{ valeur: 28 },
+				{ valeur: 20 },
+				{ valeur: 30 },
+				{ valeur: 25 },
+				{ valeur: 42 },
+				{ valeur: 36 },
+				{ valeur: 38 },
+				{ valeur: 33 },
+				{ valeur: 22 },
+				{ valeur: 40 },
+				{ valeur: 36 },
+				{ valeur: 44 }
+			]
+			
+		];
+		
+		
+		var config={
+			canvas:"cvsgraph_3",	// id du canvas conteneur
+			data:data,				// objet json contenant les donnés
+			requete:false,			//  si l'objet json provient du serveur par l'intermediaire d'une requete en ajax
+			adresse_req:null,		// adresse du fichier pour la requete
+			bord:20,				// taille de bordure du canvas
+			bord_bas:50,			// distance du bord bas du canvas
+			axe_y_max:130,			// valeur maxi de l'axe verticale (y)
+			axe_y_min:10,			// valeur maxi de l'axe verticale (y)
+			repere:10,				// affiche des reperes en fonction de la valeur definit pour l'axe y 
+			sous_repere:2,			// affiche des sous repere a 0 il n'y a pas de sous reperes cette valeur doit etre un multiple de la valeur du repere par exemple si on met un repere de 10 on pourra metre soit 1 soit 2 soit 2.5 soit 5
+			ligne_repere:true,		// true ou false  affiche une ligne horizontal pour chaques repere
+			moyenne:true,			// true ou false affiche la moyen generale du graphique
+			affiche_valeur:true,	// affiche les valeurs au dessus des points.
+			affiche_legende:true,	// affiche la legende. en haut a partir de la gauche
+			titre:"volume de vente",// titre affiché sur le haut du canvas
+			couleur_fond:"white",	// couleur de fond
+			police:"12px Verdana",	// police
+			cvs_detecte:true		// true ou false affiche une info bull avec le nom et la valeur du point survolée
+		}
+
+		new graph_courbe(config)
+		
+		
+		var data=[
+			[
+				"janvier", 
+				"fevrier",
+				"mars",
+				"avril",
+				"mai",
+				"juin",
+				"juillet",
+				"aout",
+				"septembre",
+				"octobre",
+				"novembre",
+				"decembre"
+			],
+			
+			[
+				{ nom: "temperature"},
+				{ valeur:-5 },
+				{ valeur: -10 },
+				{ valeur: 3 },
+				{ valeur: 12 },
+				{ valeur: 20 },
+				{ valeur: 26 },
+				{ valeur: 28 },
+				{ valeur: 28 },
+				{ valeur: 24 },
+				{ valeur: 14 },
+				{ valeur: 6 },
+				{ valeur: 1 }
+			],
+			
+		];
+
+		var config={
+			canvas:"cvsgraph_31",	// id du canvas conteneur
+			data:data,				// objet json contenant les donnés
+			requete:false,			//  si l'objet json provient du serveur par l'intermediaire d'une requete en ajax
+			adresse_req:null,		// adresse du fichier pour la requete
+			bord:20,				// taille de bordure du canvas
+			bord_bas:50,			// distance du bord bas du canvas
+			axe_y_max:40,			// valeur maxi de l'axe verticale (y)
+			axe_y_min:-30,			// valeur maxi de l'axe verticale (y)
+			repere:10,				// affiche des reperes en fonction de la valeur definit pour l'axe y 
+			sous_repere:2,			// affiche des sous repere a 0 il n'y a pas de sous reperes cette valeur doit etre un multiple de la valeur du repere par exemple si on met un repere de 10 on pourra metre soit 1 soit 2 soit 2.5 soit 5
+			ligne_repere:true,		// true ou false  affiche une ligne horizontal pour chaques repere
+			moyenne:true,			// true ou false affiche la moyen generale du graphique
+			affiche_valeur:true,	// affiche les valeurs au dessus des points.
+			affiche_legende:true,	// affiche la legende. en haut a partir de la gauche
+			titre:"moyen mensuel",	// titre affiché sur le haut du canvas
+			couleur_fond:"white",	// couleur de fond
+			police:"12px Verdana",	// police
+			cvs_detecte:true		// true ou false affiche une info bull avec le nom et la valeur du point survolée
+		}
+		new graph_courbe(config)
+
+		
+
+		
+		
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+
+	var data=[
+	{ "nom": "comptabilité", "valeur": 10 },
+	{ "nom": "marketing", "valeur": 20 },
+	{ "nom": "gestion", "valeur": 10 },
+	{ "nom": "secretariat", "valeur": 5 },
+	{ "nom": "DRH", "valeur": 10 },
+	{ "nom": "prospecteurs", "valeur": 15 },
+	{ "nom": "logistique", "valeur": 15 },
+	{ "nom": "commercial", "valeur": 20 }
+]
+		
+			var config={
+			canvas:"cvsgraph_4",		// id du canvas conteneur
+			data:data,					// objet json contenant les donnés.
+			requete:false,				//  true ou false si l'objet json provient du serveur par l'intermediaire d'une requete en ajax
+			adresse_req:"http://scriptevol.free.fr/contenu/graph/donne.json",	// adresse du fichier pour la requete
+			ombre_centre:true,			// true ou false affiche un effet d'ombre dans le cercle qui donne une impression de 3d
+			vide_centre:50,				// cree un cercle creux en son centre.
+			position_x_centre:-75,		//modifie la position du camenbert par rapport au centre sur l'axe x
+			couleur_contour:"white",	// couleur des contour.
+			epaisseur_contour:2,		// épaisseur des contours.
+			legende_cercle:true,		// true ou false affiche la légende autour du cercle.
+			legende_pourcent:true,		// true ou false la valeur de la légende autour du cercle est affiche en pourcentage(true) ou sa valeur reel (false)
+			affiche_legende:true,		// true ou false affiche la légende de texte en haut a droite.
+			titre:"Effectif global",	// titre affiché sur le haut du canvas.
+			couleur_fond:"#7EBAFF",		// couleur de fond.
+			police:"12px Verdana"		// police.
+		
+		}
+		new graph_camenbert(config)
+		
+		
+		var config={
+			canvas:"cvsgraph_42",		// id du canvas conteneur
+			data:data,					// objet json contenant les donnés.
+			requete:false,				//  true ou false si l'objet json provient du serveur par l'intermediaire d'une requete en ajax
+			adresse_req:"http://scriptevol.free.fr/contenu/graph/donne.json",	// adresse du fichier pour la requete
+			ombre_centre:false,			// true ou false affiche un effet d'ombre dans le cercle qui donne une impression de 3d
+			vide_centre:1,				// cree un cercle creux en son centre.
+			position_x_centre:0,		//modifie la position du camenbert par rapport au centre sur l'axe x
+			couleur_contour:"white",	// couleur des contour.
+			epaisseur_contour:0,		// épaisseur des contours.
+			legende_cercle:true,		// true ou false affiche la légende autour du cercle.
+			legende_pourcent:true,		// true ou false la valeur de la légende autour du cercle est affiche en pourcentage(true) ou sa valeur reel (false)
+			affiche_legende:false,		// true ou false affiche la légende de texte en haut a droite.
+			titre:"Effectif global",	// titre affiché sur le haut du canvas.
+			couleur_fond:"#7EBAFF",		// couleur de fond.
+			police:"12px Verdana"		// police.
+		
+		}
+		new graph_camenbert(config)
+		
+		var config={
+			canvas:"cvsgraph_43",		// id du canvas conteneur
+			data:data,					// objet json contenant les donnés.
+			requete:false,				//  true ou false si l'objet json provient du serveur par l'intermediaire d'une requete en ajax
+			adresse_req:"http://scriptevol.free.fr/contenu/graph/donne.json",	// adresse du fichier pour la requete
+			ombre_centre:false,			// true ou false affiche un effet d'ombre dans le cercle qui donne une impression de 3d
+			vide_centre:95,				// cree un cercle creux en son centre.
+			position_x_centre:0,		//modifie la position du camenbert par rapport au centre sur l'axe x
+			couleur_contour:"white",	// couleur des contour.
+			epaisseur_contour:1,		// épaisseur des contours.
+			legende_cercle:true,		// true ou false affiche la légende autour du cercle.
+			legende_pourcent:false,		// true ou false la valeur de la légende autour du cercle est affiche en pourcentage(true) ou sa valeur reel (false)
+			affiche_legende:false,		// true ou false affiche la légende de texte en haut a droite.
+			titre:"Effectif global",	// titre affiché sur le haut du canvas.
+			couleur_fond:"#7EBAFF",		// couleur de fond.
+			police:"12px Verdana"		// police.
+		
+		}
+		new graph_camenbert(config)
+		
+		
+////////////////////////////////////////////////////////////////////////////////////////////
+
+var data=[
+			{ nom: "math", valeur: 1 },
+			{ nom: "francais", valeur: 3 },
+			{ nom: "science", valeur: 5 },
+			{ nom: "anglais", valeur: 7 },
+			{ nom: "histoire", valeur: 8 },
+			{ nom: "javascript", valeur: 11 },
+			{ nom: "geographie", valeur: 13 },
+			{ nom: "science", valeur: 13.6 },
+			{ nom: "anglais", valeur: 14.2 },
+			{ nom: "histoire", valeur: 15 },
+			{ nom: "javascript", valeur: 16.3 },
+			{ nom: "geographie", valeur: 17 },
+			{ nom: "geographie", valeur: 17.6 },
+			{ nom: "geographie", valeur: 18.4 },
+			{ nom: "css", valeur: 19 },
+			{ nom: "math", valeur: 22 },
+			{ nom: "francais", valeur: 24 },
+			{ nom: "science", valeur: 28 },
+			{ nom: "anglais", valeur: 31 },
+			{ nom: "histoire", valeur: 33 },
+			{ nom: "javascript", valeur: 37 },
+			{ nom: "geographie", valeur: 40 },
+			{ nom: "css", valeur: 42 }
+			];
+
+
+		var config={
+			canvas:"cvsgraph_5",	// id du canvas conteneur
+			data:data,				// objet json contenant les donnés
+			requete:false,			//  si l'objet json provient du serveur par l'intermediaire d'une requete en ajax
+			adresse_req:null,		// adresse du fichier pour la requete
+			espace:4,				// espace entre chaque barres
+			bord:20,				// taille de bordure du canvas
+			bord_gauche:50,			// distance des bord gauche et bas du canvas
+			titre:"Note par matiere",// titre affiché sur le haut du canvas
+			couleur_barre:"#4F81BC",	// la couleur des barres
+			couleur_fond:"white",	// couleur de fond
+			police:"14px Verdana",	// police
+			cvs_detecte:true		// true ou false affiche une info bull avec le nom et la valeur de la barre survolée
+		}
+
+		new graph_honrizontal(config)
+
+		
+		
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+		var data=[
+			{ "nom": "math", "valeur": 6 },
+			{ "nom": "francais", "valeur": 11 },
+			{ "nom": "science", "valeur": 14 },
+			{ "nom": "anglais", "valeur": 16 },
+			{ "nom": "histoire", "valeur": 19 },
+			{ "nom": "javascript", "valeur": 20 },
+			{ "nom": "geographie", "valeur": 12 },
+			{ "nom": "css", "valeur": 10 }
+			];
+
+
+		var config={
+			canvas:"cvsgraph_6",	// id du canvas conteneur.
+			data:data,				// objet json contenant les donnés.
+			requete:false,			//  si l'objet json provient du serveur par l'intermediaire d'une requete en ajax.
+			adresse_req:null,		// adresse du fichier pour la requete.
+			espace:10,				// espace entre chaque barres.
+			bord:20,				// taille de bordure du canvas.
+			bord_bas:40,			// distance du bord bas du canvas.
+			axe_y_max:20,			// valeur maxi de l'axe verticale (y).
+			axe_y_min:0,			// valeur mini de l'axe verticale (y) accepte les valeurs inferieur a zero.
+			repere:5,				// affiche des reperes en fonction de la valeur definit pour l'axe y. 
+			sous_repere:2.5,			// affiche des sous repere a 0 il n'y a pas de sous reperes cette valeur doit etre un multiple de la valeur du repere par exemple si on met un repere de 10 on pourra metre soit 1 soit 2 soit 2.5 soit 5
+			ligne_repere:true,		// true ou false  affiche une ligne horizontal pour chaques repere.
+			moyenne:true,			// true ou false affiche la moyen generale du graphique.
+			affiche_valeur:true,	// true ou false affiche la valeur de chaques barres.
+			affiche_legende:false,	// affiche la legende. en haut a partir de la gauche
+			titre:"Note par matiere",// titre affiché sur le haut du canvas.
+			couleur_fond:"white",	// couleur de fond.
+			police:"12px Verdana",	// police.
+			multicouleur:true,		// true ou false dans le cas de barre mono valeur les barre seront de différentes couleurs a false elles seront de la meme couleur.
+			cvs_detecte:false		// true ou false affiche une info bull avec le nom et la valeur de la barre survolée
+		}
+
+		new graph_barre(config)
+
+
+
+
+
+		var data=[
+			{ "nom": "janvier", "produit1": 5,"produit2": 10,"produit3": 16 },
+			{ "nom": "fevrier", "produit1": 11,"produit2": 8,"produit3": 5 },
+			{ "nom": "mars", "produit1": 14,"produit2": 7,"produit3": 2 },
+			{ "nom": "avril", "produit1": 16,"produit2": 16,"produit3": 11 },
+			{ "nom": "mai", "produit1": 19,"produit2": 3,"produit3": 5 },
+			{ "nom": "juin", "produit1": 20,"produit2": 14,"produit3": 3 },
+			{ "nom": "juillet", "produit1": 12,"produit2": 4,"produit3": 2 },
+			{ "nom": "aout", "produit1": 10,"produit2": 8,"produit3": 8 }
+			];
+
+
+		var config={
+			canvas:"cvsgraph_7",	// id du canvas conteneur.
+			data:data,				// objet json contenant les donnés.
+			requete:false,			//  si l'objet json provient du serveur par l'intermediaire d'une requete en ajax.
+			adresse_req:null,		// adresse du fichier pour la requete.
+			espace:20,				// espace entre chaque barres.
+			bord:20,				// taille de bordure du canvas.
+			bord_bas:40,			// distance du bord bas du canvas.
+			axe_y_max:50,			// valeur maxi de l'axe verticale (y).
+			axe_y_min:0,			// valeur mini de l'axe verticale (y) accepte les valeurs négatives.
+			repere:5,				// affiche des reperes en fonction de la valeur definit pour l'axe y. 
+			sous_repere:0,			// affiche des sous repere a 0 il n'y a pas de sous reperes cette valeur doit etre un multiple de la valeur du repere par exemple si on met un repere de 10 on pourra metre soit 1 soit 2 soit 2.5 soit 5
+			ligne_repere:true,		// true ou false  affiche une ligne horizontal pour chaques repere.
+			moyenne:false,			// true ou false affiche la moyen generale du graphique.
+			affiche_valeur:true,	// true ou false affiche la valeur de chaques barres.
+			affiche_legende:true,	// affiche la legende. en haut a partir de la gauche
+			titre:"vente par famille",// titre affiché sur le haut du canvas.
+			couleur_fond:"white",	// couleur de fond.
+			police:"14px Verdana",	// police.
+			multicouleur:false,		// true ou false dans le cas de barre mono valeur les barre seront de différentes couleurs a false elles seron de la meme couleur.
+			cvs_detecte:true		// true ou false affiche une info bull avec le nom et la valeur de la barre survolée
+		}
+
+		new graph_barre(config)
+		
+		
+		
+		
+		var data=[
+			{ "nom": "proxon", "valeur": 6 },
+			{ "nom": "risum", "valeur": 11 },
+			{ "nom": "axor", "valeur": 14 },
+			{ "nom": "eral", "valeur": -16 },
+			{ "nom": "parcon", "valeur": 19 },
+			{ "nom": "zoduim", "valeur": -20 },
+			{ "nom": "carus", "valeur": 12 },
+			{ "nom": "pilexis", "valeur": -10 },
+			{ "nom": "emonium", "valeur": 20 },
+			{ "nom": "varal", "valeur": 12 },
+			{ "nom": "inos", "valeur": -10 }
+			];
+
+
+		var config={
+			canvas:"cvsgraph_8",	// id du canvas conteneur.
+			data:data,				// objet json contenant les donnés.
+			requete:false,			//  si l'objet json provient du serveur par l'intermediaire d'une requete en ajax.
+			adresse_req:null,		// adresse du fichier pour la requete.
+			espace:10,				// espace entre chaque barres.
+			bord:20,				// taille de bordure du canvas.
+			bord_bas:40,			// distance du bord bas du canvas.
+			axe_y_max:25,			// valeur maxi de l'axe verticale (y).
+			axe_y_min:-25,			// valeur mini de l'axe verticale (y) accepte les valeurs inferieur a zero.
+			repere:5,				// affiche des reperes en fonction de la valeur definit pour l'axe y. 
+			sous_repere:2.5,			// affiche des sous repere a 0 il n'y a pas de sous reperes cette valeur doit etre un multiple de la valeur du repere par exemple si on met un repere de 10 on pourra metre soit 1 soit 2 soit 2.5 soit 5
+			ligne_repere:true,		// true ou false  affiche une ligne horizontal pour chaques repere.
+			moyenne:false,			// true ou false affiche la moyen generale du graphique.
+			affiche_valeur:true,	// true ou false affiche la valeur de chaques barres.
+			affiche_legende:false,	// affiche la legende. en haut a partir de la gauche
+			titre:"Inventaire 2016",// titre affiché sur le haut du canvas.
+			couleur_fond:"white",	// couleur de fond.
+			police:"12px Verdana",	// police.
+			multicouleur:true,		// true ou false dans le cas de barre mono valeur les barre seront de différentes couleurs a false elles seront de la meme couleur.
+			cvs_detecte:true		// true ou false affiche une info bull avec le nom et la valeur de la barre survolée
+		}
+
+		new graph_barre(config)
+		
+		
+		
+		var data=[
+			{ "nom": "math", "valeur": 56 },
+			{ "nom": "francais", "valeur": 61 },
+			{ "nom": "science", "valeur": 64 },
+			{ "nom": "anglais", "valeur": 66 },
+			{ "nom": "histoire", "valeur": 69 },
+			{ "nom": "html", "valeur": 70 },
+			{ "nom": "canvas", "valeur": 62 },
+			{ "nom": "php", "valeur": 53 },
+			{ "nom": "javascript", "valeur": 70 },
+			{ "nom": "geographie", "valeur": 62 },
+			{ "nom": "css", "valeur": 60 }
+			];
+
+
+		var config={
+			canvas:"cvsgraph_9",	// id du canvas conteneur.
+			data:data,				// objet json contenant les donnés.
+			requete:false,			//  si l'objet json provient du serveur par l'intermediaire d'une requete en ajax.
+			adresse_req:null,		// adresse du fichier pour la requete.
+			espace:10,				// espace entre chaque barres.
+			bord:20,				// taille de bordure du canvas.
+			bord_bas:40,			// distance du bord bas du canvas.
+			axe_y_max:80,			// valeur maxi de l'axe verticale (y).
+			axe_y_min:50,			// valeur mini de l'axe verticale (y) accepte les valeurs inferieur a zero.
+			repere:5,				// affiche des reperes en fonction de la valeur definit pour l'axe y. 
+			sous_repere:2.5,			// affiche des sous repere a 0 il n'y a pas de sous reperes cette valeur doit etre un multiple de la valeur du repere par exemple si on met un repere de 10 on pourra metre soit 1 soit 2 soit 2.5 soit 5
+			ligne_repere:true,		// true ou false  affiche une ligne horizontal pour chaques repere.
+			moyenne:false,			// true ou false affiche la moyen generale du graphique.
+			affiche_valeur:true,	// true ou false affiche la valeur de chaques barres.
+			affiche_legende:false,	// affiche la legende. en haut a partir de la gauche
+			titre:"Note par matiere",// titre affiché sur le haut du canvas.
+			couleur_fond:"white",	// couleur de fond.
+			police:"12px Verdana",	// police.
+			multicouleur:false,		// true ou false dans le cas de barre mono valeur les barre seront de différentes couleurs a false elles seront de la meme couleur.
+			cvs_detecte:true		// true ou false affiche une info bull avec le nom et la valeur de la barre survolée
+		}
+
+		new graph_barre(config)
+
+	} 
+,false)
+
+
+
+</script>
+</head>
+<body>
+
+<div style="height:380px;width:650px;margin:auto"><canvas id="cvsgraph_2" width="650" height="380"></canvas></div>
+<br>
+<div style="height:380px;width:650px;margin:auto"><canvas id="cvsgraph_1" width="650" height="380"></canvas></div>
+<br>
+<div style="height:380px;width:650px;margin:auto"><canvas id="cvsgraph_3" width="650" height="380"></canvas></div>
+<br>
+<div style="height:380px;width:650px;margin:auto"><canvas id="cvsgraph_31" width="650" height="380"></canvas></div>
+<br>
+<div style="height:380px;width:650px;margin:auto"><canvas id="cvsgraph_4" width="650" height="380"></canvas></div>
+<br>
+<div style="height:380px;width:650px;margin:auto"><canvas id="cvsgraph_42" width="650" height="380"></canvas></div>
+<br>
+<div style="height:380px;width:650px;margin:auto"><canvas id="cvsgraph_43" width="650" height="380"></canvas></div>
+<br>
+<div style="height:480px;width:650px;margin:auto"><canvas id="cvsgraph_5" width="650" height="480"></canvas></div>
+<br>
+<div style="height:380px;width:650px;margin:auto"><canvas id="cvsgraph_6" width="650" height="380"></canvas></div>
+<br>
+<div style="height:380px;width:650px;margin:auto"><canvas id="cvsgraph_7" width="650" height="380"></canvas></div>
+<br>
+<div style="height:380px;width:650px;margin:auto"><canvas id="cvsgraph_8" width="650" height="380"></canvas></div>
+<br>
+<div style="height:380px;width:650px;margin:auto"><canvas id="cvsgraph_9" width="650" height="380"></canvas></div>
+
+</body>
+</html>
