@@ -51,7 +51,7 @@ def getWCSCapabilities(resol):  # Lance une requête "getCapabilities" du WCS po
     return res    # renvoi la liste des objets CoverageId exposés par le WCS de MF
 def mostRecentId(resol,code):   # renvoi le plus récent des CoverageId de resolution "resol" et dont le code du la variable est "code"
     tab=getWCSCapabilities(resol)   #  envoi d'ue requête getCapabilities au WCS pour la résolution "resol"
-    ts=-sys.maxint-1    #  le plus grand des entiers
+    ts=-sys.maxsize-1    #  le plus grand des entiers
     res=None
     for Id in tab:    #  recherche du plus récent run pour le paramètre de code "code"
         if Id.code==code and Id.timeUTCRunTs>=ts :  #  on lit le timestamp du run
@@ -87,7 +87,11 @@ def profilVertical(resol,code,longi,lati):   #  renvoi le profil vertical à l'h
         res["now"]=chaineUTCFromTs(ts)
         return res
     else : return None
-def previsions (resol,code,longi,lati,niveau=None): 
+def profilVerticalComplet(resol,code_generique,longi,lati):   #  renvoi le profil vertical à l'heure précedante dans les deux coordonées verticales
+    resh=profilVertical(resol,code_generique+"(h)",longi,lati)  # profil vertical en corrdonée z
+    resp=profilVertical(resol,code_generique+"(p)",longi,lati)  # profil vertical en coordonnée p
+    return resh,resp
+def previsions (resol,code,longi,lati,niveau=None): # renvoie toutes les prévisions disponibles pour un code donné
     if not(niveau==None): niveau = int(niveau)
     Id=mostRecentId(resol,code)
     if Id:
@@ -107,20 +111,20 @@ def previsions (resol,code,longi,lati,niveau=None):
         res["position"]={"longitude":longi,"latitude":lati}
         res["previsions"]=[]
         res["nbPrevi"]= len(Id.timeDatePrevi);
-        for date in Id.timeDatePrevi:
+        for date in Id.timeDatePrevi:  # itération sur les dates des prévisions
             #Id.getCoverage(lati-.1,lati+.1,longi-.1,longi+.1,date,niveau)
             previ=prevision(Id,longi,lati,date,niveau)
             res["previsions"].append({"date":date,"valeur":previ})
         return res;
     return {"error":"Previsions : mostRecentId was not found : Check the given code"};
-def prevision (Id,longi,lati,date,niveau=None):
+def prevision (Id,longi,lati,date,niveau=None):  # prévision pour uen date donnée
     if Id.dim==4 and niveau==None : # Cas où il manque le niveau
         raise Exception ("prevision : Le champs est de dim=4, le niveau est manquant");
     if Id.dim==3 and not(niveau==None): # Cas où le niveau n'est pas requis
         raise Exception ("prevision : Le champs est de dim=3, le niveau n'est pas requi");  
     Id.getCoverage(lati-.1,lati+.1,longi-.1,longi+.1,date,niveau)
     return Id.valeur(longi,lati)
-def allFuturesPrevisionsForId (Id,longi,lati):  # renvoi toutes les prévisions (au premier niveau quand il y a plusiuers) futures en (longi,lati) contenues dans Id
+def allFuturesPrevisionsForId (Id,longi,lati):  # renvoi toutes les prévisions futures en (longi,lati) contenues dans Id
     result=[]
     Id.describeCoverage()  # On complète la description de l'Id
     Id.affiche()

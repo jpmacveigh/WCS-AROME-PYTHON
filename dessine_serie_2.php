@@ -64,7 +64,12 @@
     var transformxAxisLabel= function (ts){
       var jour=["dim","lun","mar","mer","jeu","ven","sam"];
       var d=new Date(ts*1000);
-      return jour[d.getUTCDay()]+" "+(d.toISOString());
+      ret = jour[d.getUTCDay()]+" "+(d.toISOString());
+      var heureUTC=d.getUTCHours();
+      if (heureUTC==0){
+        ret="<strong>"+ret+"</strong>";
+      }
+      return ret;
     };
     plot_points_previ(data,"courbe'.$i.'","'.$rows[$i]["nom"].' '.$rows[$i]["niv"].' '.$rows[$i]["hauteur"].'",transformxAxisLabel);
   </script><br>';

@@ -1,4 +1,5 @@
 # coding: utf8
+import json
 class CatalogueWCS:
     catalogueWCS={
     "Tourab(p)":("ABSOLUTE_VORTICITY__ISOBARIC_SURFACE","Tourbillon absolu sur des surfaces isobares."),
@@ -57,24 +58,23 @@ class CatalogueWCS:
     "FFgust(h)":("WIND_SPEED_GUST__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND","Rafale de vent en niveaux hauteur."),
     "FF(p)":("WIND_SPEED__ISOBARIC_SURFACE","Force du vent sur des surfaces isobares."),
     "FF(h)":("WIND_SPEED__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND","Force du vent en niveaux hauteur.")}
-    
+'''    
     def cles(self):
         clefs=[]
-        for (k,v) in self.catalogueWCS.iteritems():
+        for (k,_) in self.catalogueWCS.items():
             clefs.append(k)
         clefs.sort()
         return clefs
     
-"""
 
-cles=[]
-for (k,v) in catalogueWCS.iteritems():
-    cles.append((k,v))
-cles.sort()
-for cle in cles :
-    (k,v)=cle
-    (Id,desc)=v
-    print k + "   "+desc
-print len(cles)
-print json.dumps(cles)
-"""
+    cles=[]
+    for (k,v) in catalogueWCS.items():
+        cles.append((k,v))
+    cles.sort()
+    for cle in cles :
+        (k,v)=cle
+        (Id,desc)=v
+        print (k + "   "+desc)
+    print (len(cles))
+    print (json.dumps(cles))
+'''

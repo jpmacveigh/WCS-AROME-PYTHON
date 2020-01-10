@@ -4,7 +4,9 @@ import random
 import sys
 from getWCSCapabilities import mostRecentId
 from getWCSCapabilities import profilVertical
+from getWCSCapabilities import profilVerticalComplet
 from getWCSCapabilities import previsions
+from getWCSCapabilities import allFuturesPrevisionsForId
 from CatalogueWCS import CatalogueWCS
 #sys.path.insert(0,'/home/jpmvjvmh/public_html/DarkSky/Utils')  # insérer dans sys.path le dossier contenant le/les modules
 #sys.path.insert(0, '/home/ubuntu/workspace/Utils') # insérer dans sys.path le dossier contenant le/les modules
@@ -56,7 +58,7 @@ for code in CatalogueWCS().cles() :
     #print tab
     print (json.dumps(tab,indent=4,sort_keys=True))
 """
-code="T(h)"
+code="U(p)"
 
 #code ="FFgust(h)"
 """
@@ -67,5 +69,12 @@ Id.affiche()
 tab=profilVertical (reso,"V(h)",3.06,50.6)
 print (json.dumps(tab,indent=4,sort_keys=True))
 """
-tab=previsions (reso,"T(h)",3.06,50.6,2)
-print (json.dumps(tab,indent=4,sort_keys=True))
+Id=mostRecentId(reso,"T(h)")
+
+print(allFuturesPrevisionsForId(Id,3.06,50.6))
+#tab=previsions (reso,code,3.06,50.6,100)
+"""
+resh,resp = profilVerticalComplet(reso,"U",3.06,50.6)
+print (json.dumps(resh,indent=4,sort_keys=True))
+print (json.dumps(resp,indent=4,sort_keys=True))
+"""
