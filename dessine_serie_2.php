@@ -67,7 +67,7 @@
       ret = jour[d.getUTCDay()]+" "+(d.toISOString());
       var heureUTC=d.getUTCHours();
       if (heureUTC==0){
-        ret="<strong>"+ret+"</strong>";
+        ret=ret.bold();
       }
       return ret;
     };

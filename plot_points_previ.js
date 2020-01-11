@@ -31,6 +31,7 @@ function plot_points_previ(data,container,titre,transxAxisLabel){
       	chart.xAxis().drawFirstLabel(true);
         chart.xAxis().drawLastLabel(true);
       	chart.xAxis().labels().fontSize(10);
+      	chart.xAxis().labels().useHtml(true);
       	chart.xAxis().labels().format(function (){  // modification des labels de l'axe des X
           return transxAxisLabel(this.value);
         });
