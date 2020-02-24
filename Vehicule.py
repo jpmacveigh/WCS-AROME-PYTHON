@@ -6,14 +6,16 @@ import arrow
 import math
 import sys
 import datetime
-from getWCSCapabilities import profilVertical
-from getWCSCapabilities import mostRecentId
-from getWCSCapabilities import prevision
+#from getWCSCapabilities import profilVertical
+#from getWCSCapabilities import mostRecentId
+#from getWCSCapabilities import prevision
 from AxeVertical import AxeVertical
 from VentHorizontal import VentHorizontal
 from Utils import getHeureLocale
 sys.path.insert(0,'/home/ubuntu/node_jpmv/Utils') # insérer dans sys.path le dossier contenant le/les modules
 from Utils import *
+sys.path.insert(0,'/home/ubuntu/environment/python_grib') # insérer dans sys.path le dossier contenant le/les modules
+from util_eccodes import *
 class Vehicule:  # un véhicule qui se déplace
     def __init__(self,lat,lng,alt):  # constructeur
         if not(-180.<=lng<=180.): raise Exception ("Vehicule : lng doit être dans [-180,+180]")
@@ -27,6 +29,7 @@ class Vehicule:  # un véhicule qui se déplace
         self.getHauteur()  #  aquisition de la hauteur en fonction de l'heure
         self.getVille()  # recherche du nom de la ville qui est en dessous
         self.initDB()
+        print ("hauteurs du véhicule : ",self.alt,self.hauteur)
     def getTime(self):  # Quelle heure UTC est-il ?
         self.heureUTC=arrow.utcnow()
         self.tsUTC=self.heureUTC.timestamp;
@@ -107,7 +110,7 @@ class Vehicule:  # un véhicule qui se déplace
     def getHauteur(self):   # calcul l'altitude du véhicule en fonction de l'heure locale
         hautNuit=10.
         if 0<=self.dayPosition <=100.:
-            hautMidi=3000.
+            hautMidi=12000.
             x=(self.dayPosition/100.*2.*math.pi)-(math.pi/2.)
             self.hauteur=((math.sin(x)+1.)*0.5*(hautMidi-hautNuit))+hautNuit
         else:
@@ -147,31 +150,34 @@ class Vehicule:  # un véhicule qui se déplace
         print (u,v)
         print (VentHorizontal(u,v).toStringKmh())
         return (u,v)
+    def getVentActuelArpege(self):
+        print ("Calcul du vent Arpège avec : ",self.lng,self.lat,self.hauteur)
+        return (get_now_vent_arpege_world (self.lng,self.lat,self.hauteur))
     def interpole (self,xinf,xsup,alpha):   # interpolation temporelle ou verticale
         rep = ((100.-alpha)*xinf + alpha*xsup)/100.
         return rep
     def getVentActuelMeteomatics(self):  #  Vent là où je metrouve actuellemente ?
         url="https://domicile_macveigh:MHSglNtCk5y78@api.meteomatics.com/now/wind_speed_u_"+str(int(round(self.hauteur,0)))+"m:ms,wind_speed_v_"+str(int(round(self.hauteur,0)))+"m:ms/"+str(self.lat)+","+str(self.lng)+"/json"
-        print url
+        print (url)
         status=0
         while status != 200:
             r=requests.get(url)
             status=r.status_code
-            print status
+            print (status)
         self.ventMeteomatics=json.loads(r.content)
         u= self.ventMeteomatics["data"][0]["coordinates"][0]["dates"][0]["value"]
         v= self.ventMeteomatics["data"][1]["coordinates"][0]["dates"][0]["value"]
         #print (u,v)
         #print (VentHorizontal(u,v).toStringKmh())
         return (u,v)
-    def getVille(self):   # détermination de la villeau dessus de laquelle est le véhicule
+    def getVille(self):   # détermination de la ville au dessus de laquelle est le véhicule
         path="https://nominatim.openstreetmap.org/reverse?format=json&lat="+str(self.lat)+"&lon="+str(self.lng)+"&zoom=18&addressdetails=1"
         #print path
         status=0
         while status != 200:
             r=requests.get(path)
             status=r.status_code
-        print r.content  # le résultat de la requête
+        print (r.content)  # le résultat de la requête
         self.localisation=json.loads(r.content)
         if ("error" in self.localisation): 
             self.ville="ville inconnue"
@@ -195,7 +201,7 @@ class Vehicule:  # un véhicule qui se déplace
     def listPositions(self):  #  liste toutes les positions archivées dans la base de données sqlite
         c=self.conn.cursor()
         for row in c.execute("SELECT * FROM trajectoire"):
-            print row
+            print (row)
     def affiche(self):
         for k in sorted(self.__dict__.keys()):
             print (k+":  "+str(self.__dict__[k]))

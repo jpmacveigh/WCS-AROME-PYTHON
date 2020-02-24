@@ -4,7 +4,7 @@ import sqlite3
 import json
 import os
 from dateLimiteRetention import dateLimiteRetention
-# Lecture du fichier previArome.tx lignes par lignes et écriture dans la base Arome.sqlite
+# Lecture du fichier previArome.txt lignes par lignes et écriture dans la base Arome.sqlite
 def traiteAromePrevi():
     repcourant=os.getcwd()+"/"
     con = sqlite3.connect(repcourant+"Arome.sqlite")

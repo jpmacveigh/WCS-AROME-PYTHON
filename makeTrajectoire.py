@@ -44,24 +44,27 @@ from time import sleep
 #v=Vehicule(46.5675203751551,4.39642168158707,10);  # Charolles
 
 def initTrajectoire(vehicule):
-    print str(datetime.datetime.now())
-    print vehicule.ville
+    print (str(datetime.datetime.now()))
+    print (vehicule.ville)
     vehicule.savePosition()
     vehicule.listPositions()
 def actualiseTrajectoire(vehicule,dt):
-    print i,str(datetime.datetime.now())
-    vent=vehicule.getVentActuelArome()   # calcul des composante (u,v) actuelles du vent en m/s
+    print (i,str(datetime.datetime.now()))
+    #vent=vehicule.getVentActuelArome()   # calcul des composantes (u,v) actuelles du vent en m/s
+    vent=vehicule.getVentActuelArpege()   # calcul des composantes (u,v) actuelles du vent en m/s
+    print("vent calculé: ",vent)
     vehicule.moove(vent[0],vent[1],dt)   # on déplace le véhicule à la vitesse du vent
     vehicule=Vehicule(v.lat,v.lng,v.hauteur)  # on recrée un nouveau véhicule à la nouvelle position
     vehicule.savePosition()  # écriture de la nouvelle position dans la trajectoire
     #v.listPositions()
     print (vehicule.ville)
-v=Vehicule (42.808021283194975, 9.211713389750136,10)   # la dernière position avant plantage   
+    return (vehicule)
+v=Vehicule (50.6,3.06,10.)   # la dernière position avant plantage   
 initTrajectoire(v)
-dt=300. # interval en secondes entre deux actualisations de la trajectoires
+dt=600. # interval en secondes entre deux actualisations de la trajectoires
 for i in range(100000):
     time.sleep(dt)    # wait in seconds
-    actualiseTrajectoire(v,dt)
+    v=actualiseTrajectoire(v,dt)
 """
 tab=profilVertical (reso,"U(h)",3.06,50.6)
 print (json.dumps(tab,indent=4,sort_keys=True))

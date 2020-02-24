@@ -13,7 +13,7 @@ app = Flask(__name__)
 def profif(longi,lati,code="T(h)"):
     #return "Hello les mecs il est : "+ str(datetime.datetime.utcnow())
     #code="T(h)"
-    print code
+    print (code)
     tab= profilVertical ("0025",code,longi,lati)
     return jsonify(tab)
 

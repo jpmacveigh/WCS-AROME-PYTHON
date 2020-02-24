@@ -1,7 +1,7 @@
 #! /usr/bin/python
 # -*- coding:utf-8 -*-
 import math
-class VentHorizontal :  # Un vent horizontal défini par sa composante zonale u (Ouest-Est, positive vers l'Est) et méridienne v (Sud-Nord, positive vers le Nord) en m/s
+class VentHorizontal :  # Un vent horizontal défini par sa composante zonale (Estward) u (Ouest-Est, positive vers l'Est) et méridienne (Northward) v (Sud-Nord, positive vers le Nord) en m/s
     def __init__(self,u,v):
         self.u=u
         self.v=v
@@ -25,6 +25,17 @@ class VentHorizontal :  # Un vent horizontal défini par sa composante zonale u 
     def toStringKmh(self):
         x=str(self.direction360()).zfill(3)
         return (x+"/"+str(int(round(self.vitesse_kmh(),0)))+" km/h")
+    def affiche(self):
+        for k in self.__dict__:
+            print (k,self.__dict__[k])
+    def affiche_tout(self):
+        print("vent : ",self.toStringKmh())
+        print("direction (degrès): ",self.direction())
+        print("u (m/s): ",self.u)
+        print("v (m/s): ",self.v)
+        print("vitesse (m/s): ",self.vitesse_ms())
+        print("vitesse (kt): ",self.vitesse_kt())
+        print("vitesse (km/h): ",self.vitesse_kmh())
         
 '''
 
