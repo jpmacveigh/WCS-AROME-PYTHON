@@ -6,6 +6,7 @@ import arrow
 import math
 import sys
 import datetime
+import random
 #from getWCSCapabilities import profilVertical
 #from getWCSCapabilities import mostRecentId
 #from getWCSCapabilities import prevision
@@ -118,6 +119,17 @@ class Vehicule:  # un véhicule qui se déplace
     def moove (self,u,v,dt) : # le déplace pendant dt unités de temps avec les vitesses zonale et méridienne (u,v) en m/unité de temps
         self.lat=self.lat+vLat(v)*dt           # la latitude varie en fonction de v (vitesse méridienne)
         self.lng=self.lng+uLng(u,self.lat)*dt  # la longitude varie en fonction de u (vitesse zonale)
+    def getVentActuelRandom(self,dd,ff):
+        DELTA_DD=30.  # en degrès
+        DELTA_FF=15.  # en m/s
+        assert ff > DELTA_FF , (DELTA_FF,ff)
+        rand_dd=random.random()-0.5
+        direction=(dd+DELTA_DD*rand_dd)%360.
+        direction = abs(direction)
+        rand_ff=random.random()-0.5
+        force=ff+DELTA_FF*rand_ff
+        vent=VentHorizontal_DDFF(direction,force)
+        return (vent.u,vent.v)    
     def getVentActuelArome (self):   #  Aquisition du vent Arome 0025 actuel à la hauteur du véhicule
         lesDeuxDates=lesChainesDateEntourantes()
         IdU=mostRecentId("0025","U(h)")    #  composante zonale du vent (positive vers l'Est)
@@ -206,5 +218,11 @@ class Vehicule:  # un véhicule qui se déplace
         for k in sorted(self.__dict__.keys()):
             print (k+":  "+str(self.__dict__[k]))
             #print (k)
-#v=Vehicule(-21.566896, 165.498048,200)
-#v.affiche()
+"""
+v=Vehicule(-21.566896, 165.498048,200)
+v.affiche()
+(u,v)=v.getVentActuelRandom(270.,16.)
+print (u,v)
+vent=VentHorizontal(u,v)
+vent.affiche_tout()
+"""
