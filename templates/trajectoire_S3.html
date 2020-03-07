@@ -27,6 +27,9 @@
 			
 		     getTrajectoire_S3()   // lecture des points de la trajectoire à afficher
             .then(function(res){
+            	for (i=0;i<=(res["points"].length -1);i++){  // on transforme toutes les longitudes dans [0,360]
+            		res["points"][i]["lng"]=longi_0_360(res["points"][i]["lng"]);
+            	}
             	var latDernier=res["points"][res["points"].length -1]["lat"]
             	var lngDernier=res["points"][res["points"].length -1]["lng"]
             	macarte = L.map('map').setView([latDernier,lngDernier],14);  // Créer l'objet "macarte" et l'insèrer dans l'élément HTML qui a l'ID "map"
@@ -45,7 +48,10 @@
             		popup=popup+"<br>hauteur : "+res["points"][i]["hauteur"].toFixed(0)+" m";
             		if (i>=1) {
             			var dist=macarte.distance(latlng[i],latlng[i-1]);
+            			var deltat=res["points"][i]["ts"]-res["points"][i-1]["ts"];
+            			var vitesse=dist/deltat*3600./1000.
             			popup=popup+"&nbsp &nbsp dist : "+dist.toFixed(0)+" m";
+            			popup=popup+"<br>durée : "+deltat.toFixed(0)+"sec. &nbsp &nbsp  vitesse : "+vitesse.toFixed(1)+" Km/h";
             		}
             		if (i<res["points"].length-1){
 	            		var marker = L.marker([res["points"][i]["lat"],res["points"][i]["lng"]]).addTo(macarte)
@@ -117,6 +123,14 @@
 						}	
 				});
 			});	
+		}
+		function longi_0_360 (longitude){
+			 if (longitude >=0.) {
+        return (longitude);
+			 }
+    	else {
+        return (360. -Math.abs(longitude));
+    	}
 		}
 		function getTrajectoire_S3 (){
 			var res;
