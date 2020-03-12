@@ -168,6 +168,28 @@ class Vehicule:  # un véhicule qui se déplace
     def interpole (self,xinf,xsup,alpha):   # interpolation temporelle ou verticale
         rep = ((100.-alpha)*xinf + alpha*xsup)/100.
         return rep
+    def getVentActuel_10m_Darksky(self):
+        ''' renvoi le vent actuel, (u,v) en m/s,à 10m par requête à l'API globale Darksky '''
+        url="https://13ssr86jdc.execute-api.eu-west-1.amazonaws.com/lati_longi/darksky?longi="
+        url=url+str(self.lng)
+        url=url+"&lati="+str(self.lat)
+        print (url)
+        status=0
+        while status != 200:
+            r=requests.get(url)
+            status=r.status_code
+            print (status)
+        self.vent10mDarksky=json.loads(r.content)
+        print(self.vent10mDarksky["currently"])
+        dd=self.vent10mDarksky["currently"]["windBearing"]
+        ff_kmh=self.vent10mDarksky["currently"]["windSpeed"]
+        vent_10m=VentHorizontal_DDFF(dd,ff_kmh/3.6)  # on transforme la vitesse en m/s
+        u=vent_10m.u
+        v=vent_10m.v
+        #print (u,v)
+        #print (VentHorizontal(u,v).toStringKmh())
+        return (u,v)
+        
     def getVentActuelMeteomatics(self):  #  Vent là où je metrouve actuellemente ?
         url="https://domicile_macveigh:MHSglNtCk5y78@api.meteomatics.com/now/wind_speed_u_"+str(int(round(self.hauteur,0)))+"m:ms,wind_speed_v_"+str(int(round(self.hauteur,0)))+"m:ms/"+str(self.lat)+","+str(self.lng)+"/json"
         print (url)
@@ -226,3 +248,5 @@ print (u,v)
 vent=VentHorizontal(u,v)
 vent.affiche_tout()
 """
+v=Vehicule(50.6,3.06,10.)
+v.getVentActuel_10m_Darksky()
