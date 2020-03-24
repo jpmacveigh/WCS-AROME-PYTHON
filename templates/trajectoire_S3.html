@@ -32,13 +32,35 @@
             	}
             	var latDernier=res["points"][res["points"].length -1]["lat"]
             	var lngDernier=res["points"][res["points"].length -1]["lng"]
-            	macarte = L.map('map').setView([latDernier,lngDernier],14);  // Créer l'objet "macarte" et l'insèrer dans l'élément HTML qui a l'ID "map"
+            	macarte = L.map('map').setView([latDernier,lngDernier],8);  // Créer l'objet "macarte" et l'insèrer dans l'élément HTML qui a l'ID "map"
                	L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {  // Leaflet ne récupère pas les cartes (tiles) sur un serveur par défaut. Nous devons lui préciser où nous souhaitons les récupérer. Ici, openstreetmap.fr
                 	attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',  // Il est toujours bien de laisser le lien vers la source des données
                 	minZoom: 1,
                 	maxZoom: 20
             	}).addTo(macarte);
             	var latlng=[];
+            	var iconWidth=12
+            	var iconHight=iconWidth*1.5
+            	var iconsParameters = {     // paramètres communs à toutes les icones des Markers
+            				iconUrl: "",
+            				shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+            				iconSize: [iconWidth,iconHight],
+						  			iconAnchor: [iconWidth/2.,iconHight],
+						  			popupAnchor: [0,-iconHight],
+						  			shadowSize: [iconHight,iconHight]
+						  };
+						  /*
+						  iconSize: [25, 41],
+						  iconAnchor: [12, 41],
+						  popupAnchor: [1, -34],
+						  shadowSize: [41, 41]	
+            	*/
+            	iconsParameters["iconUrl"]='https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png';  // marker de couleur rouge
+            	var redIcon = new L.Icon(iconsParameters);
+		      		iconsParameters["iconUrl"]='https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-black.png';  // marker de couleur noire
+							var blackIcon = new L.Icon(iconsParameters);
+							iconsParameters["iconUrl"]='https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png';  // marker de couleur bleu
+							var blueIcon = new L.Icon(iconsParameters);
             	for (var i=0;i<res["points"].length;i++){
             		latlng[i]=[res["points"][i]["lat"],res["points"][i]["lng"]];
             		console.log (res["points"][i]["lat"],res["points"][i]["lng"]);
@@ -53,38 +75,22 @@
             			popup=popup+"&nbsp &nbsp dist : "+dist.toFixed(0)+" m";
             			popup=popup+"<br>durée : "+deltat.toFixed(0)+"sec. &nbsp &nbsp  vitesse : "+vitesse.toFixed(1)+" Km/h";
             		}
-            		if (i<res["points"].length-1){
-	            		var marker = L.marker([res["points"][i]["lat"],res["points"][i]["lng"]]).addTo(macarte)
-	            		.bindPopup(popup);
+            		if (i<res["points"].length-1){  // Les markers, sauf le dernier
+	            		//var marker = L.marker([res["points"][i]["lat"],res["points"][i]["lng"]]).addTo(macarte).bindPopup(popup);
+	            		var marker = L.marker([res["points"][i]["lat"],res["points"][i]["lng"]], {icon: blueIcon}).addTo(macarte).bindPopup(popup);
             		}
             		else {  // affichage du dernier point de la trajectoire
-            			var redIcon = new L.Icon({
-            			  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',  // marker de couleur rouge
-						  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-						  iconSize: [25, 41],
-						  iconAnchor: [12, 41],
-						  popupAnchor: [1, -34],
-						  shadowSize: [41, 41]							
-						});
-						var blackIcon = new L.Icon({
-            			  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-black.png',  // marker de couleur rouge
-						  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-						  iconSize: [25, 41],
-						  iconAnchor: [12, 41],
-						  popupAnchor: [1, -34],
-						  shadowSize: [41, 41]							
-						});
-            			var ageMarker=0.;   // calcul  de l'age du dernier marker pour déterminer sa couleur
+            var ageMarker=0.;   // calcul  de l'age du dernier marker pour déterminer sa couleur
 						var maintenant=Date.now();
 						console.log(maintenant);
 						ageMarker=(maintenant-res["points"][i]["ts"]*1000.)/1000.;
 						console.log(ageMarker);
 						if (ageMarker < 60*12.) { // si le marker a moins de 12 minutes, on le trace en rouge
-            				L.marker([res["points"][i]["lat"],res["points"][i]["lng"]], {icon: redIcon}).addTo(macarte).bindPopup(popup);  // les dernier point est en rouge
+            			L.marker([res["points"][i]["lat"],res["points"][i]["lng"]], {icon: redIcon}).addTo(macarte).bindPopup(popup);  // les dernier point est en rouge
 						}
-            			else { // sinon on le trace en noir
-            				L.marker([res["points"][i]["lat"],res["points"][i]["lng"]], {icon: blackIcon}).addTo(macarte).bindPopup(popup);  // les dernier point est en noir
-            			}
+            else { // sinon on le trace en noir
+            			L.marker([res["points"][i]["lat"],res["points"][i]["lng"]], {icon: blackIcon}).addTo(macarte).bindPopup(popup);  // les dernier point est en noir
+            }
             				
         			}
           		

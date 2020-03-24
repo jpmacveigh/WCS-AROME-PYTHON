@@ -25,6 +25,8 @@ class Vehicule:  # un véhicule qui se déplace
         self.lng=lng
         self.lat=lat
         self.alt=alt
+        self.hautNuit=10.     # hauteur (m) du Vehcule pendant la nuit
+        self.hautMidi=12000.  # hauteur (m) du véhicule à midi local
         self.getTimeZoneParIpgeolocation()   #  la timezone du lieu
         self.getSunRiseSunSet()  #  détermination heures locales de lever et de coucher du soleil du lieu du véhicule
         self.getHauteur()  #  aquisition de la hauteur en fonction de l'heure
@@ -109,13 +111,11 @@ class Vehicule:  # un véhicule qui se déplace
         else :
            self.dayPhase="night evening" 
     def getHauteur(self):   # calcul l'altitude du véhicule en fonction de l'heure locale
-        hautNuit=10.
-        if 0<=self.dayPosition <=100.:
-            hautMidi=12000.
+        if 0<=self.dayPosition <=100.:   # si on est dant la journée
             x=(self.dayPosition/100.*2.*math.pi)-(math.pi/2.)
-            self.hauteur=((math.sin(x)+1.)*0.5*(hautMidi-hautNuit))+hautNuit
+            self.hauteur=((math.sin(x)+1.)*0.5*(self.hautMidi-self.hautNuit))+self.hautNuit
         else:
-            self.hauteur=hautNuit
+            self.hauteur=self.hautNuit   # si c'est la nuit
     def moove (self,u,v,dt) : # le déplace pendant dt unités de temps avec les vitesses zonale et méridienne (u,v) en m/unité de temps
         self.lat=self.lat+vLat(v)*dt           # la latitude varie en fonction de v (vitesse méridienne)
         self.lng=self.lng+uLng(u,self.lat)*dt  # la longitude varie en fonction de u (vitesse zonale)
@@ -169,7 +169,8 @@ class Vehicule:  # un véhicule qui se déplace
         rep = ((100.-alpha)*xinf + alpha*xsup)/100.
         return rep
     def getVentActuel_10m_Darksky(self):
-        ''' renvoi le vent actuel, (u,v) en m/s,à 10m par requête à l'API globale Darksky '''
+        ''' renvoi le vent actuel, (u,v) en m/s,à 10m par requête à l'API globale Darksky,
+            corrigé par l'altitude '''
         url="https://13ssr86jdc.execute-api.eu-west-1.amazonaws.com/lati_longi/darksky?longi="
         url=url+str(self.lng)
         url=url+"&lati="+str(self.lat)
@@ -180,12 +181,18 @@ class Vehicule:  # un véhicule qui se déplace
             status=r.status_code
             print (status)
         self.vent10mDarksky=json.loads(r.content)
-        print(self.vent10mDarksky["currently"])
+        #print(self.vent10mDarksky["currently"])
         dd=self.vent10mDarksky["currently"]["windBearing"]
         ff_kmh=self.vent10mDarksky["currently"]["windSpeed"]
         vent_10m=VentHorizontal_DDFF(dd,ff_kmh/3.6)  # on transforme la vitesse en m/s
         u=vent_10m.u
         v=vent_10m.v
+        #print(u,v)
+        altitude=self.hauteur
+        coef=(1.+4*(altitude-self.hautNuit)/(self.hautMidi-self.hautNuit))  # coef de correction linéaire en fonction de l'altitude
+        #print(coef)
+        u=u*coef     # correction de u
+        v=v*coef     # correction de v
         #print (u,v)
         #print (VentHorizontal(u,v).toStringKmh())
         return (u,v)
@@ -218,6 +225,38 @@ class Vehicule:  # un véhicule qui se déplace
         else :
             self.ville=self.localisation["display_name"]
         return self.ville
+        
+    def getPhotoVille(self):
+        api_key="AIzaSyB_08ztuOnLIm1md8_uSvAxS3j0uol1Qs0"
+        url="https://maps.googleapis.com/maps/api/place/nearbysearch/json"
+        url=url+"?location="+str(self.lat)+","+str(self.lng)
+        url=url+"&radius=150000&type=church&keyword=cruise&key="+api_key
+        #url="https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=1500&type=restaurant&keyword=cruise&key=AIzaSyB_08ztuOnLIm1md8_uSvAxS3j0uol1Qs0"
+        print (url)
+        status=0
+        while status != 200:
+            r=requests.get(url)      # requête à l'API Goolgle Place
+            status=r.status_code
+        print (r.content)  # le résultat de la requête
+        res=json.loads(r.content)
+        nb_results_Google_Place=len(res["results"])
+        print ("nombre de résultats GooglePLace: ",nb_results_Google_Place)
+        if (nb_results_Google_Place > 0):
+            photo_reference=res["results"][0]["photos"][0]["photo_reference"]
+            #url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=CnRtAAAATLZNl354RwP_9UKbQ_5Psy40texXePv4oAlgP4qNEkdIrkyse7rPXYGd9D_Uj1rVsQdWT4oRz4QrYAJNpFX7rzqqMlZw2h2E2y5IKMUZ7ouD_SlcHxYq1yL4KbKUv3qtWgTK0A6QbGh87GB3sscrHRIQiG2RrmU_jF4tENr9wGS_YxoUSSDrYjWmrNfeEHSGSc3FyhNLlBU&key=AIzaSyB_08ztuOnLIm1md8_uSvAxS3j0uol1Qs0"
+            url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=300"
+            url=url+"&photoreference="+photo_reference+"&key="+api_key
+            status=0
+            while status != 200:
+                r=requests.get(url)    # requête à API Google Place Photo
+                status=r.status_code
+                #print(status)
+            #print (r.content)  # le résultat de la requête
+            with open('photo.png', 'wb') as f:
+                f.write(r.content)      # on écrit la photo dans le fichier "photo.png"
+            f.close()
+        return (0)
+        
     def initDB(self):
         self.conn = sqlite3.connect('traject.sqlite')
         c = self.conn.cursor()
@@ -249,4 +288,5 @@ vent=VentHorizontal(u,v)
 vent.affiche_tout()
 """
 v=Vehicule(50.6,3.06,10.)
-v.getVentActuel_10m_Darksky()
+photo=v.getPhotoVille()
+
