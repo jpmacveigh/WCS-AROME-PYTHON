@@ -7,6 +7,7 @@ import math
 import sys
 import datetime
 import random
+
 #from getWCSCapabilities import profilVertical
 #from getWCSCapabilities import mostRecentId
 #from getWCSCapabilities import prevision
@@ -211,6 +212,7 @@ class Vehicule:  # un véhicule qui se déplace
         #print (u,v)
         #print (VentHorizontal(u,v).toStringKmh())
         return (u,v)
+        
     def getVille(self):   # détermination de la ville au dessus de laquelle est le véhicule
         path="https://nominatim.openstreetmap.org/reverse?format=json&lat="+str(self.lat)+"&lon="+str(self.lng)+"&zoom=18&addressdetails=1"
         #print path
@@ -288,5 +290,5 @@ vent=VentHorizontal(u,v)
 vent.affiche_tout()
 """
 v=Vehicule(50.6,3.06,10.)
-photo=v.getPhotoVille()
+v.getVentActuelMeteociel()
 
