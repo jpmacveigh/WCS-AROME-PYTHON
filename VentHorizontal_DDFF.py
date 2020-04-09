@@ -3,6 +3,7 @@
 from VentHorizontal import VentHorizontal
 import math
 class VentHorizontal_DDFF:
+  ''' Un vent horizontal initié par sa direction dd [0,360] et sa force ff (m/s) '''
   def __init__ (self,dd,ff):
     self.dd=dd
     self.ff=ff

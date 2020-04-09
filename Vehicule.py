@@ -7,6 +7,7 @@ import math
 import sys
 import datetime
 import random
+from getProfilMeteociel import getProfilVerticalMeteoCiel
 
 #from getWCSCapabilities import profilVertical
 #from getWCSCapabilities import mostRecentId
@@ -26,7 +27,7 @@ class Vehicule:  # un véhicule qui se déplace
         self.lng=lng
         self.lat=lat
         self.alt=alt
-        self.hautNuit=10.     # hauteur (m) du Vehcule pendant la nuit
+        self.hautNuit=300.     # hauteur (m) du Vehcule pendant la nuit
         self.hautMidi=12000.  # hauteur (m) du véhicule à midi local
         self.getTimeZoneParIpgeolocation()   #  la timezone du lieu
         self.getSunRiseSunSet()  #  détermination heures locales de lever et de coucher du soleil du lieu du véhicule
@@ -163,6 +164,10 @@ class Vehicule:  # un véhicule qui se déplace
         print (u,v)
         print (VentHorizontal(u,v).toStringKmh())
         return (u,v)
+    def getVentActuelMeteociel(self):
+        res=getProfilVerticalMeteoCiel(9,self.lat,self.lng,[self.hauteur])
+        return(res["altitudes_interpolees"][0]["u"],res["altitudes_interpolees"][0]["v"])
+        
     def getVentActuelArpege(self):
         print ("Calcul du vent Arpège avec : ",self.lng,self.lat,self.hauteur)
         return (get_now_vent_arpege_world (self.lng,self.lat,self.hauteur))
@@ -281,14 +286,21 @@ class Vehicule:  # un véhicule qui se déplace
         for k in sorted(self.__dict__.keys()):
             print (k+":  "+str(self.__dict__[k]))
             #print (k)
-"""
-v=Vehicule(-21.566896, 165.498048,200)
-v.affiche()
-(u,v)=v.getVentActuelRandom(270.,16.)
+
+vehicule=Vehicule(50.6,3.06,200)
+vehicule.affiche()
+hauteur=vehicule.hauteur
+print("*********** Vent DarkSky à 10m corrigé pour l'altitude "+str(hauteur)+" (m) du véhicule ***********") 
+(u,v)=vehicule.getVentActuel_10m_Darksky()
+print (u,v)
+vent=VentHorizontal(u,v)
+vent.affiche_tout()
+print("*********** Vent Meteociel à l'altitude "+str(hauteur)+" (m) du véhicule  ***********")
+(u,v)=vehicule.getVentActuelMeteociel()
 print (u,v)
 vent=VentHorizontal(u,v)
 vent.affiche_tout()
 """
 v=Vehicule(50.6,3.06,10.)
 v.getVentActuelMeteociel()
-
+"""
