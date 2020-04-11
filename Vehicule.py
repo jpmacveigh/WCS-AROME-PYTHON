@@ -7,13 +7,13 @@ import math
 import sys
 import datetime
 import random
-from getProfilMeteociel import getProfilVerticalMeteoCiel
 
 #from getWCSCapabilities import profilVertical
 #from getWCSCapabilities import mostRecentId
 #from getWCSCapabilities import prevision
 from AxeVertical import AxeVertical
 from VentHorizontal import VentHorizontal
+from getNowVentMeteociel import getNowVentMeteociel
 from Utils import getHeureLocale
 sys.path.insert(0,'/home/ubuntu/node_jpmv/Utils') # insérer dans sys.path le dossier contenant le/les modules
 from Utils import *
@@ -28,18 +28,20 @@ class Vehicule:  # un véhicule qui se déplace
         self.lat=lat
         self.alt=alt
         self.hautNuit=300.     # hauteur (m) du Vehcule pendant la nuit
-        self.hautMidi=12000.  # hauteur (m) du véhicule à midi local
+        self.hautMidi=11000.  # hauteur (m) du véhicule à midi local
         self.getTimeZoneParIpgeolocation()   #  la timezone du lieu
         self.getSunRiseSunSet()  #  détermination heures locales de lever et de coucher du soleil du lieu du véhicule
         self.getHauteur()  #  aquisition de la hauteur en fonction de l'heure
         self.getVille()  # recherche du nom de la ville qui est en dessous
         self.initDB()
         print ("hauteurs du véhicule : ",self.alt,self.hauteur)
+    
     def getTime(self):  # Quelle heure UTC est-il ?
         self.heureUTC=arrow.utcnow()
         self.tsUTC=self.heureUTC.timestamp;
         #print ("heure UTC: "+str(self.heureUTC)+"  soit TS: "+str(self.tsUTC))
         #print ("heure locale Paris: "+str(self.heureUTC.to("Europe/Paris")))  # heure de Paris
+    
     def getTimeZone(self):  #  Dans quel fuseau horaire suis-je ?
         self.getTime();
         urlGetTZ="https://maps.googleapis.com/maps/api/timezone/json?location="+str(self.lat)+","+str(self.lng)+"&timestamp="+str(self.tsUTC)+"&key=AIzaSyAJ5k6nijmVsFGQ8EqVs4YiSkdDucJbJ2s"
@@ -61,6 +63,7 @@ class Vehicule:  # un véhicule qui se déplace
             print ("heure locale du lieu: "+str(self.heureLocale))
         else:    
             self.heureLocale=self.heureUTC.to(self.timeZone["timeZoneId"])
+    
     def getTimeZoneParIpgeolocation(self):  #  Dans quel fuseau horaire suis-je ?
         self.getTime();
         # https://api.ipgeolocation.io/timezone?apiKey=87922ec82b4846b0aa6e6ffcf7ccbb78&lat=-27.4748&long=153.017
@@ -74,6 +77,7 @@ class Vehicule:  # un véhicule qui se déplace
         # tester :  http://api.geonames.org/timezoneJSON?lat=49.11&lng=-27.82&username=demo
         self.timeZone=json.loads(r.content)
         self.heureLocale=self.heureUTC.to(self.timeZone["timezone"])        
+    
     def getSunRiseSunSet(self):  # heures locales de lever et de coucher du soleil
         #https://api.sunrise-sunset.org/json?lat=50.6&lng=-34&formatted=0
         url="https://api.sunrise-sunset.org/json?lat="+str(self.lat)+"&lng="+str(self.lng)+"&date=today&formatted=0"
@@ -103,7 +107,6 @@ class Vehicule:  # un véhicule qui se déplace
         self.tsSunsetUTC=self.heureSunsetLocale.timestamp
         self.dayPosition=(self.tsUTC-self.tsSunriseUTC)/1./self.sunRiseSunSet["results"]["day_length"]*100.  # Où en est-on de la journée dans [0%,100%]
         #print self.dayPosition
-        
         if self.dayPosition <0.:
             self.dayPhase="night morning"
         elif 0<=self.dayPosition <50.:
@@ -112,15 +115,18 @@ class Vehicule:  # un véhicule qui se déplace
             self.dayPhase="day afternoon"
         else :
            self.dayPhase="night evening" 
+    
     def getHauteur(self):   # calcul l'altitude du véhicule en fonction de l'heure locale
         if 0<=self.dayPosition <=100.:   # si on est dant la journée
             x=(self.dayPosition/100.*2.*math.pi)-(math.pi/2.)
             self.hauteur=((math.sin(x)+1.)*0.5*(self.hautMidi-self.hautNuit))+self.hautNuit
         else:
             self.hauteur=self.hautNuit   # si c'est la nuit
+    
     def moove (self,u,v,dt) : # le déplace pendant dt unités de temps avec les vitesses zonale et méridienne (u,v) en m/unité de temps
         self.lat=self.lat+vLat(v)*dt           # la latitude varie en fonction de v (vitesse méridienne)
         self.lng=self.lng+uLng(u,self.lat)*dt  # la longitude varie en fonction de u (vitesse zonale)
+    
     def getVentActuelRandom(self,dd,ff):
         DELTA_DD=30.  # en degrès
         DELTA_FF=15.  # en m/s
@@ -132,6 +138,7 @@ class Vehicule:  # un véhicule qui se déplace
         force=ff+DELTA_FF*rand_ff
         vent=VentHorizontal_DDFF(direction,force)
         return (vent.u,vent.v)    
+    
     def getVentActuelArome (self):   #  Aquisition du vent Arome 0025 actuel à la hauteur du véhicule
         lesDeuxDates=lesChainesDateEntourantes()
         IdU=mostRecentId("0025","U(h)")    #  composante zonale du vent (positive vers l'Est)
@@ -164,16 +171,19 @@ class Vehicule:  # un véhicule qui se déplace
         print (u,v)
         print (VentHorizontal(u,v).toStringKmh())
         return (u,v)
+    
     def getVentActuelMeteociel(self):
-        res=getProfilVerticalMeteoCiel(9,self.lat,self.lng,[self.hauteur])
-        return(res["altitudes_interpolees"][0]["u"],res["altitudes_interpolees"][0]["v"])
-        
+        res=getNowVentMeteociel(self.lat,self.lng,self.hauteur)
+        return(res[0],res[1])
+    
     def getVentActuelArpege(self):
         print ("Calcul du vent Arpège avec : ",self.lng,self.lat,self.hauteur)
         return (get_now_vent_arpege_world (self.lng,self.lat,self.hauteur))
+    
     def interpole (self,xinf,xsup,alpha):   # interpolation temporelle ou verticale
         rep = ((100.-alpha)*xinf + alpha*xsup)/100.
         return rep
+    
     def getVentActuel_10m_Darksky(self):
         ''' renvoi le vent actuel, (u,v) en m/s,à 10m par requête à l'API globale Darksky,
             corrigé par l'altitude '''
@@ -268,6 +278,7 @@ class Vehicule:  # un véhicule qui se déplace
         self.conn = sqlite3.connect('traject.sqlite')
         c = self.conn.cursor()
         c.execute("CREATE TABLE IF NOT EXISTS trajectoire (ts num,lat real,lng real,haut real,lieu text)")
+
     def savePosition(self):  #  sauvegarde la postion actuelle
         sql="INSERT INTO trajectoire VALUES ("
         sql=sql+str(self.tsUTC)
@@ -278,10 +289,12 @@ class Vehicule:  # un véhicule qui se déplace
         #c.execute("INSERT INTO trajectoire VALUES (150.,50.6,3.06,22.0,'Lille')")
         c.execute(sql)
         self.conn.commit()
+
     def listPositions(self):  #  liste toutes les positions archivées dans la base de données sqlite
         c=self.conn.cursor()
         for row in c.execute("SELECT * FROM trajectoire"):
             print (row)
+
     def affiche(self):
         for k in sorted(self.__dict__.keys()):
             print (k+":  "+str(self.__dict__[k]))
@@ -292,12 +305,10 @@ vehicule.affiche()
 hauteur=vehicule.hauteur
 print("*********** Vent DarkSky à 10m corrigé pour l'altitude "+str(hauteur)+" (m) du véhicule ***********") 
 (u,v)=vehicule.getVentActuel_10m_Darksky()
-print (u,v)
 vent=VentHorizontal(u,v)
 vent.affiche_tout()
 print("*********** Vent Meteociel à l'altitude "+str(hauteur)+" (m) du véhicule  ***********")
 (u,v)=vehicule.getVentActuelMeteociel()
-print (u,v)
 vent=VentHorizontal(u,v)
 vent.affiche_tout()
 """

@@ -13,6 +13,10 @@
 			#map { /* la carte DOIT avoir une hauteur sinon elle n'apparaît pas */
 				height:600px;
 			}
+			.cartouche {
+				font-size:14px;
+				
+			}
 		</style>
 	</head>
 	<body>
@@ -65,7 +69,7 @@
             		popup=popup+"<br>hauteur : "+res["points"][i]["hauteur"].toFixed(0)+" m";
             		if (i>=1) {
             			var dist=macarte.distance(latlng[i],latlng[i-1]);
-            			distance_parcourue += dist
+            			distance_parcourue += dist/1000.      // on cumule les distances en km
             			var deltat=res["points"][i]["ts"]-res["points"][i-1]["ts"];
             			var vitesse=dist/deltat*3600./1000.
             			popup=popup+"&nbsp &nbsp dist : "+dist.toFixed(0)+" m";
@@ -93,17 +97,20 @@
 			  	}
             	var poly=L.polyline(latlng).addTo(macarte);   // afficahge du tracé de la trajectoire
             	L.control.scale().addTo(macarte);
-            	var distance_effective=macarte.distance(latlng[res["points"].length-1],latlng[0]);
+            	var distance_effective=macarte.distance(latlng[res["points"].length-1],latlng[0])/1000.;   // en km
+            	var duree_trajet=(new Date()-new Date(res["points"][0]["ts"]*1000))/1000./3600.;  // durée en heures
+            	console.log(new Date(),new Date(res["points"][0]["ts"]*1000),duree_trajet);
             	var legend = L.control({position: 'topright'})
 							legend.onAdd = function () {
-								var div = L.DomUtil.create();
-								div.innerHTML +='<div style="font-size:28px">';
+								var div = L.DomUtil.create("div","cartouche");
 								div.innerHTML +="Départ : "+ new Date(res["points"][0]["ts"]*1000).toUTCString();
 								div.innerHTML +="<br>Maintenant : "+ new Date().toUTCString();
+								div.innerHTML +="<br>Durée : "+(duree_trajet/24.).toFixed(1)+" jours";
 								div.innerHTML +="<br>Nombre de points : "+res["nb_points"];
-								div.innerHTML +="<br>Distance parcourue : "+distance_parcourue.toFixed(1)+" km</div>";
-								div.innerHTML +="<br>Distance effective : "+distance_effective.toFixed(1)+" km</div>";
-								div.innerHTML +="<br>rapport : "+(distance_effective/distance_parcourue).toFixed(2)+" %</div>";
+								div.innerHTML +="<br>Distance parcourue : "+new Intl.NumberFormat().format(distance_parcourue.toFixed(1))+" km</div>";
+								div.innerHTML +="<br>Distance effective : "+new Intl.NumberFormat().format(distance_effective.toFixed(1))+" km</div>";
+								div.innerHTML +="<br>Rapport : "+(distance_effective/distance_parcourue*100.).toFixed(1)+" %";
+								div.innerHTML +="<br>Vitesse moyenne : "+(distance_parcourue/duree_trajet).toFixed(1)+" km/h";
 								return div;
 							};
 							legend.addTo(macarte);
