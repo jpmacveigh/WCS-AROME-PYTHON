@@ -6,12 +6,13 @@ class VentHorizontal_DDFF:
   ''' Un vent horizontal initié par sa direction dd [0,360] et sa force ff (m/s) '''
   def __init__ (self,dd,ff):
     self.dd=dd
+    if ff==0. : ff=0.1   # On évite une singularité
     self.ff=ff
     self.u=-math.sin(math.radians(dd))*ff
     self.v=-math.cos(math.radians(dd))*ff
     self.vent_UV=VentHorizontal(self.u,self.v)
-    assert abs(dd - self.vent_UV.direction())  <= 10.**-6, (dd, self.vent_UV.direction())
-    assert abs(ff - self.vent_UV.vitesse_ms()) <= 10.**-6, (ff,self.vent_UV.vitesse_ms())
+    assert abs(dd - self.vent_UV.direction())  <= 10.**-6, (dd, self.vent_UV.direction(),ff)
+    assert abs(ff - self.vent_UV.vitesse_ms()) <= 10.**-6, (ff,self.vent_UV.vitesse_ms(),dd)
   def vitesse_kmh(self): 
         return (self.ff*3.6);
   def vitesse_kt(self):
@@ -26,6 +27,11 @@ class VentHorizontal_DDFF:
   def affiche(self):
         for k in self.__dict__:
             print (k,self.__dict__[k])
+
+
+v=VentHorizontal_DDFF(337.5,0.)
+print (v.dd,v.ff,v.u,v.v,v.vent_UV.toStringKmh(),v.vent_UV.vitesse_kmh())
+
 '''  
 
 v=VentHorizontal_DDFF(185.534,1.821)

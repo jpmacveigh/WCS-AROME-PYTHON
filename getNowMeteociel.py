@@ -1,6 +1,6 @@
 import datetime
 import numpy as np
-from getProfiVerticalMeteociel import getProfilVerticalMeteoCiel
+from getProfiVerticalMeteociel import getProfilVerticalMeteociel
 
 def getNowMeteociel(code_param,lati,longi,alti): 
   ''' renvoit la valeur actuelle pour le "code_param" à une position et altitude (m) données.
@@ -10,7 +10,7 @@ def getNowMeteociel(code_param,lati,longi,alti):
   ts=[]
   val=[]
   for ech in [3,6,9]:
-    res=getProfilVerticalMeteoCiel(ech,lati,longi,[alti])
+    res=getProfilVerticalMeteociel(ech,lati,longi,[alti])
     ts.append(res["ts_previ"])
     val.append(res["altitudes_interpolees"][0][code_param])
     print (res["UTC_previ_string"],res["ts_previ"],res["altitudes_interpolees"][0][code_param])

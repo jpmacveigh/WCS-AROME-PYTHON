@@ -300,7 +300,7 @@ class Vehicule:  # un véhicule qui se déplace
             print (k+":  "+str(self.__dict__[k]))
             #print (k)
 
-vehicule=Vehicule(50.6,3.06,200)
+vehicule=Vehicule(57.21,172.56,200)
 vehicule.affiche()
 hauteur=vehicule.hauteur
 print("*********** Vent DarkSky à 10m corrigé pour l'altitude "+str(hauteur)+" (m) du véhicule ***********") 

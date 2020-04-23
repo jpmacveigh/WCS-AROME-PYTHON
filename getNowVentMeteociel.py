@@ -1,6 +1,6 @@
 import datetime
 import numpy as np
-from getProfiVerticalMeteociel import getProfilVerticalMeteoCiel
+from getProfiVerticalMeteociel import getProfilVerticalMeteociel
 from VentHorizontal import VentHorizontal
 
 def getNowVentMeteociel(lati,longi,alti): 
@@ -13,7 +13,7 @@ def getNowVentMeteociel(lati,longi,alti):
   les_v=[]
   nb_ech=0
   for ech in [3,6,9]:
-    res=getProfilVerticalMeteoCiel(ech,lati,longi,[alti])
+    res=getProfilVerticalMeteociel(ech,lati,longi,[alti])
     ts.append(res["ts_previ"])
     les_u.append(res["altitudes_interpolees"][0]["u"])
     les_v.append(res["altitudes_interpolees"][0]["v"])
@@ -25,4 +25,4 @@ def getNowVentMeteociel(lati,longi,alti):
   v=np.interp(ts_now,ts,les_v)
   return (u,v,VentHorizontal(u,v).toStringKmh(),nb_ech)
 
-print(getNowVentMeteociel(50.6,3.06,384))
+#print(getNowVentMeteociel(50.6,3.06,384))

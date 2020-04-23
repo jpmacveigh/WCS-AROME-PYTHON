@@ -4,7 +4,7 @@ import numpy as np
 from VentHorizontal_DDFF import VentHorizontal_DDFF
 import json
 import datetime
-def getProfilVerticalMeteoCiel (echeance,lati,longi,alti_interpolees=[]):
+def getProfilVerticalMeteociel (echeance,lati,longi,alti_interpolees=[]):
         ''' Extraction du profil vertical atmosphérique issu du modèle global GFS pour une grille à 0.25°
             et contenu dans une page HTML fournie par Météociel.
             voir : http://www.meteociel.fr/modeles/sondage_gfs.php
