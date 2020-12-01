@@ -28,11 +28,11 @@ class VentHorizontal_DDFF:
         for k in self.__dict__:
             print (k,self.__dict__[k])
 
-
+'''
 v=VentHorizontal_DDFF(337.5,0.)
 print (v.dd,v.ff,v.u,v.v,v.vent_UV.toStringKmh(),v.vent_UV.vitesse_kmh())
 
-'''  
+
 
 v=VentHorizontal_DDFF(185.534,1.821)
 print (v.dd,v.ff,v.u,v.v,v.vent_UV.toStringKmh(),v.vent_UV.vitesse_kmh())

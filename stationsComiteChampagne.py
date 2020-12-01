@@ -32,7 +32,7 @@ stationsComiteChampagne =[
 ]
 result=[]
 for station in stationsComiteChampagne :
-    print station["commune"],station["lieu-dit"],station["lat"],station["lng"],station["alt"]
+    print (station["commune"],station["lieu-dit"],station["lat"],station["lng"],station["alt"])
     res={}
     res["station"]=station
     res["previsions"]=[]

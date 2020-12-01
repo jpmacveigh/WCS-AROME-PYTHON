@@ -1,7 +1,7 @@
 import requests
 import bs4 as BeautifulSoup
-from VentHorizontal_DDFF import VentHorizontal_DDFF
 import numpy as np
+from VentHorizontal_DDFF import VentHorizontal_DDFF
 import json
 import datetime
 def getProfilVerticalMeteociel (echeance,lati,longi,alti_interpolees=[]):
@@ -38,67 +38,58 @@ def getProfilVerticalMeteociel (echeance,lati,longi,alti_interpolees=[]):
             status=r.status_code
             #print (status)
         res=r.content
-        soup=BeautifulSoup.BeautifulSoup(res,"html")  # parsing de la page HTML
+        soup=BeautifulSoup.BeautifulSoup(res,"lxml")  # parsing de la page HTML
         tables=[]
         for p in soup.find_all('table'):  #  on extrait toutes les balises <tables> de la page HTML
             tables.append(p)
-        #print(len(tables))
-        table_titre     =tables[0]
-        ligne_previ     =table_titre.find_all('tr')[0]
-        ligne_run       =table_titre.find_all('tr')[1]
-        table_niveaux   =tables[1]
-        table_isos      =tables[2]
-        ligne_isos      =table_isos.find_all('tr')[0]
-        table_pied      =tables[3]
         
-        
-        # traitement de la ligne donnant la date du run du modèle  
-        #print(ligne_run)
-        colonnes=ligne_run.find_all('td')
-        #print(colonnes)        # on extrait toutes les balises <td> de la balise <tr>
-        col_run=colonnes[1].text       # la définition du run du modèle
-        #print(col_run)
-        result["col_run"]=col_run     
-        split=col_run.split()
-        #print(split)
-        result["an_run"]=int(split[-1])
-        result["mois_run"]=split[-2]
-        mois=["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"]
-        result["num_mois_run"]=mois.index(result["mois_run"])+1
-        assert 1<=result["num_mois_run"]<=12 , result["num_mois_run"]
-        result["jour_run"]=int(split[-3])
-        result["heure_run"]=int(split[1][:-1])
-        UTC_run=datetime.datetime(result["an_run"],result["num_mois_run"],result["jour_run"],result["heure_run"],tzinfo=datetime.timezone.utc)
-        result["ts_run"]=int(datetime.datetime.timestamp(UTC_run))
-        result["UTC_run_string"]=UTC_run.isoformat()
-        
-        # traitement de la ligne iso 0° et iso -10°
-        colonnes=ligne_isos.find_all('td')
-        iso_0=colonnes[0].text     
-        result["iso_0"]=float(iso_0.split()[3])
-        iso_10=colonnes[1].text
-        result["iso_M10"]=float(iso_10.split()[3])
-        iso_20=colonnes[2].text
-        result["iso_M20"]=float(iso_20.split()[3])
-        
-        # traitement de la ligne indiquant l'heure de l'échéance de la prévision
-        colonnes=ligne_previ.find_all('td')
-        colonne=colonnes[0]    
-        col_date=colonne.text  # la date et l'échéance des prévision
-        result["col_date"]=col_date   # A finir
-        ndeb=col_date.find("(+")
-        nfin=col_date.find("h)")
-        result["echeance"]=int(col_date[ndeb+2:nfin])
-        UTC_previ=UTC_run+datetime.timedelta(hours=result["echeance"])
-        result["ts_previ"]=int(datetime.datetime.timestamp(UTC_previ))
-        result["UTC_previ_string"]=UTC_previ.isoformat()
-        
-        # traitement de la table listant tous les niveaux du sondage vertical
+        num_row=0
+        for row in tables[0].find_all('tr'):   # la premiere table est celle des données générales du profil
+            colonnes=row.find_all('td')        # on extraittoutesles balises <td> de la balise <tr>
+            if num_row==0:
+                 for colonne in colonnes:
+                    col_run=colonne.text       # la définition du run du modèle
+                    print(col_run)
+                    result["col_run"]=col_run     
+                    split=col_run.split()
+                    result["an_run"]=int(split[-1])
+                    result["mois_run"]=split[-2]
+                    mois=["janvier","fevrier","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","decembre"]
+                    result["num_mois_run"]=mois.index(result["mois_run"])+1
+                    assert 1<=result["num_mois_run"]<=12 , result["num_mois_run"]
+                    result["jour_run"]=int(split[-3])
+                    result["heure_run"]=int(split[2][:-1])
+                    UTC_run=datetime.datetime(result["an_run"],result["num_mois_run"],result["jour_run"],result["heure_run"],tzinfo=datetime.timezone.utc)
+                    result["ts_run"]=int(datetime.datetime.timestamp(UTC_run))
+                    result["UTC_run_string"]=UTC_run.isoformat()
+            else :
+                 num_col=0
+                 for colonne in colonnes:
+                    if num_col==0:
+                        col_isos=colonne.text  # les isothermes 0°C, -10°C et -20°C
+                        n=col_isos.find("|")
+                        result["iso_0"]=float(col_isos[0:n])
+                        col_isos=col_isos[n+1:]
+                        n=col_isos.find("|")
+                        result["iso_M10"]=float(col_isos[0:n])
+                        col_isos=col_isos[n+1:]
+                        result["iso_M20"]=float(col_isos)
+                    else:
+                        col_date=colonne.text  # la date et l'échéance des prévision
+                        result["col_date"]=col_date   # A finir
+                        ndeb=col_date.find("(+")
+                        nfin=col_date.find("h)")
+                        result["echeance"]=int(col_date[ndeb+2:nfin])
+                        UTC_previ=UTC_run+datetime.timedelta(hours=result["echeance"])
+                        result["ts_previ"]=int(datetime.datetime.timestamp(UTC_previ))
+                        result["UTC_previ_string"]=UTC_previ.isoformat()
+                    num_col=num_col+1
+            num_row=num_row+1
         result["altitudes"]=[]   # liste de tous les niveaux présents dans le profil verrticaal
         num_row=0
         alti_min=10000.
         alti_max=-500.
-        for row in table_niveaux.find_all('tr'):# la seconde table de la page est celle des valeurs numérique du profil vertical
+        for row in tables[1].find_all('tr'):# la seconde table de la page est celle des valeurs numérique du profil vertical
             if num_row > 0:                          # on saute la première ligne de la table
                 colonnes=row.find_all('td')          # on récupère les colonnes de chaque ligne de la table
                 alti=float(colonnes[0].text[:-2])    # la première colonne donne l'altitude (m)
@@ -145,9 +136,12 @@ def getProfilVerticalMeteociel (echeance,lati,longi,alti_interpolees=[]):
                 result["altitudes_interpolees"][num_alti_interpolees][key]=res[num_alti_interpolees]
                 num_alti_interpolees=num_alti_interpolees+1
             result["altitudes_interpolees"]=sorted(result["altitudes_interpolees"],key=lambda k:k["alti"]) # tri sur les altitudes croissantes
-        return result
+        return (result)
+
+    
 res= getProfilVerticalMeteociel(9,50.6,3.06,[10,12,-400,125,528,352,965,8952,12000,15963])
 print(json.dumps(res, indent=4, sort_keys=True))
+
 
 for key in res:
     if not key in ["altitudes","altitudes_interpolees"]:
@@ -158,3 +152,4 @@ for niv in res["altitudes"]:
 print("***************** altitudes interpolees **************************************")
 for niv in res["altitudes_interpolees"]:
     print (niv)
+

@@ -8,12 +8,12 @@ import sys
 import datetime
 import random
 
+
 #from getWCSCapabilities import profilVertical
 #from getWCSCapabilities import mostRecentId
 #from getWCSCapabilities import prevision
 from AxeVertical import AxeVertical
 from VentHorizontal import VentHorizontal
-from getNowVentMeteociel import getNowVentMeteociel
 from Utils import getHeureLocale
 sys.path.insert(0,'/home/ubuntu/node_jpmv/Utils') # insérer dans sys.path le dossier contenant le/les modules
 from Utils import *
@@ -88,25 +88,28 @@ class Vehicule:  # un véhicule qui se déplace
             status=r.status_code
         #print r.content  # le résultat de la requête
         self.sunRiseSunSet=json.loads(r.content)
-        sunrise=arrow.get(self.sunRiseSunSet["results"]["sunrise"])
-        sunriseTs=sunrise.timestamp
-        sunset=arrow.get(self.sunRiseSunSet["results"]["sunset"])
-        sunsetTs=sunset.timestamp
-        self.dayPosition= 100.*(self.tsUTC-sunriseTs)/(sunsetTs-sunriseTs)
-        #print self.dayPosition
-        self.heureSunriseLocale=sunrise.to(self.timeZone["timezone"])
-        if (self.heureSunriseLocale.day!=self.heureLocale.day):
-            self.heureSunriseLocale=self.heureSunriseLocale.replace(day=self.heureLocale.day)
-        #print sunrise
-        self.tsSunriseUTC=self.heureSunriseLocale.timestamp
-        #print sunrise.to(self.timeZone["timeZoneId"])
-        #print sunset
-        self.heureSunsetLocale=sunset.to(self.timeZone["timezone"])
-        if (self.heureSunsetLocale.day!=self.heureLocale.day):  # si ce n'est pas le sunset d'aujourd'hui
-            self.heureSunsetLocale=self.heureSunsetLocale.replace(day=self.heureLocale.day)   # on le force à aujourd'hui    
-        self.tsSunsetUTC=self.heureSunsetLocale.timestamp
-        self.dayPosition=(self.tsUTC-self.tsSunriseUTC)/1./self.sunRiseSunSet["results"]["day_length"]*100.  # Où en est-on de la journée dans [0%,100%]
-        #print self.dayPosition
+        if (self.sunRiseSunSet["results"]["day_length"]==0):
+            self.dayPosition=0.
+        else:
+            sunrise=arrow.get(self.sunRiseSunSet["results"]["sunrise"])
+            sunriseTs=sunrise.timestamp
+            sunset=arrow.get(self.sunRiseSunSet["results"]["sunset"])
+            sunsetTs=sunset.timestamp
+            self.dayPosition= 100.*(self.tsUTC-sunriseTs)/(sunsetTs-sunriseTs)
+            #print self.dayPosition
+            self.heureSunriseLocale=sunrise.to(self.timeZone["timezone"])
+            if (self.heureSunriseLocale.day!=self.heureLocale.day):
+                self.heureSunriseLocale=self.heureSunriseLocale.replace(day=self.heureLocale.day)
+            #print sunrise
+            self.tsSunriseUTC=self.heureSunriseLocale.timestamp
+            #print sunrise.to(self.timeZone["timeZoneId"])
+            #print sunset
+            self.heureSunsetLocale=sunset.to(self.timeZone["timezone"])
+            if (self.heureSunsetLocale.day!=self.heureLocale.day):  # si ce n'est pas le sunset d'aujourd'hui
+                self.heureSunsetLocale=self.heureSunsetLocale.replace(day=self.heureLocale.day)   # on le force à aujourd'hui    
+            self.tsSunsetUTC=self.heureSunsetLocale.timestamp
+            self.dayPosition=(self.tsUTC-self.tsSunriseUTC)/1./self.sunRiseSunSet["results"]["day_length"]*100.  # Où en est-on de la journée dans [0%,100%]
+            #print self.dayPosition
         if self.dayPosition <0.:
             self.dayPhase="night morning"
         elif 0<=self.dayPosition <50.:
@@ -300,9 +303,10 @@ class Vehicule:  # un véhicule qui se déplace
             print (k+":  "+str(self.__dict__[k]))
             #print (k)
 
-vehicule=Vehicule(57.21,172.56,200)
+vehicule=Vehicule(78.147148305,-84.576917,200)
 vehicule.affiche()
 hauteur=vehicule.hauteur
+"""
 print("*********** Vent DarkSky à 10m corrigé pour l'altitude "+str(hauteur)+" (m) du véhicule ***********") 
 (u,v)=vehicule.getVentActuel_10m_Darksky()
 vent=VentHorizontal(u,v)
@@ -311,7 +315,7 @@ print("*********** Vent Meteociel à l'altitude "+str(hauteur)+" (m) du véhicul
 (u,v)=vehicule.getVentActuelMeteociel()
 vent=VentHorizontal(u,v)
 vent.affiche_tout()
-"""
+
 v=Vehicule(50.6,3.06,10.)
 v.getVentActuelMeteociel()
 """

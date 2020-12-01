@@ -1,3 +1,4 @@
+''' Lecture d'une table d'une base de données RDS Aurora serverless '''
 import boto3
 client=boto3.client('rds-data')
 response=client.execute_statement(
