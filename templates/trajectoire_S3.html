@@ -29,8 +29,7 @@
 		function initMap() {  // Fonction d'initialisation de la carte
 		     getTrajectoire_S3()   // lecture des points de la trajectoire à afficher
             .then(function(res){
-            	let pos_1,pos_3,pos_5=pos_passés(res);  // calcul des positions de jours précédants
-            	console.log(pos_1,pos_3,pos_5);
+            	
             	// on va prendre un point sur trois
             	var new_res=[];
             	for (i=0;i<=(res["points"].length -1);i++){
@@ -44,8 +43,26 @@
             	for (i=0;i<=(res["points"].length -1);i++){  // on transforme toutes les longitudes dans [0,360]
             		res["points"][i]["lng"]=longi_0_360(res["points"][i]["lng"]);
             	}
-            	var latDernier=res["points"][res["points"].length -1]["lat"]
-            	var lngDernier=res["points"][res["points"].length -1]["lng"]
+            	let pos_dernier=res["points"][res["points"].length -1];
+            	var latDernier=pos_dernier["lat"];
+            	var lngDernier=pos_dernier["lng"];
+            	var [pos_1,pos_3,pos_5]=pos_passés(res);  // calcul des positions de jours précédants
+            	console.log(pos_1);
+            	console.log(pos_3);
+            	console.log(pos_5);
+            	let ecart_1=get_dd_passées(pos_1["lat"],pos_1["lng"],latDernier,lngDernier); // calcul des dd et distances au derneir point de jours précédants
+            	console.log(ecart_1);
+            	let dd_1=ecart_1["dd_to_go"];
+            	let vit_1=ecart_1["distance"]/(pos_dernier["ts"]-ecart_1["ts"])*3.6;
+            	let ecart_3=get_dd_passées(pos_3["lat"],pos_3["lng"],latDernier,lngDernier);
+            	console.log(ecart_3);
+            	let dd_3=ecart_3["dd_to_go"];
+            	let vit_3=ecart_3["distance"]/(pos_dernier["ts"]-ecart_3["ts"])*3.6;
+            	let ecart_5=get_dd_passées(pos_5["lat"],pos_5["lng"],latDernier,lngDernier);
+            	console.log(ecart_5);
+            	let dd_5=ecart_5["dd_to_go"];
+            	let vit_5=ecart_5["distance"]/(pos_dernier["ts"]-ecart_5["ts"])*3.6;
+            	
             	macarte = L.map('map').setView([latDernier,lngDernier],8);  // Créer l'objet "macarte" et l'insèrer dans l'élément HTML qui a l'ID "map"
                	L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {  // Leaflet ne récupère pas les cartes (tiles) sur un serveur par défaut. Nous devons lui préciser où nous souhaitons les récupérer. Ici, openstreetmap.fr
                 	attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',  // Il est toujours bien de laisser le lien vers la source des données
@@ -106,6 +123,9 @@
           		
 			  	}
             	var poly=L.polyline(latlng).addTo(macarte);   // afficahge du tracé de la trajectoire
+            	var trait_1=L.polyline([[pos_1["lat"],pos_1["lng"]],[pos_dernier["lat"],pos_dernier["lng"]]],{color: 'yellow'}).addTo(macarte);
+            	var trait_3=L.polyline([[pos_3["lat"],pos_3["lng"]],[pos_dernier["lat"],pos_dernier["lng"]]],{color: 'yellow'}).addTo(macarte);
+            	var trait_5=L.polyline([[pos_5["lat"],pos_5["lng"]],[pos_dernier["lat"],pos_dernier["lng"]]],{color: 'yellow'}).addTo(macarte);
             	L.control.scale().addTo(macarte);
             	var distance_effective=macarte.distance(latlng[res["points"].length-1],latlng[0])/1000.;   // en km
             	var duree_trajet=(new Date()-new Date(res["points"][0]["ts"]*1000))/1000./3600.;  // durée en heures
@@ -204,10 +224,34 @@
 				console.log((pos_find));
 				return(pos_find);
 			}
-			let pos_1_jour=look_for_past(traject,1);  // position à j-1 de la dernière position
-			let pos_3_jour=look_for_past(traject,3);  // position à j-3
-			let pos_5_jour=look_for_past(traject,5);  // position à j-5
-			return pos_1_jour,pos_3_jour,pos_5_jour;
+			var pos_1_jour=look_for_past(traject,1);  // position à j-1 de la dernière position
+			var pos_3_jour=look_for_past(traject,3);  // position à j-3
+			var pos_5_jour=look_for_past(traject,5);  // position à j-5
+			return [pos_1_jour,pos_3_jour,pos_5_jour];
+		}
+		function get_dd_passées (lati_deb,longi_deb,lati_fin,longi_fin){
+			var host=window.location.host;
+			console.log (host);
+			var url="https://vent.jpmacveigh.repl.co/?lati_deb="+
+			lati_deb.toString()+"&longi_deb="+longi_deb.toString()+
+			"&lati_fin="+lati_fin.toString()+"&longi_fin="+longi_fin.toString();
+			console.log(url);
+			return new Promise(function(resolve,reject){
+				$.ajax({  
+					type: "GET",
+					url: url,
+					dataType: "json",
+					async : true, 
+					success: function (json){
+						console.log("lecture get_dd_passées OK");
+						resolve(json);
+					},
+					error: function(json){
+						console.log("erreur get_dd_passées");
+						reject(json);
+						}	
+				});
+			});	
 		}
 	</script>
 </html>
