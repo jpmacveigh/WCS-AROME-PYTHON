@@ -24,8 +24,8 @@
 	</body>
 	
 	<script type="text/javascript">
-		// On initialise la latitude et la longitude de Lille (centre de la carte)
-		var macarte = null;
+		/*global L*/
+		var macarte=null;
 		function initMap() {  // Fonction d'initialisation de la carte
 		     getTrajectoire_S3()   // lecture des points de la trajectoire à afficher
             .then(function(res){
@@ -39,30 +39,48 @@
             		}
             	}
             	res["points"]=new_res;   // on travail maintenant avec 1 point sur 3
-            	console.log(res,res.length);
+            	console.log(res,res["points"].length);
             	for (i=0;i<=(res["points"].length -1);i++){  // on transforme toutes les longitudes dans [0,360]
             		res["points"][i]["lng"]=longi_0_360(res["points"][i]["lng"]);
             	}
-            	let pos_dernier=res["points"][res["points"].length -1];
+            	var pos_dernier=res["points"][res["points"].length -1];
             	var latDernier=pos_dernier["lat"];
             	var lngDernier=pos_dernier["lng"];
+            	function pos_passés(traject){     // recherches de positions de certains jours précédants la dernière position
+								var dernier=traject["points"][traject["points"].length-1];
+								console.log(dernier);
+								let ts_fin=dernier["ts"];
+								function look_for_past(traject,nb_jours){
+									let dts=nb_jours*24*60*60;
+									let i=traject["points"].length-1;
+									while (traject["points"][i]["ts"]>ts_fin-dts && i>=0) {
+										i=i-1;
+									}
+									let pos_find=traject["points"][i];
+									console.log((pos_find));
+									return(pos_find);
+								}
+								var pos_1_jour=look_for_past(traject,1);  // position à j-1 de la dernière position
+								var pos_3_jour=look_for_past(traject,3);  // position à j-3
+								var pos_5_jour=look_for_past(traject,5);  // position à j-5
+								return [pos_1_jour,pos_3_jour,pos_5_jour];
+							}
             	var [pos_1,pos_3,pos_5]=pos_passés(res);  // calcul des positions de jours précédants
             	console.log(pos_1);
+            	
             	console.log(pos_3);
             	console.log(pos_5);
+            	/*
             	let ecart_1=get_dd_passées(pos_1["lat"],pos_1["lng"],latDernier,lngDernier); // calcul des dd et distances au derneir point de jours précédants
-            	console.log(ecart_1);
-            	let dd_1=ecart_1["dd_to_go"];
-            	let vit_1=ecart_1["distance"]/(pos_dernier["ts"]-ecart_1["ts"])*3.6;
-            	let ecart_3=get_dd_passées(pos_3["lat"],pos_3["lng"],latDernier,lngDernier);
-            	console.log(ecart_3);
-            	let dd_3=ecart_3["dd_to_go"];
-            	let vit_3=ecart_3["distance"]/(pos_dernier["ts"]-ecart_3["ts"])*3.6;
+            	let vit_1=ecart_1["distance"]/(pos_dernier["ts"]-pos_1["ts"])*3.6;
+            	console.log(ecart_1,vit_1);
+             	let ecart_3=get_dd_passées(pos_3["lat"],pos_3["lng"],latDernier,lngDernier);
+            	let vit_3=ecart_3["distance"]/(pos_dernier["ts"]-pos_3["ts"])*3.6;
+            	console.log(ecart_3,vit_3);
             	let ecart_5=get_dd_passées(pos_5["lat"],pos_5["lng"],latDernier,lngDernier);
-            	console.log(ecart_5);
-            	let dd_5=ecart_5["dd_to_go"];
-            	let vit_5=ecart_5["distance"]/(pos_dernier["ts"]-ecart_5["ts"])*3.6;
-            	
+            	let vit_5=ecart_5["distance"]/(pos_dernier["ts"]-pos_5["ts"])*3.6;
+            	console.log(ecart_5,vit_5);
+            	*/
             	macarte = L.map('map').setView([latDernier,lngDernier],8);  // Créer l'objet "macarte" et l'insèrer dans l'élément HTML qui a l'ID "map"
                	L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {  // Leaflet ne récupère pas les cartes (tiles) sur un serveur par défaut. Nous devons lui préciser où nous souhaitons les récupérer. Ici, openstreetmap.fr
                 	attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',  // Il est toujours bien de laisser le lien vers la source des données
@@ -70,8 +88,8 @@
                 	maxZoom: 20
             	}).addTo(macarte);
             	var latlng=[];
-            	var iconWidth=12
-            	var iconHight=iconWidth*1.5
+            	var iconWidth=12;
+            	var iconHight=iconWidth*1.5;
             	var iconsParameters = {     // paramètres communs à toutes les icones des Markers
             				iconUrl: "",
             				shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -122,15 +140,23 @@
         			}
           		
 			  	}
-            	var poly=L.polyline(latlng).addTo(macarte);   // afficahge du tracé de la trajectoire
-            	var trait_1=L.polyline([[pos_1["lat"],pos_1["lng"]],[pos_dernier["lat"],pos_dernier["lng"]]],{color: 'yellow'}).addTo(macarte);
-            	var trait_3=L.polyline([[pos_3["lat"],pos_3["lng"]],[pos_dernier["lat"],pos_dernier["lng"]]],{color: 'yellow'}).addTo(macarte);
-            	var trait_5=L.polyline([[pos_5["lat"],pos_5["lng"]],[pos_dernier["lat"],pos_dernier["lng"]]],{color: 'yellow'}).addTo(macarte);
+            	L.polyline(latlng).addTo(macarte);   // afficahge du tracé de la trajectoire
+            	L.polyline([[pos_1["lat"],pos_1["lng"]],[pos_dernier["lat"],pos_dernier["lng"]]],{color: 'yellow'}).addTo(macarte);
+          		L.polyline([[pos_3["lat"],pos_3["lng"]],[pos_dernier["lat"],pos_dernier["lng"]]],{color: 'yellow'}).addTo(macarte);
+            	L.polyline([[pos_5["lat"],pos_5["lng"]],[pos_dernier["lat"],pos_dernier["lng"]]],{color: 'yellow'}).addTo(macarte);
+            	
             	L.control.scale().addTo(macarte);
             	var distance_effective=macarte.distance(latlng[res["points"].length-1],latlng[0])/1000.;   // en km
             	var duree_trajet=(new Date()-new Date(res["points"][0]["ts"]*1000))/1000./3600.;  // durée en heures
             	console.log(new Date(),new Date(res["points"][0]["ts"]*1000),duree_trajet);
-            	var legend = L.control({position: 'topright'})
+            	
+            	var dist_1=macarte.distance( [pos_1["lat"],pos_1["lng"]] , [pos_dernier["lat"],pos_dernier["lng"]] );
+            	var vit_1=dist_1/(pos_dernier["ts"]-pos_1["ts"])*3.6;
+            	var dist_3=macarte.distance( [pos_3["lat"],pos_3["lng"]] , [pos_dernier["lat"],pos_dernier["lng"]] );
+            	var vit_3=dist_3/(pos_dernier["ts"]-pos_3["ts"])*3.6;
+            	var dist_5=macarte.distance( [pos_5["lat"],pos_5["lng"]] , [pos_dernier["lat"],pos_dernier["lng"]] );
+            	var vit_5=dist_5/(pos_dernier["ts"]-pos_5["ts"])*3.6;
+            	var legend = L.control({position: 'topright'});
 							legend.onAdd = function () {
 								var div = L.DomUtil.create("div","cartouche");
 								div.innerHTML +="Départ : "+ new Date(res["points"][0]["ts"]*1000).toUTCString();
@@ -141,6 +167,9 @@
 								div.innerHTML +="<br>Distance effective : "+new Intl.NumberFormat().format(distance_effective.toFixed(1))+" km</div>";
 								div.innerHTML +="<br>Rapport : "+(distance_effective/distance_parcourue*100.).toFixed(1)+" %";
 								div.innerHTML +="<br>Vitesse moyenne : "+(distance_parcourue/duree_trajet).toFixed(1)+" km/h";
+								div.innerHTML +="<br>Vitesse 1 jour  : "+vit_1.toFixed(1)+" km/h";
+								div.innerHTML +="<br>Vitesse 3 jours : "+vit_3.toFixed(1)+" km/h";
+								div.innerHTML +="<br>Vitesse 5 jours : "+vit_5.toFixed(1)+" km/h";
 								return div;
 							};
 							legend.addTo(macarte);
@@ -210,28 +239,8 @@
 				});
 			});	
 		}
-		function pos_passés(traject){     // recherches de positions de certains jours précédants la dernière position
-			var dernier=traject["points"][traject["points"].length-1];
-			console.log(dernier);
-			let ts_fin=dernier["ts"];
-			function look_for_past(traject,nb_jours){
-				let dts=nb_jours*24*60*60;
-				let i=traject["points"].length-1;
-				while (traject["points"][i]["ts"]>ts_fin-dts && i>=0) {
-					i=i-1;
-				}
-				let pos_find=traject["points"][i];
-				console.log((pos_find));
-				return(pos_find);
-			}
-			var pos_1_jour=look_for_past(traject,1);  // position à j-1 de la dernière position
-			var pos_3_jour=look_for_past(traject,3);  // position à j-3
-			var pos_5_jour=look_for_past(traject,5);  // position à j-5
-			return [pos_1_jour,pos_3_jour,pos_5_jour];
-		}
+		
 		function get_dd_passées (lati_deb,longi_deb,lati_fin,longi_fin){
-			var host=window.location.host;
-			console.log (host);
 			var url="https://vent.jpmacveigh.repl.co/?lati_deb="+
 			lati_deb.toString()+"&longi_deb="+longi_deb.toString()+
 			"&lati_fin="+lati_fin.toString()+"&longi_fin="+longi_fin.toString();
