@@ -34,7 +34,7 @@ class WCSGeotiff:
             #print type(self.array)
             #print self.array.shape
         else :
-            print pathGetCoverage
+            print (pathGetCoverage)
             raise Exception ("WCSGeotiff : Fichier geotiff incorrect")
     def valeurSurGrille(self,rangLongi,rangLati):  # renvoi la valeur du champ au point de la grille [rangLati,rangLongi]
         if not (0<= rangLongi <= self.dataset.RasterXSize-1): raise Exception ("erreur rangLongi")
@@ -51,6 +51,7 @@ class WCSGeotiff:
         if not(self.origineX <= rlongi <= self.extremeX) : 
             print ("Anomalie rlongi : "+ str(rlongi) + " "+str(self.origineX)+" "+str(self.extremeX))
             raise Exception ("erreur rlongi")
+        cmp=lambda x,seuil : -1 if x<seuil else (0 if x==seuil else 1)
         s=cmp(self.pixelHeight,0)
         if not(self.origineY*s <= s*rlati <= s*self.extremeY) : raise Exception ("erreur rlati")
         if rlongi==self.extremeX:

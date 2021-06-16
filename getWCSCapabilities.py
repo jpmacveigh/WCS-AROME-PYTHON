@@ -1,4 +1,7 @@
 # coding: utf8
+'''
+Un ensemble de script traitant les fichier Inspire (WCS) open data de Météo-France
+'''
 from __future__ import unicode_literals
 import requests
 import sys
@@ -26,9 +29,13 @@ def getWCSCapabilities(resol):  # Lance une requête "getCapabilities" du WCS po
         while status != 200:
             r=requests.get(path)
             status=r.status_code
+        '''
         fichier = open(XMLFileName,"w")
         print >> fichier,r.content  # le résultat de la requête est un XML qui l'on écrite dans un ficheir
         fichier.close()
+        '''
+        with open(XMLFileName,"wb") as fichier:
+            fichier.write(r.content)
     mydoc = minidom.parse(XMLFileName)  # parse an XML file given by his name
     items = mydoc.getElementsByTagName('wcs:CoverageId') # recherches des CoverageID dans le ficheir XML parsé
     res=[];

@@ -32,4 +32,4 @@ def traiteAromePrevi():
     fic.close()
     s3=boto3.client("s3")
     s3.upload_file(sqlite_name, "elasticbeanstalk-eu-west-1-062282685834", "Arome.sqlite") # upload de la base sqlite vers S3
-traiteAromePrevi()    
+#traiteAromePrevi()    
