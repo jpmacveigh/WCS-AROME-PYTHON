@@ -20,7 +20,7 @@ class CoverageId :
         self.descr=""  # description renvoyée par la requette getCapabilities du WCS
         self.code=""
         for k,v in CatalogueWCS.catalogueWCS.items():
-            (nom,desc)=v
+            (nom,desc,classe)=v
             if nom==self.chaineNom():
                 self.code=k
                 break
