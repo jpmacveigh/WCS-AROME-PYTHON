@@ -34,9 +34,10 @@ print (len(result),deb,fin)
 #fic = open("logArome.txt","a")
 #fic.write(len(covId),len(jeunesCovId),len(aTraiterCovId),len(result),deb,fin)
 #fic.close()
-repcourant=os.getcwd()+"/"
-fic = open(repcourant+"previArome.txt","w") # Ecriture des résultats dans fichier temporaire
-for previ in result:
-    fic.writelines(str(previ)+"\n")
-fic.close()
-traiteAromePrevi() # Ecriture du fichier previArome.txt dans base Arome.sqlite
+if len(result) != 0 :
+    repcourant=os.getcwd()+"/"
+    fic = open(repcourant+"previArome.txt","w") # Ecriture des résultats dans fichier temporaire
+    for previ in result:
+        fic.writelines(str(previ)+"\n")
+    fic.close()
+    traiteAromePrevi() # Ecriture du fichier previArome.txt dans base Arome.sqlite

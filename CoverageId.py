@@ -20,7 +20,7 @@ class CoverageId :
         self.descr=""  # description renvoyée par la requette getCapabilities du WCS
         self.code=""
         for k,v in CatalogueWCS.catalogueWCS.items():
-            (nom,desc,classe)=v
+            (nom,desc)=v
             if nom==self.chaineNom():
                 self.code=k
                 break
@@ -96,6 +96,7 @@ class CoverageId :
         model="MF-NWP-HIGHRES-AROME-"+self.resol+"-FRANCE-WCS";
         path="https://geoservices.meteofrance.fr/services/"+model+"?SERVICE=WCS&version=2.0.1&REQUEST=DescribeCoverage&coverageID=";
         path=path+self.coverageId+"&token=__BvvAzSbJXLEdUJ--rRU0E1F8qi6cSxDp5x5AtPfCcuU__"; 
+        print("path pour getdescribeCoverage : ",path)
         return path
     def describeCoverage(self):  # Envoi et traitement d'une requette describeCoverage pour ce CoverageId
         path = self.describeCoveragePath()
@@ -105,15 +106,11 @@ class CoverageId :
             retry=retry+1
             r=requests.get(path)  # envoi d'une requête "describeCoverage" du WCS
             status=r.status_code
+            time.sleep(1)
             #print("path: ",path," status decribeCoverage : ",str(status))
         if retry>10 :
             print("retry : "+str(retry)+" path: ",path," status decribeCoverage : ",str(status))
             sys.exit(retry)
-        '''
-        fichier = open("WCSDescribeCoverage.xml","w")
-        print >> fichier,r.content  # le résultat de la requête est un XML qui l'on écrit dans un ficheir
-        fichier.close()
-        '''
         with open("WCSDescribeCoverage.xml","wb") as fichier:
             fichier.write(r.content)
         res=self.analyseXML("WCSDescribeCoverage.xml")
@@ -221,15 +218,16 @@ class CoverageId :
         self.chaineDatePreviGot=chaineDatePrevi
         self.nivGot=niv
         self.filename="WCSgetCoverage.tiff"
-        #print ("getCoverage path: "+path)
+        print ("   ")
+        print ("getCoverage path: "+path)
         status=-1
         isGeotiff=False
+        nb_getCoverage=1
         while status != 200 or not isGeotiff:
             if not(status==-1): time.sleep(0.5)    # sauf la première fois, wait in seconds pour ne pas surcharger le serveur
             r=requests.get(path)  # envoi d'une requête "getCoverage" du WCS
             status=r.status_code
-            print (path)
-            print ("getCoverage code: "+str(r.status_code))
+            print (nb_getCoverage,"getCoverage code: "+str(r.status_code))
             print ("longueur retournée: "+ str(len(r.content)))
             print ("deux premiers octets : "+str(r.content[0:2]))
             debut=r.content[0:2]  # lecture des deux premiers octets du buffer retourné
@@ -238,11 +236,7 @@ class CoverageId :
             else :
                 isGeotiff=False
             print (isGeotiff)
-        '''
-        fichier = open(self.filename,"w")  # quand le buffer retourné est correct, on le traite
-        print >> fichier,r.content  # le résultat de la requête est un geotiff que l'on écrit dans un fichier
-        fichier.close()
-        '''
+            nb_getCoverage=nb_getCoverage+1
         with open(self.filename,"wb") as fichier:
             fichier.write(r.content)
         self.geotiff=WCSGeotiff(path,self.filename)  # décodage du Geotiff
