@@ -271,9 +271,14 @@ class CoverageId :
         if "TEMPERATURE__ISOBARIC_SURFACE" in self.coverageId :   return True  ;
         if "U_COMPONENT_OF_WIND__ISOBARIC_" in self.coverageId :   return True  ;
         if "U_COMPONENT_OF_WIND__POTENTIAL_VORTICITY" in self.coverageId :   return True  ;
+        if "U_COMPONENT_OF_WIND_GUST__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND" in self.coverageId :   return True  ;
         if "V_COMPONENT_OF_WIND__ISOBARIC_SURFACE" in self.coverageId :   return True  ;
         if "V_COMPONENT_OF_WIND__POTENTIAL_VORTICITY" in self.coverageId :   return True  ;
+        if "V_COMPONENT_OF_WIND_GUST__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND" in self.coverageId :   return True  ;
         if "GEOPOTENTIAL__ISOBARIC_SURFACE___" in self.coverageId :   return True  ;
+        if "WIND_SPEED__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND" in self.coverageId :   return True  ;
+        if "WIND_SPEED__ISOBARIC_SURFACE" in self.coverageId :   return True  ;
+        if "DEW_POINT_TEMPERATURE__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND" in self.coverageId :   return True  ;
         return False
     def affiche(self):
         print (json.dumps(self.__dict__,indent=4,sort_keys=True))
