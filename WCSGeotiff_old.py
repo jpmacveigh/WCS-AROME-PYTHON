@@ -1,7 +1,4 @@
 # coding: utf8
-'''
-Classe WCSGeotiff
-'''
 import gdal
 from Axe import Axe
 from Espace2D import Espace2D

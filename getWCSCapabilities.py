@@ -1,158 +1,61 @@
-# coding: utf8
-'''
-Un ensemble de script traitant les fichier Inspire (WCS) open data de Météo-France
-'''
-from __future__ import unicode_literals
-import requests
-import sys
-import time
-import calendar
-import os
-import json
-#sys.path.insert(0, '/home/ubuntu/workspace/Utils') # insérer dans sys.path le dossier contenant le/les modules
-sys.path.insert(0, '/home/ubuntu/environment/node_jpmv/Utils') # insérer dans sys.path le dossier contenant le/les modules
-from Utils import lesChainesDateEntourantes
-from Utils import chaineUTCFromTs
-from Utils import tsNow
-from CoverageId import CoverageId
-#import xml.etree.ElementTree as ET
-from xml.dom import minidom
-def getWCSCapabilities(resol):  # Lance une requête "getCapabilities" du WCS pour le modèel Arome de MF. La résolution ("0025" ou "001") est donnée en paramètre. 
-    XMLFileName="WCSCapabilities.xml"
-    #  on regarde si la dernière requête "getCapabilities" n'est trop récente
-    now=time.time()
-    if (not ((os.path.exists(XMLFileName) and (now-os.path.getctime(XMLFileName)<=10*60)))): #  plus de 10 minutes ?
-        path="https://geoservices.meteofrance.fr/services/MF-NWP-HIGHRES-AROME-"
-        path=path+resol+"-FRANCE-WCS?request=GetCapabilities&version=1.3.0&service=WCS&token=__BvvAzSbJXLEdUJ--rRU0E1F8qi6cSxDp5x5AtPfCcuU__"
-        #curl "https://geoservices.meteofrance.fr/services/MF-NWP-HIGHRES-AROME-001-FRANCE-WCS?request=GetCapabilities&version=1.3.0&service=WCS&token=__BvvAzSbJXLEdUJ--rRU0E1F8qi6cSxDp5x5AtPfCcuU__" > resultGetCapabilities
-        status=-1
-        while status != 200:
-            r=requests.get(path)
-            status=r.status_code
-        '''
-        fichier = open(XMLFileName,"w")
-        print >> fichier,r.content  # le résultat de la requête est un XML qui l'on écrite dans un ficheir
-        fichier.close()
-        '''
-        with open(XMLFileName,"wb") as fichier:
-            fichier.write(r.content)
-    mydoc = minidom.parse(XMLFileName)  # parse an XML file given by his name
-    items = mydoc.getElementsByTagName('wcs:CoverageId') # recherches des CoverageID dans le ficheir XML parsé
-    res=[];
-    lesTitres=set()
-    cle={}
-    for i in range (0,len(items)):  # boucle sur les CoverageId trouvés dans le fichier XML parsé
-        coverageId=items[i].childNodes[0].nodeValue  # le coverageId
-        node=items[i].parentNode
-        node=node.getElementsByTagName('ows:Title')  # recherche de sa description
-        description=node[0].childNodes[0].nodeValue  # sa description
-        cle='"",("'+CoverageId(coverageId,resol).chaineNom()+'","'+description+'"),'
-        lesTitres.add(cle)
-        cov=CoverageId(coverageId,resol)  # création dun objet CoverageId
-        cov.descr=description  # renseignement de sa descritpion
-        res.append(cov)  # écriture des objets CoverageId dans la liste des résultats
-    titres=sorted(lesTitres)
-    """for titre in titres:
-        print titre
-    print len(titres)"""
-    return res    # renvoi la liste des objets CoverageId exposés par le WCS de MF
-def mostRecentId(resol,code):   # renvoi le plus récent des CoverageId de resolution "resol" et dont le code du la variable est "code"
-    tab=getWCSCapabilities(resol)   #  envoi d'ue requête getCapabilities au WCS pour la résolution "resol"
-    ts=-sys.maxsize-1    #  le plus grand des entiers
-    res=None
-    for Id in tab:    #  recherche du plus récent run pour le paramètre de code "code"
-        if Id.code==code and Id.timeUTCRunTs>=ts :  #  on lit le timestamp du run
-            res=Id
-            ts=Id.timeUTCRunTs
-    return res
-def profilVertical(resol,code,longi,lati):   #  renvoi le profil vertical à l'heure précedante
-    Id=mostRecentId(resol,code)
-    if Id:
-        res={}
-        Id.describeCoverage()
-        if (Id.dim!=4): raise Exception ("profilVertical : %s n'est pas de dimension 4" %(code))
-        #print (Id.code,Id.descr,Id.niv)
-        chaineDate=lesChainesDateEntourantes()[0]
-        res["titre"]="Profil vertical"
-        res["code"]=Id.code
-        res["descr"]=Id.descr
-        res["vertical"]=Id.niv
-        res["run"]=Id.chaineDate()
-        res["previ"]=chaineDate
-        res["unit"]=Id.unite
-        res["niveaux"]=[]
-        res["position"]={"longitude":longi,"latitude":lati}
-        niveaux=Id.__dict__[Id.niv]
-        res["nbNiv"]=len(niveaux);
-        #print niveaux
-        for niv in niveaux:
-            #Id.getCoverage(lati-.1,lati+.1,longi-.1,longi+.1,Id.timeDatePrevi[0],niv)
-            Id.getCoverage(lati-.1,lati+.1,longi-.1,longi+.1,chaineDate,niv)
-            #print niv,Id.valeur(longi,lati)
-            res["niveaux"].append({"niveau":niv,"valeur":Id.valeur(longi,lati)})
-        ts= calendar.timegm(time.gmtime())
-        res["now"]=chaineUTCFromTs(ts)
-        return res
-    else : return None
-def profilVerticalComplet(resol,code_generique,longi,lati):   #  renvoi le profil vertical à l'heure précedante dans les deux coordonées verticales
-    resh=profilVertical(resol,code_generique+"(h)",longi,lati)  # profil vertical en corrdonée z
-    resp=profilVertical(resol,code_generique+"(p)",longi,lati)  # profil vertical en coordonnée p
-    return resh,resp
-def previsions (resol,code,longi,lati,niveau=None): # renvoie toutes les prévisions disponibles pour un code donné
-    if not(niveau==None): niveau = int(niveau)
-    Id=mostRecentId(resol,code)
-    if Id:
-        res={};
-        Id.describeCoverage();
-        if Id.dim==4 and niveau==None : # Cas où il manque le niveau
-            return {"error":"Previsions : Le champs est de dim=4, le niveau est manquant"};
-        if Id.dim==3 and not(niveau==None): # Cas où le niveau n'est pas requis
-            return {"error":"Previsions : Le champs est de dim=3, le niveau n'est pas requi"};  
-        res={};
-        res["titre"]="Previsions"
-        res["code"]=Id.code
-        res["descr"]=Id.descr
-        res["niveau"]=niveau
-        res["run"]=Id.chaineDate()
-        res["unit"]=Id.unite
-        res["position"]={"longitude":longi,"latitude":lati}
-        res["previsions"]=[]
-        res["nbPrevi"]= len(Id.timeDatePrevi);
-        for date in Id.timeDatePrevi:  # itération sur les dates des prévisions
-            #Id.getCoverage(lati-.1,lati+.1,longi-.1,longi+.1,date,niveau)
-            previ=prevision(Id,longi,lati,date,niveau)
-            res["previsions"].append({"date":date,"valeur":previ})
-        return res;
-    return {"error":"Previsions : mostRecentId was not found : Check the given code"};
-def prevision (Id,longi,lati,date,niveau=None):  # prévision pour uen date donnée
-    if Id.dim==4 and niveau==None : # Cas où il manque le niveau
-        raise Exception ("prevision : Le champs est de dim=4, le niveau est manquant");
-    if Id.dim==3 and not(niveau==None): # Cas où le niveau n'est pas requis
-        raise Exception ("prevision : Le champs est de dim=3, le niveau n'est pas requi");  
-    Id.getCoverage(lati-.1,lati+.1,longi-.1,longi+.1,date,niveau)
-    return Id.valeur(longi,lati)
-def allFuturesPrevisionsForId (Id,longi,lati):  # renvoi toutes les prévisions futures en (longi,lati) contenues dans Id
-    result=[]
-    Id.describeCoverage()  # On complète la description de l'Id
-    Id.affiche()
-    if Id.dim==3 : nbIterationsNiv = 1            
-    if Id.dim==4 : nbIterationsNiv = len(Id.__dict__[Id.niv])
-    for numNiv in range(0, nbIterationsNiv) :  # boucle sur les niveaux disponibles dans l'Id
-        for date in Id.timeDatePreviFutures :  # boucle sur toutes les dates futures
-            res={}  # dictionnaire résultat pour une prévision
-            res["abrev"]=Id.code
-            res["run"]=Id.timeUTCRun
-            res["unit"]=Id.unite
-            res["nom"]=Id.chaineNom()
-            res["now"]=chaineUTCFromTs(tsNow())  # heure actuelle à laquelle on extrait la prévision des bases de MF
-            if Id.dim==4 : niveau=Id.__dict__[Id.niv][numNiv] # Cas où il faut le niveau.
-            if Id.dim==3 : niveau=None  # Cas où le niveau n'est pas requis
-            res["z"]=niveau  # position sur la verticale (ou None si dim=3)
-            res["niv"]=Id.niv # nom de la coordonnée verticale (ou None si dim=3)
-             # on prend la première date des prévisions
-            res["date"]=date
-            Id.getCoverage(lati-.1,lati+.1,longi-.1,longi+.1,date,niveau)
-            res["val"]= Id.valeur(longi,lati)
-            print (res["abrev"],res["run"],res["date"],res["z"],res["niv"],res["val"])
-            result.append(json.dumps(res)) # renvoi une liste de prévisiosn transformée en json 
-    return result
+import datetime
+from Client_APIM_MF import Client_APIM_MF  
+def getWCSCapabilities(modele,resol,domaine):
+  """
+  Envoi une requête getCapabilities au service WCS de MF et retourne la
+  liste des coverageId disonibles
+  """
+  #import requests
+  domaines=["FRANCE","EUROPE","GLOBE"]       # les domaines possibles
+  assert domaine in domaines,domaine          
+  resols=["001","0025","01","025"]           # les résolutions possibles
+  assert resol in resols,resol              
+  models=["HIGHRES-AROME","GLOBAL-ARPEGE"]   # les modèles MF possibles
+  assert modele in models,modele
+  modele_resol_domaine=f"{modele}-{resol}-{domaine}"
+  print(modele_resol_domaine)
+  combinaisons=["HIGHRES-AROME-001-FRANCE","HIGHRES-AROME-0025-FRANCE","GLOBAL-ARPEGE-01-EUROPE","GLOBAL-ARPEGE-025-GLOBE"]
+  assert modele_resol_domaine in combinaisons , modele_resol_domaine
+  #tok="eyJ4NXQiOiJOelU0WTJJME9XRXhZVGt6WkdJM1kySTFaakZqWVRJeE4yUTNNalEyTkRRM09HRmtZalkzTURkbE9UZ3paakUxTURRNFltSTVPR1kyTURjMVkyWTBNdyIsImtpZCI6Ik56VTRZMkkwT1dFeFlUa3paR0kzWTJJMVpqRmpZVEl4TjJRM01qUTJORFEzT0dGa1lqWTNNRGRsT1RnelpqRTFNRFE0WW1JNU9HWTJNRGMxWTJZME13X1JTMjU2IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJqcG1hY3ZlaWdoQGNhcmJvbi5zdXBlciIsImF1ZCI6IjY3QTU5Vk1jd0VCeUhTNmY3dHBVQWRfNmFfVWEiLCJuYmYiOjE2NDQzMjc5NDIsImF6cCI6IjY3QTU5Vk1jd0VCeUhTNmY3dHBVQWRfNmFfVWEiLCJzY29wZSI6ImFtX2FwcGxpY2F0aW9uX3Njb3BlIGRlZmF1bHQiLCJpc3MiOiJodHRwczpcL1wvYW8xLW1mLm9yZzo5NDQzXC9vYXV0aDJcL3Rva2VuIiwiZXhwIjoxNjQ0MzMxNTQyLCJpYXQiOjE2NDQzMjc5NDIsImp0aSI6ImVlMjYwYzBjLTUxODktNDg4NC05NTVjLTAxMmExNDQ2ZDkyNCJ9.LIX69boro2nFW4eVh9Py1YHBp72_4AutxXcO44xNHSP26yaLtzedJ9EzLMFX1t2Lb6vT453ZAtUhjm36cwiQmBmNBviea4_xTA680UcLcE2k0G0vYFppe-VIKT1SuASmdpEQ-bbDiuSNOGuOXosTKoqhUG0biqDvyj-Y4pez757fhYzBLhpJgXRHawW_vIoLQfldBs1ippbXXct-OVZ5Q1mUeS7cAJNQr0nvLTf_TIYx07UvZCiQVN7t8ZxzCu1LN_USUBGdbrDdmvPbbBIsks38QVFOAK-TkLbvOPgW8QbnBtxJTtKSVZXVIF3MR8VwW1CkGUNiPungT95BLvsdmg"
+  #path=f"https://geoservices.meteofrance.fr/services/MF-NWP-{modele_resol_domaine}-WCS?request=GetCapabilities&version=1.3.0&service=WCS&token=__BvvAzSbJXLEdUJ--rRU0E1F8qi6cSxDp5x5AtPfCcuU__"
+  #path='https://public-api.meteofrance.fr/public/arome/1.0/wms/MF-NWP-HIGHRES-AROME-001-FRANCE-WMS/GetCapabilities?service=WMS&version=1.3.0'
+  # path pour getCapabilities du WMS (Web Map Services) :
+  #path=f"https://public-api.meteofrance.fr/public/arome/1.0/wms/MF-NWP-{modele_resol_domaine}-WMS/GetCapabilities?service=WMS&version=1.3.0"
+  #path="https://public-api.meteofrance.fr/public/arome/1.0/wcs/MF-NWP-HIGHRES-AROME-001-FRANCE-WCS/GetCapabilities?SERVICE=WCS&VERSION=1.3.0&REQUEST=GetCapabilities"
+  path=f"https://public-api.meteofrance.fr/public/arome/1.0/wcs/MF-NWP-{modele_resol_domaine}-WCS/GetCapabilities?SERVICE=WCS&VERSION=1.3.0&REQUEST=GetCapabilities"
+  #path=f"https://geoservices.meteofrance.fr/services/MF-NWP-{modele_resol_domaine}-WCS?request=GetCapabilities&version=1.3.0&service=WCS&token=eyJ4NXQiOiJZV0kxTTJZNE1qWTNOemsyTkRZeU5XTTRPV014TXpjek1UVmhNbU14T1RSa09ETXlOVEE0Tnc9PSIsImtpZCI6ImdhdGV3YXlfY2VydGlmaWNhdGVfYWxpYXMiLCJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJqcG1hY3ZlaWdoQGNhcmJvbi5zdXBlciIsImFwcGxpY2F0aW9uIjp7Im93bmVyIjoianBtYWN2ZWlnaCIsInRpZXJRdW90YVR5cGUiOm51bGwsInRpZXIiOiJVbmxpbWl0ZWQiLCJuYW1lIjoianBtdiIsImlkIjo2MDQsInV1aWQiOiJkOWFkNTZkMy00ZTU2LTRmY2QtYmE0ZC0xOWUzNWMzYTI0Y2EifSwiaXNzIjoiaHR0cHM6XC9cL3BvcnRhaWwtYXBpLm1ldGVvZnJhbmNlLmZyOjQ0M1wvb2F1dGgyXC90b2tlbiIsInRpZXJJbmZvIjp7IjUwUGVyTWluIjp7InRpZXJRdW90YVR5cGUiOiJyZXF1ZXN0Q291bnQiLCJncmFwaFFMTWF4Q29tcGxleGl0eSI6MCwiZ3JhcGhRTE1heERlcHRoIjowLCJzdG9wT25RdW90YVJlYWNoIjp0cnVlLCJzcGlrZUFycmVzdExpbWl0IjowLCJzcGlrZUFycmVzdFVuaXQiOiJzZWMifX0sImtleXR5cGUiOiJQUk9EVUNUSU9OIiwicGVybWl0dGVkUmVmZXJlciI6IiIsInN1YnNjcmliZWRBUElzIjpbeyJzdWJzY3JpYmVyVGVuYW50RG9tYWluIjoiY2FyYm9uLnN1cGVyIiwibmFtZSI6IkFST01FIiwiY29udGV4dCI6IlwvcHVibGljXC9hcm9tZVwvMS4wIiwicHVibGlzaGVyIjoiYWRtaW5fbWYiLCJ2ZXJzaW9uIjoiMS4wIiwic3Vic2NyaXB0aW9uVGllciI6IjUwUGVyTWluIn1dLCJleHAiOjE3Mzg5MDYxNTUsInBlcm1pdHRlZElQIjoiIiwiaWF0IjoxNjQ0Mjk4MTU1LCJqdGkiOiI0NjVmOTg5ZC1lZGI4LTQ1NmYtYmRlMi1iZGZkOWVkMTc2YTMifQ==.r5ee2shK0_CqmAoHskiY_3M44owRWrOJBPQZJQmB-ELjxuttujjEfKINmcXX6GV4rh9kMLY9f-PWfZ--L1NhTPZThwluJRQwWyEjo_L1krsELuw1Gibb00ABhH8EmLTSrKlnaL4LbdAsPERbNA6Q9Dkoh0Blf0iWrSIoL8xOLRm8PFuoE0smVOxLiJOEebxtIQJbIs7aN7j2gTPyxCtt_KIQgEbZKoQyv39FdbHaeb5jFtYQ-sShHNbNdl7LDZl0bQLWQjIkn23PIJvld5aOP5VqJ5W10ITrMM9JEJt9cbjwA4AbdipUSfz_nldzN5JcKkndKO3REVTgzyPQPq3iVg=="
+  #path=f"https://geoservices.meteofrance.fr/services/MF-NWP-{modele_resol_domaine}-WCS?request=GetCapabilities&version=1.3.0&service=WCS&token={tok}"
+
+  print(path)
+  #rep=requests.get(path)   # requête GetCapabilities du standard Web Coverage Services (WCS)
+  rep=Client_APIM_MF().request("GET",path,verify=False)   # requête GetCapabilities du standard Web Coverage Services (WCS)
+  assert rep.status_code == 200 , rep.status_code
+  from xml.dom.minidom import parseString  # analyse du XML retourné par la requête GetCapabilities
+  dom = parseString(rep.content)
+  items = dom.getElementsByTagName('wcs:CoverageId')
+  rep={}
+  rep["now_utc"]=str(datetime.datetime.utcnow())
+  rep["modele"]=modele
+  rep["resolution"]=resol
+  rep["domaine"]=domaine
+  res=[];
+  lesTitres=set()
+  cle={}
+  for i in range (0,len(items)):  # boucle sur les CoverageId trouvés dans le fichier XML parsé
+      coverageId=items[i].childNodes[0].nodeValue  # le coverageId
+      node=items[i].parentNode
+      node=node.getElementsByTagName('ows:Title')  # recherche de sa description
+      description=node[0].childNodes[0].nodeValue  # sa description
+      #print (coverageId,description)
+      run=coverageId.split("__")[-1][1:]
+      res.append({"Id":coverageId,"desc":description,"run":run})
+      #cle='"",("'+CoverageId(coverageId,resol).chaineNom()+'","'+description+'"),'
+      #lesTitres.add(cle)
+      #cov=CoverageId(coverageId,resol)  # création dun objet CoverageId
+      #cov.descr=description  # renseignement de sa descritpion
+      #res.append(cov)  # écriture des objets CoverageId dans la liste des résultats
+  titres=sorted(lesTitres)
+  print(len(res))
+  rep["nb_ID"]=len(res)
+  rep["lesID"]=res
+  return rep
