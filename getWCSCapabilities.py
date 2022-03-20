@@ -1,9 +1,10 @@
 import datetime
-from Client_APIM_MF import Client_APIM_MF  
+from Client_APIM_MF import Client_APIM_MF  # client MF pour renouveler le token d'acces à l'API WCS de MF (depuis janvier 2022)
+from Coverage import Coverage
 def getWCSCapabilities(modele,resol,domaine):
   """
   Envoi une requête getCapabilities au service WCS de MF et retourne la
-  liste des coverageId disonibles
+  liste des coverageId disponibles
   """
   #import requests
   domaines=["FRANCE","EUROPE","GLOBE"]       # les domaines possibles
@@ -33,6 +34,7 @@ def getWCSCapabilities(modele,resol,domaine):
   from xml.dom.minidom import parseString  # analyse du XML retourné par la requête GetCapabilities
   dom = parseString(rep.content)
   items = dom.getElementsByTagName('wcs:CoverageId')
+  assert len(items)!= 0 , len(items)
   rep={}
   rep["now_utc"]=str(datetime.datetime.utcnow())
   rep["modele"]=modele
@@ -48,11 +50,11 @@ def getWCSCapabilities(modele,resol,domaine):
       description=node[0].childNodes[0].nodeValue  # sa description
       #print (coverageId,description)
       run=coverageId.split("__")[-1][1:]
-      res.append({"Id":coverageId,"desc":description,"run":run})
-      #cle='"",("'+CoverageId(coverageId,resol).chaineNom()+'","'+description+'"),'
-      #lesTitres.add(cle)
-      #cov=CoverageId(coverageId,resol)  # création dun objet CoverageId
-      #cov.descr=description  # renseignement de sa descritpion
+      cov=Coverage(coverageId,resol,modele,domaine)  # création d'un objet Coverage
+      cle='"",("'+cov.chaineNom()+'","'+description+'"),'
+      lesTitres.add(cle)
+      cov.descr=description  # renseignement de sa descritpion
+      res.append({"Id":coverageId,"desc":description,"run":run,"obj":cov}) # écriture des objets CoverageId dans la liste des résultats
       #res.append(cov)  # écriture des objets CoverageId dans la liste des résultats
   titres=sorted(lesTitres)
   print(len(res))

@@ -61,12 +61,12 @@ class CatalogueWCS:
     "FF(h)":("WIND_SPEED__SPECIFIC_HEIGHT_LEVEL_ABOVE_GROUND","Force du vent en niveaux hauteur","vent")}
 
 #print([CatalogueWCS.catalogueWCS[x] for x in CatalogueWCS.catalogueWCS])
-
+"""
 tri=sorted([CatalogueWCS.catalogueWCS[x] for x in CatalogueWCS.catalogueWCS],key=lambda x:x[2])
 for i in tri:
     print(i)
 print (len(tri))
-"""
+
 
 cles=[]
 for (k,v) in CatalogueWCS.catalogueWCS.items():

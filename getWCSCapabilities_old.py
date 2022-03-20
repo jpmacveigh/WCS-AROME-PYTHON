@@ -14,10 +14,21 @@ sys.path.insert(0, '/home/ubuntu/environment/node_jpmv/Utils') # insérer dans s
 from Utils import lesChainesDateEntourantes
 from Utils import chaineUTCFromTs
 from Utils import tsNow
+from Client_APIM_MF import Client_APIM_MF
 from CoverageId import CoverageId
 #import xml.etree.ElementTree as ET
 from xml.dom import minidom
-def getWCSCapabilities(resol):  # Lance une requête "getCapabilities" du WCS pour le modèel Arome de MF. La résolution ("0025" ou "001") est donnée en paramètre. 
+def getWCSCapabilities(modele,resol,domaine):  # Lance une requête "getCapabilities" du WCS pour le modèel Arome de MF. La résolution ("0025" ou "001") est donnée en paramètre. 
+    domaines=["FRANCE","EUROPE","GLOBE"]       # les domaines possibles
+    assert domaine in domaines,domaine          
+    resols=["001","0025","01","025"]           # les résolutions possibles
+    assert resol in resols,resol              
+    models=["HIGHRES-AROME","GLOBAL-ARPEGE"]   # les modèles MF possibles
+    assert modele in models,modele
+    modele_resol_domaine=f"{modele}-{resol}-{domaine}"
+    print(modele_resol_domaine)
+    combinaisons=["HIGHRES-AROME-001-FRANCE","HIGHRES-AROME-0025-FRANCE","GLOBAL-ARPEGE-01-EUROPE","GLOBAL-ARPEGE-025-GLOBE"]
+    assert modele_resol_domaine in combinaisons , modele_resol_domaine
     XMLFileName="WCSCapabilities.xml"
     #  on regarde si la dernière requête "getCapabilities" n'est trop récente
     now=time.time()
@@ -25,9 +36,11 @@ def getWCSCapabilities(resol):  # Lance une requête "getCapabilities" du WCS po
         path="https://geoservices.meteofrance.fr/services/MF-NWP-HIGHRES-AROME-"
         path=path+resol+"-FRANCE-WCS?request=GetCapabilities&version=1.3.0&service=WCS&token=__BvvAzSbJXLEdUJ--rRU0E1F8qi6cSxDp5x5AtPfCcuU__"
         #curl "https://geoservices.meteofrance.fr/services/MF-NWP-HIGHRES-AROME-001-FRANCE-WCS?request=GetCapabilities&version=1.3.0&service=WCS&token=__BvvAzSbJXLEdUJ--rRU0E1F8qi6cSxDp5x5AtPfCcuU__" > resultGetCapabilities
+        path=f"https://public-api.meteofrance.fr/public/arome/1.0/wcs/MF-NWP-{modele_resol_domaine}-WCS/GetCapabilities?SERVICE=WCS&VERSION=1.3.0&REQUEST=GetCapabilities"
         status=-1
         while status != 200:
-            r=requests.get(path)
+            #r=requests.get(path)
+            r=Client_APIM_MF().request("GET",path,verify=False)   # requête GetCapabilities du standard Web Coverage Services (WCS)
             status=r.status_code
         '''
         fichier = open(XMLFileName,"w")
@@ -46,9 +59,9 @@ def getWCSCapabilities(resol):  # Lance une requête "getCapabilities" du WCS po
         node=items[i].parentNode
         node=node.getElementsByTagName('ows:Title')  # recherche de sa description
         description=node[0].childNodes[0].nodeValue  # sa description
-        cle='"",("'+CoverageId(coverageId,resol).chaineNom()+'","'+description+'"),'
+        cle='"",("'+CoverageId(coverageId,resol,modele,domaine).chaineNom()+'","'+description+'"),'
         lesTitres.add(cle)
-        cov=CoverageId(coverageId,resol)  # création dun objet CoverageId
+        cov=CoverageId(coverageId,resol,modele,domaine)  # création dun objet CoverageId
         cov.descr=description  # renseignement de sa descritpion
         res.append(cov)  # écriture des objets CoverageId dans la liste des résultats
     titres=sorted(lesTitres)
@@ -56,8 +69,8 @@ def getWCSCapabilities(resol):  # Lance une requête "getCapabilities" du WCS po
         print titre
     print len(titres)"""
     return res    # renvoi la liste des objets CoverageId exposés par le WCS de MF
-def mostRecentId(resol,code):   # renvoi le plus récent des CoverageId de resolution "resol" et dont le code du la variable est "code"
-    tab=getWCSCapabilities(resol)   #  envoi d'ue requête getCapabilities au WCS pour la résolution "resol"
+def mostRecentId(modele,resol,domaine,code):   # renvoi le plus récent des CoverageId de resolution "resol" et dont le code du la variable est "code"
+    tab=getWCSCapabilities(modele,resol,domaine)   #  envoi d'ue requête getCapabilities au WCS pour la résolution "resol"
     ts=-sys.maxsize-1    #  le plus grand des entiers
     res=None
     for Id in tab:    #  recherche du plus récent run pour le paramètre de code "code"
@@ -65,8 +78,8 @@ def mostRecentId(resol,code):   # renvoi le plus récent des CoverageId de resol
             res=Id
             ts=Id.timeUTCRunTs
     return res
-def profilVertical(resol,code,longi,lati):   #  renvoi le profil vertical à l'heure précedante
-    Id=mostRecentId(resol,code)
+def profilVertical(modele,resol,domaine,code,longi,lati):   #  renvoi le profil vertical à l'heure précedante
+    Id=mostRecentId(modele,resol,domaine,code)
     if Id:
         res={}
         Id.describeCoverage()
@@ -94,13 +107,13 @@ def profilVertical(resol,code,longi,lati):   #  renvoi le profil vertical à l'h
         res["now"]=chaineUTCFromTs(ts)
         return res
     else : return None
-def profilVerticalComplet(resol,code_generique,longi,lati):   #  renvoi le profil vertical à l'heure précedante dans les deux coordonées verticales
-    resh=profilVertical(resol,code_generique+"(h)",longi,lati)  # profil vertical en corrdonée z
-    resp=profilVertical(resol,code_generique+"(p)",longi,lati)  # profil vertical en coordonnée p
+def profilVerticalComplet(modele,resol,domaine,code_generique,longi,lati):   #  renvoi le profil vertical à l'heure précedante dans les deux coordonées verticales
+    resh=profilVertical(modele,resol,domaine,code_generique+"(h)",longi,lati)  # profil vertical en corrdonée z
+    resp=profilVertical(modele,resol,domaine,code_generique+"(p)",longi,lati)  # profil vertical en coordonnée p
     return resh,resp
-def previsions (resol,code,longi,lati,niveau=None): # renvoie toutes les prévisions disponibles pour un code donné
+def previsions (modele,resol,domaine,code,longi,lati,niveau=None): # renvoie toutes les prévisions disponibles pour un code donné
     if not(niveau==None): niveau = int(niveau)
-    Id=mostRecentId(resol,code)
+    Id=mostRecentId(modele,resol,domaine,code)
     if Id:
         res={};
         Id.describeCoverage();

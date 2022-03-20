@@ -2,12 +2,12 @@
 '''
 Classe WCSGeotiff
 '''
-import gdal
 from Axe import Axe
 from Espace2D import Espace2D
 import numpy as np
 class WCSGeotiff:
     def __init__(self,pathGetCoverage,geotiffFileName):
+        import gdal
         self.dataset = gdal.Open(geotiffFileName, gdal.GA_ReadOnly)  # ouverture du fichier geotiff en écriture seule
         #print self.dataset.RasterCount
         if (self.dataset) :
@@ -39,18 +39,24 @@ class WCSGeotiff:
         else :
             print (pathGetCoverage)
             raise Exception ("WCSGeotiff : Fichier geotiff incorrect")
-    def valeurSurGrille(self,rangLongi,rangLati):  # renvoi la valeur du champ au point de la grille [rangLati,rangLongi]
+    
+    def valeurSurGrille (self,rangLongi,rangLati):  # renvoi la valeur du champ au point de la grille [rangLati,rangLongi]
         if not (0<= rangLongi <= self.dataset.RasterXSize-1): raise Exception ("erreur rangLongi")
         if not (0<= rangLati <= self.dataset.RasterYSize-1): raise Exception ("erreur rangLati")
         rlongi = self.geotransform[0] + rangLongi*self.geotransform[1] + rangLati*self.geotransform[2]
         rlati = self.geotransform[3] + rangLongi*self.geotransform[4] + rangLati*self.geotransform[5]
         val=self.array[rangLati,rangLongi]
         return rlongi,rlati,val
+    
     def valeurInterpolee (self,rlongi,rlati):  # renvoi la valeur du champs interpolée sur la grille
         # comme moyene des valeurs des 4 points entourants la position (longi,lati)
         # pondérée par l'inverse de la distance orthodromique à chacun des 4 points 
         return self.espace2D.valeur(rlongi,rlati)
-    def valeur (self,rlongi,rlati):
+    
+    def nearest_value (self,rlongi,rlati):
+        """
+        Renvoi la valeur du champs au point de la grille le plus proche de rlongi,rlati
+        """
         if not(self.origineX <= rlongi <= self.extremeX) : 
             print ("Anomalie rlongi : "+ str(rlongi) + " "+str(self.origineX)+" "+str(self.extremeX))
             raise Exception ("erreur rlongi")
@@ -73,10 +79,10 @@ filename="WCSgetCoverage.tiff"
 geotiff=WCSGeotiff(filename)
 print geotiff.valeurSurGrille(0,0)   #  coin Ouest-Nord
 print geotiff.valeurSurGrille(geotiff.RasterXSize-1,geotiff.RasterYSize-1)
-print geotiff.valeur(geotiff.origineX,geotiff.origineY)
+print geotiff.nearest_value(geotiff.origineX,geotiff.origineY)
 print geotiff.valeurInterpolee(geotiff.origineX,geotiff.origineY)
-print geotiff.valeur(geotiff.extremeX,geotiff.extremeY)
+print geotiff.nearest_value(geotiff.extremeX,geotiff.extremeY)
 print geotiff.valeurInterpolee(geotiff.extremeX,geotiff.extremeY)
-print geotiff.valeur(3.06,50.6)
+print geotiff.nearest_value(3.06,50.6)
 print geotiff.valeurInterpolee(3.06,50.6)
 '''

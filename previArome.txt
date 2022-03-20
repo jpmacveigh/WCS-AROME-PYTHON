@@ -1,0 +1,2 @@
+{"abrev": "Cape", "run": "2022-03-19T21:00:00Z", "unit": "J kg-1", "nom": "CONVECTIVE_AVAILABLE_POTENTIAL_ENERGY__GROUND_OR_WATER_SURFACE", "now": "2022-03-20T02:19:07Z", "z": null, "niv": null, "date": "2022-03-20T03:00:00Z", "val": 0.0}
+{"abrev": "Cape", "run": "2022-03-19T21:00:00Z", "unit": "J kg-1", "nom": "CONVECTIVE_AVAILABLE_POTENTIAL_ENERGY__GROUND_OR_WATER_SURFACE", "now": "2022-03-20T02:19:10Z", "z": null, "niv": null, "date": "2022-03-20T04:00:00Z", "val": 0.0}

@@ -1,5 +1,3 @@
-#!/usr/bin/python
-# coding: utf8
 import boto3
 import sqlite3
 import json
@@ -15,7 +13,7 @@ def traiteAromePrevi():
     con.commit()
     fic = open(repcourant+"previArome.txt", "r")
     for previ in fic.readlines():
-        #print (previ)
+        print (previ)
         previ=json.loads(previ)
         if previ["z"]==None :  # traitement du cas des previsions au niveau du sol
             previ["z"]="0"
