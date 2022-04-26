@@ -57,7 +57,6 @@ def getWCSCapabilities(modele,resol,domaine):
       res.append({"Id":coverageId,"desc":description,"run":run,"obj":cov}) # écriture des objets CoverageId dans la liste des résultats
       #res.append(cov)  # écriture des objets CoverageId dans la liste des résultats
   titres=sorted(lesTitres)
-  print(len(res))
   rep["nb_ID"]=len(res)
   rep["lesID"]=res
   return rep

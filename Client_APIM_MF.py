@@ -44,7 +44,7 @@ class Client_APIM_MF (object):
         # Obtain new token
         data = {'grant_type': 'client_credentials'}
         headers = {'Authorization': 'Basic ' + APPLICATION_ID}
-        access_token_response = requests.post(TOKEN_URL, data=data, verify=False, allow_redirects=False, headers=headers)
+        access_token_response = requests.post(TOKEN_URL, data=data, verify=True, allow_redirects=False, headers=headers)
         #print (access_token_response.json())
         token = access_token_response.json()['access_token']
         # Update session with fresh token

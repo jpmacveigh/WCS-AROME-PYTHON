@@ -33,12 +33,16 @@ def allPrevisionsForCov (cov,longi,lati,all_previ=True,grib=False):
             if grib==True:
                 cov.getCoverage_grib(lati-.1,lati+.1,longi-.1,longi+.1,date,niveau)
                 res["val"]= cov.nearest_value_grib(longi,lati)["value"]
+                """
                 cov.getCoverage_tiff(lati-.1,lati+.1,longi-.1,longi+.1,date,niveau)
                 print ("vérification tiff==grib")
                 assert res["val"]==cov.nearest_value_tiff(longi,lati)  # on vérifie que tiff et grib donne la même valeur
+                """
             else:
                 cov.getCoverage_tiff(lati-.1,lati+.1,longi-.1,longi+.1,date,niveau)
                 res["val"]= cov.nearest_value_tiff(longi,lati)
             print (res["abrev"],res["run"],res["date"],res["z"],res["niv"],res["val"])
             result.append(json.dumps(res)) # renvoi une liste de prévisiosn transformée en json 
+            with open("res_tempo.txt","a") as f:
+                f.write(json.dumps(res)+"\n")
     return result
