@@ -1,0 +1,4 @@
+{"abrev": "Cape", "run": "2022-04-27T18:00:00Z", "unit": "J kg-1", "nom": "CONVECTIVE_AVAILABLE_POTENTIAL_ENERGY__GROUND_OR_WATER_SURFACE", "now": "2022-04-27T22:11:21Z", "z": null, "niv": null, "date": "2022-04-27T23:00:00Z", "val": 0.0}
+{"abrev": "Cape", "run": "2022-04-27T18:00:00Z", "unit": "J kg-1", "nom": "CONVECTIVE_AVAILABLE_POTENTIAL_ENERGY__GROUND_OR_WATER_SURFACE", "now": "2022-04-27T22:11:24Z", "z": null, "niv": null, "date": "2022-04-28T00:00:00Z", "val": 0.0}
+{"abrev": "Cape", "run": "2022-04-27T18:00:00Z", "unit": "J kg-1", "nom": "CONVECTIVE_AVAILABLE_POTENTIAL_ENERGY__GROUND_OR_WATER_SURFACE", "now": "2022-04-27T22:11:25Z", "z": null, "niv": null, "date": "2022-04-28T01:00:00Z", "val": 0.0}
+{"abrev": "Cape", "run": "2022-04-27T18:00:00Z", "unit": "J kg-1", "nom": "CONVECTIVE_AVAILABLE_POTENTIAL_ENERGY__GROUND_OR_WATER_SURFACE", "now": "2022-04-27T22:11:27Z", "z": null, "niv": null, "date": "2022-04-28T02:00:00Z", "val": 0.0}

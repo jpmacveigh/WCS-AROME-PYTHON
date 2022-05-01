@@ -1,5 +1,3 @@
-#!/usr/bin/python
-# coding: utf8
 import datetime
 def dateLimiteRetention(ecart_heure):  # calcul la date limite de rétention à partir d'un écart (secondes) à maintenant dans la passé
         # format requis : 2019-08-01T09:46:18Z

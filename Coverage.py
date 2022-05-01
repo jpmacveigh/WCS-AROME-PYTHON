@@ -344,14 +344,14 @@ class Coverage :
         if "SPECIFIC_RAIN_WATER_CONTENT__ISOBARIC_SURFACE" in self.coverageId :   return True  ; 
         if "SPECIFIC_RAIN_WATER_CONTENT__SPECIFIC_HEIGHT_LEVEL" in self.coverageId :   return True  ;
         if "SPECIFIC_SNOW_WATER_CONTENT__" in self.coverageId :   return True  ;
-        if "SHORT_WAVE_RADIATION_FLUX__GROUND_OR_WATER_SURFACE" in self.coverageId :   return True  ;
+        #if "SHORT_WAVE_RADIATION_FLUX__GROUND_OR_WATER_SURFACE" in self.coverageId :   return True  ;
         if "RELATIVE_HUMIDITY__ISOBARIC_SURFACE___" in self.coverageId :   return True  ;
         if "LOW_CLOUD_COVER__GROUND" in self.coverageId :   return True  ;
         if "HIGH_CLOUD_COVER__GROUND" in self.coverageId :   return True  ;
         if "MEDIUM_CLOUD_COVER__GROUND" in self.coverageId :   return True  ;
         if "CONVECTIVE_CLOUD_COVER__GROUND" in self.coverageId :   return True  ;
         if "PRESSURE__SPECIFIC_HEIGHT_LEVEL_" in self.coverageId :   return True  ;
-        if "PRESSURE__GROUND_OR_WATER" in self.coverageId :   return True  ;
+        #if "PRESSURE__GROUND_OR_WATER" in self.coverageId :   return True  ;
         if "TOTAL_PRECIPITATION_RATE__SPECIFIC_HEIGHT" in self.coverageId :   return True  ;
         if "TOTAL_PRECIPITATION_RATE__ISOBARIC" in self.coverageId :   return True  ;
         if "ABSOLUTE_VORTICITY__ISOBARIC" in self.coverageId :   return True  ;
@@ -359,7 +359,7 @@ class Coverage :
         if "TURBULENT_KINETIC_ENERGY__ISOBARIC" in self.coverageId :   return True  ;
         if "PSEUDO_ADIABATIC_POTENTIAL_TEMPERATURE__ISOBARIC" in self.coverageId :   return True  ;
         if "POTENTIAL_VORTICITY__ISOBARIC" in self.coverageId :   return True  ;
-        if "TEMPERATURE__GROUND_OR_WATER_SURFACE" in self.coverageId :   return True  ;
+        #if "TEMPERATURE__GROUND_OR_WATER_SURFACE" in self.coverageId :   return True  ;
         if "TEMPERATURE__ISOBARIC_SURFACE" in self.coverageId :   return True  ;
         if "U_COMPONENT_OF_WIND__ISOBARIC_" in self.coverageId :   return True  ;
         if "U_COMPONENT_OF_WIND__POTENTIAL_VORTICITY" in self.coverageId :   return True  ;
