@@ -9,7 +9,6 @@ import time
 import calendar
 import gdal
 import json
-import numpy as np
 from Client_APIM_MF import Client_APIM_MF  # client MF pour renouveler le token d'acces à l'API WCS de MF (depuis janvier 2022)
 from WCSGeotiff import WCSGeotiff
 from WCSGeogrib import WCSGeogrib
@@ -38,7 +37,7 @@ class Coverage :
         self.domaine=domaine
         for k,v in CatalogueWCS.catalogueWCS.items():
             #print (v)
-            (nom,desc,type_var)=v
+            (nom,desc,type_var,dimension)=v
             if nom==self.chaineNom():
                 self.code=k
                 break
@@ -256,7 +255,7 @@ class Coverage :
         status=-1
         isGrib=False
         while status != 200 or not isGrib:
-            if not(status==-1): time.sleep(0.5)    # sauf la première fois, wait in seconds pour ne pas surcharger le serveur
+            if not(status==-1): time.sleep(2.5)    # sauf la première fois, wait in seconds pour ne pas surcharger le serveur
             #r=requests.get(path)  # envoi d'une requête "getCoverage" du WCS
             r=Client_APIM_MF().request("GET",path,verify=False)   # envoi d'une requête "getCoverage" du WCS
             status=r.status_code
