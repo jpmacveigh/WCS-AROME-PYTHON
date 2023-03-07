@@ -140,6 +140,7 @@ class Coverage :
             r=Client_APIM_MF().request("GET",path,verify=False)   # envoi d'une requête "describeCoverage" du WCS
             status=r.status_code
             print("path: ",path," status decribeCoverage : ",str(status))
+            if (status != 200): time.sleep(30.)
         if retry>10 :
             print("retry : "+str(retry)+" path: ",path," status decribeCoverage : ",str(status))
             sys.exit(retry)       

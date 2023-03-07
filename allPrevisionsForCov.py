@@ -1,5 +1,6 @@
 from Utils import chaineUTCFromTs,tsNow
 import json
+import pyairtable
 def allPrevisionsForCov (cov,longi,lati,all_previ=True,grib=False): 
     '''
     Retourne toutes les prévisions au point (longi,lati) contenues dans un objet Coverage cov
@@ -7,6 +8,11 @@ def allPrevisionsForCov (cov,longi,lati,all_previ=True,grib=False):
     Si all_previ=False : ne retourne que les prévsions qui sont futures par rapport à l'heure actuelle
     Utilise le format grib ou tiff du coverage selon la valeur du paraètre "grib" 
     '''
+    # Accès à la base Météo de Airtable
+    from pyairtable import Table
+    PAT="patPdSrU8sJ8AERNd.b52225dcf7dd617bca5c544559ce3854199faa45907b6354f44ab7e578b7be71" # Personal Acces Token pour cette base
+    baseId="app6VCTcvfW1V6FHh" # Id de la base
+    table = Table(PAT,baseId,"Prévisions WCS décodées")  # ouverture de la table de la base Airtable
     result=[]
     cov.describeCoverage()  # On complète la description de l'objet cov
     cov.affiche()
@@ -45,4 +51,27 @@ def allPrevisionsForCov (cov,longi,lati,all_previ=True,grib=False):
             result.append(json.dumps(res)) # renvoi une liste de prévisiosn transformée en json 
             with open("res_tempo.txt","a") as f:
                 f.write(json.dumps(res)+"\n")
+            if cov.dim == 4:
+                record={
+                    'Param':res["abrev"],
+                    'Niveau':float(res["z"]),
+                    'Lati':float(lati),
+                    'Longi':float(longi),
+                    'Valeur':float(res["val"]),
+                    'Date UTC run':res["run"],
+                    'Date UTC prévi':res["date"]   
+                 }
+            else :
+                 record={
+                    'Param':res["abrev"],
+                    'Niveau':0.,
+                    'Lati':float(lati),
+                    'Longi':float(longi),
+                    'Valeur':float(res["val"]),
+                    'Date UTC run':res["run"],
+                    'Date UTC prévi':res["date"]   
+                 }
+            print(record)
+            # Création pour chaque prévision d'un record dans la table Prévision WCS décodées de la base Météo de Airtable
+            table.create(record)
     return result
