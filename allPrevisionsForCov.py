@@ -1,6 +1,8 @@
 from Utils import chaineUTCFromTs,tsNow
 import json
 import pyairtable
+import os
+from traiteAromePrevi import traiteAromePrevi
 def allPrevisionsForCov (cov,longi,lati,all_previ=True,grib=False): 
     '''
     Retourne toutes les prévisions au point (longi,lati) contenues dans un objet Coverage cov
@@ -34,23 +36,18 @@ def allPrevisionsForCov (cov,longi,lati,all_previ=True,grib=False):
             if cov.dim==3 : niveau=None  # Cas où le niveau n'est pas requis
             res["z"]=niveau  # position sur la verticale (ou None si dim=3)
             res["niv"]=cov.niv # nom de la coordonnée verticale (ou None si dim=3)
-             # on prend la première date des prévisions
-            res["date"]=date
+            res["date"]=date  # on prend la première date des prévisions
             if grib==True:
-                cov.getCoverage_grib(lati-.1,lati+.1,longi-.1,longi+.1,date,niveau)
+                cov.getCoverage_grib(lati-.1,lati+.1,longi-.1,longi+.1,date,niveau) # Appel à getCoverage_grib
                 res["val"]= cov.nearest_value_grib(longi,lati)["value"]
-                """
-                cov.getCoverage_tiff(lati-.1,lati+.1,longi-.1,longi+.1,date,niveau)
-                print ("vérification tiff==grib")
-                assert res["val"]==cov.nearest_value_tiff(longi,lati)  # on vérifie que tiff et grib donne la même valeur
-                """
             else:
-                cov.getCoverage_tiff(lati-.1,lati+.1,longi-.1,longi+.1,date,niveau)
+                cov.getCoverage_tiff(lati-.1,lati+.1,longi-.1,longi+.1,date,niveau) # Appel à getCoverage_tiff
                 res["val"]= cov.nearest_value_tiff(longi,lati)
             print (res["abrev"],res["run"],res["date"],res["z"],res["niv"],res["val"])
             result.append(json.dumps(res)) # renvoi une liste de prévisiosn transformée en json 
-            with open("res_tempo.txt","a") as f:
+            with open("res_tempo.txt","a") as f: # Ecriture dans le fichier res_tempo.txt
                 f.write(json.dumps(res)+"\n")
+            # Ecriture dans la base Airtable
             if cov.dim == 4:
                 record={
                     'Param':res["abrev"],
@@ -74,4 +71,11 @@ def allPrevisionsForCov (cov,longi,lati,all_previ=True,grib=False):
             print(record)
             # Création pour chaque prévision d'un record dans la table Prévision WCS décodées de la base Météo de Airtable
             table.create(record)
+    if len(result) != 0 :
+        repcourant=os.getcwd()+"/"
+        fic = open(repcourant+"previArome.txt","w") # Ecriture des résultats dans fichier temporaire
+        for previ in result:
+            fic.writelines(str(previ)+"\n")
+        fic.close()
+        traiteAromePrevi() # Ecriture du fichier previArome.txt dans base Arome.sqlite
     return result

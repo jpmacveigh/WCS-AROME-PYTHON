@@ -8,7 +8,7 @@ import traceback
 from traiteAromePrevi import traiteAromePrevi
 deb=datetime.datetime.utcnow()
 print (deb)
-lat=50.06  # les coordonnees geographiques de Lille
+lat=50.7  # les coordonnees geographiques de Lille
 lng=3.06
 resolution="0025"  # résolution du modèle Arome ("001" ou "0025")
 modele="HIGHRES-AROME"
@@ -19,7 +19,7 @@ print(covId["lesID"][0])
 jeunesCovId=  list(filter(lambda x:x["obj"].ageRun() <=ageMaxi,covId["lesID"])) # on ne traite que les CoverageId qui ont moins de 8 heures d'age
 aTraiterCovId=list(filter(lambda x:x["obj"].aIgnorer()==False,jeunesCovId))
 random.shuffle(aTraiterCovId)  # on mélange les CoverageId pour ne pas toujours les traiter dans le même ordre
-nbMaxIter=15 # On ne traite ue les premiers CoverageId
+nbMaxIter=3 # On ne traite ue les premiers CoverageId
 aTraiterCovId=aTraiterCovId[0:nbMaxIter]
 print(len(covId),len(jeunesCovId),len(aTraiterCovId))
 result=[]
@@ -40,13 +40,6 @@ for Id in aTraiterCovId :
 fin=datetime.datetime.utcnow()
 print (len(covId),len(jeunesCovId),len(aTraiterCovId))
 print (len(result),deb,fin)
-#fic = open("logArome.txt","a")
-#fic.write(len(covId),len(jeunesCovId),len(aTraiterCovId),len(result),deb,fin)
-#fic.close()
-if len(result) != 0 :
-    repcourant=os.getcwd()+"/"
-    fic = open(repcourant+"previArome.txt","w") # Ecriture des résultats dans fichier temporaire
-    for previ in result:
-        fic.writelines(str(previ)+"\n")
-    fic.close()
-    traiteAromePrevi() # Ecriture du fichier previArome.txt dans base Arome.sqlite
+fic = open("logArome.txt","a")
+fic.write(len(covId),len(jeunesCovId),len(aTraiterCovId),len(result),deb,fin)
+fic.close()

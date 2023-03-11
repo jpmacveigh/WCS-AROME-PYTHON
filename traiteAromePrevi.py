@@ -22,9 +22,9 @@ def traiteAromePrevi():
         cur.execute("INSERT INTO prevision (now,nom,abrev,niv,hauteur,unit,run,date,val) VALUES(?,?,?,?,?,?,?,?,?)",[previ["now"],previ["nom"],previ["abrev"],previ["niv"],previ["z"],previ["unit"], previ["run"],previ["date"],previ["val"]])
     con.commit()
     dateLimite=dateLimiteRetention(40)  # on efface les données plus vieilles de 40 heures
-    #cmd='DELETE FROM prevision WHERE now <= "'+dateLimite+'"'
-    #print (cmd)
-    #cur.execute(cmd)
+    cmd='DELETE FROM prevision WHERE now <= "'+dateLimite+'"'
+    print (cmd)
+    cur.execute(cmd)
     con.commit()
     con.close()
     fic.close()
